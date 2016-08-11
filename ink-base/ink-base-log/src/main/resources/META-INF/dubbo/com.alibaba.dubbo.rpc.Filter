@@ -1,0 +1,2 @@
+providerLogMdcFilter=com.ink.base.log.dubbo.filter.ProviderLogMDCFilter
+consumerLogMdcFilter=com.ink.base.log.dubbo.filter.ConsumerLogMDCFilter

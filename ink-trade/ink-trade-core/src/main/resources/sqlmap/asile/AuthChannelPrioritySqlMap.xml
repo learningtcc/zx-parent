@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AuthChannelPriority">
+
+    <resultMap id="AuthChannelPriority" type="com.ink.asile.core.po.AuthChannelPriority">
+        <result property="id" column="id"/>
+        <result property="channelNo" column="channel_no"/>
+        <result property="priority" column="priority"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,channel_no ,priority ,create_time ,last_update_time ,operator 
+	    ]]>
+	</sql>
+
+	<!-- 获取所有四要素认证通道 -->
+	<select id="getAll" resultMap="AuthChannelPriority">
+		SELECT <include refid="columns"/>
+		<![CDATA[
+	        FROM auth_channel_priority
+	    ]]>
+	</select>
+
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO auth_channel_priority (
+	        id  ,
+	        channel_no  ,
+	        priority  ,
+	        create_time  ,
+	        last_update_time  ,
+	        operator  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{channelNo, jdbcType=VARCHAR} ,
+        	#{priority, jdbcType=INTEGER} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{operator, jdbcType=VARCHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO auth_channel_priority ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.channelNo, jdbcType=VARCHAR} ,
+        	#{item.priority, jdbcType=INTEGER} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.operator, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE auth_channel_priority SET
+	        channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	        priority = #{priority, jdbcType=INTEGER} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        operator = #{operator, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+<update id="updateNotNull" >
+			UPDATE auth_channel_priority
+				<set>
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=priority and ''!=priority ">
+	   			 		priority = #{priority, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=lastUpdateTime and ''!=lastUpdateTime ">
+	   			 		last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=operator and ''!=operator ">
+	   			 		operator = #{operator, jdbcType=VARCHAR} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM auth_channel_priority WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="AuthChannelPriority">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM auth_channel_priority 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		AND channel_no = #{channelNo}
+	   			   	</if>
+			       	<if test="null!=operator and ''!=operator ">
+	   			 		AND operator = #{operator}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=channelNo and ''!=channelNo">
+				    <!-- 	AND channel_no LIKE '%'||#{channelNo}||'%' oracle -->
+			   			AND channel_no LIKE concat('%',#{channelNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=operator and ''!=operator">
+				    <!-- 	AND operator LIKE '%'||#{operator}||'%' oracle -->
+			   			AND operator LIKE concat('%',#{operator},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=priority and ''!=priority">
+			    AND priority = #{priority}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM auth_channel_priority <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="AuthChannelPriority">
+    	SELECT <include refid="columns"/> FROM auth_channel_priority 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="AuthChannelPriority">
+	    SELECT <include refid="columns"/> FROM auth_channel_priority 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

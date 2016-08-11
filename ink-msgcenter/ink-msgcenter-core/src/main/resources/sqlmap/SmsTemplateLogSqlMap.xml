@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SmsTemplateLog">
+
+    <resultMap id="SmsTemplateLog" type="com.ink.msgcenter.core.po.SmsTemplateLog">
+        <result property="id" column="id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="merctId" column="merct_id"/>
+        <result property="merctCode" column="merct_code"/>
+        <result property="tempName" column="temp_name"/>
+        <result property="tempContent" column="temp_content"/>
+        <result property="parseMethod" column="parse_method"/>
+        <result property="tempParam" column="temp_param"/>
+        <result property="tempRemark" column="temp_remark"/>
+        <result property="logRemark" column="log_remark"/>
+        <result property="status" column="status"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="operateTime" column="operate_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,template_id ,merct_id ,merct_code ,temp_name ,temp_content ,parse_method ,temp_param ,temp_remark ,log_remark ,operator_id ,operator_name ,operate_time,status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO sms_template_log (
+	        id  ,
+	        template_id  ,
+	        merct_id  ,
+	        merct_code  ,
+	        temp_name  ,
+	        temp_content  ,
+	        parse_method  ,
+	        temp_param  ,
+	        temp_remark  ,
+	        log_remark  ,
+	        status ,
+	        operator_id  ,
+	        operator_name  ,
+	        operate_time  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{templateId, jdbcType=BIGINT} ,
+        	#{merctId, jdbcType=BIGINT} ,
+        	#{merctCode, jdbcType=VARCHAR} ,
+        	#{tempName, jdbcType=VARCHAR} ,
+        	#{tempContent, jdbcType=VARCHAR} ,
+        	#{parseMethod, jdbcType=CHAR} ,
+        	#{tempParam, jdbcType=VARCHAR} ,
+        	#{tempRemark, jdbcType=VARCHAR} ,
+        	#{logRemark, jdbcType=VARCHAR} ,
+        	#{status, jdbcType=VARCHAR} ,
+        	#{operatorId, jdbcType=VARCHAR} ,
+        	#{operatorName, jdbcType=VARCHAR} ,
+        	#{operateTime, jdbcType=TIMESTAMP} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO sms_template_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.templateId, jdbcType=BIGINT} ,
+        	#{item.merctId, jdbcType=BIGINT} ,
+        	#{item.merctCode, jdbcType=VARCHAR} ,
+        	#{item.tempName, jdbcType=VARCHAR} ,
+        	#{item.tempContent, jdbcType=VARCHAR} ,
+        	#{item.parseMethod, jdbcType=CHAR} ,
+        	#{item.tempParam, jdbcType=VARCHAR} ,
+        	#{item.tempRemark, jdbcType=VARCHAR} ,
+        	#{item.logRemark, jdbcType=VARCHAR} ,
+        	#{item.operatorId, jdbcType=VARCHAR} ,
+        	#{item.operatorName, jdbcType=VARCHAR} ,
+        	#{item.operateTime, jdbcType=TIMESTAMP} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE sms_template_log SET
+	        template_id = #{templateId, jdbcType=BIGINT} ,
+	        merct_id = #{merctId, jdbcType=BIGINT} ,
+	        merct_code = #{merctCode, jdbcType=VARCHAR} ,
+	        temp_name = #{tempName, jdbcType=VARCHAR} ,
+	        temp_content = #{tempContent, jdbcType=VARCHAR} ,
+	        parse_method = #{parseMethod, jdbcType=CHAR} ,
+	        temp_param = #{tempParam, jdbcType=VARCHAR} ,
+	        temp_remark = #{tempRemark, jdbcType=VARCHAR} ,
+	        log_remark = #{logRemark, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=VARCHAR} ,
+	        operator_id = #{operatorId, jdbcType=VARCHAR} ,
+	        operator_name = #{operatorName, jdbcType=VARCHAR} ,
+	        operate_time = #{operateTime, jdbcType=TIMESTAMP} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM sms_template_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="SmsTemplateLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM sms_template_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=merctCode and ''!=merctCode ">
+	   			 		AND merct_code = #{merctCode}
+	   			   	</if>
+			       	<if test="null!=tempName and ''!=tempName ">
+	   			 		AND temp_name = #{tempName}
+	   			   	</if>
+			       	<if test="null!=tempContent and ''!=tempContent ">
+	   			 		AND temp_content = #{tempContent}
+	   			   	</if>
+			       	<if test="null!=parseMethod and ''!=parseMethod ">
+	   			 		AND parse_method = #{parseMethod}
+	   			   	</if>
+			       	<if test="null!=tempParam and ''!=tempParam ">
+	   			 		AND temp_param = #{tempParam}
+	   			   	</if>
+			       	<if test="null!=tempRemark and ''!=tempRemark ">
+	   			 		AND temp_remark = #{tempRemark}
+	   			   	</if>
+			       	<if test="null!=logRemark and ''!=logRemark ">
+	   			 		AND log_remark = #{logRemark}
+	   			   	</if>
+			       	<if test="null!=operatorId and ''!=operatorId ">
+	   			 		AND operator_id = #{operatorId}
+	   			   	</if>
+			       	<if test="null!=operatorName and ''!=operatorName ">
+	   			 		AND operator_name = #{operatorName}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=merctCode and ''!=merctCode">
+				    <!-- 	AND merct_code LIKE '%'||#{merctCode}||'%' oracle -->
+			   			AND merct_code LIKE concat('%',#{merctCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempName and ''!=tempName">
+				    <!-- 	AND temp_name LIKE '%'||#{tempName}||'%' oracle -->
+			   			AND temp_name LIKE concat('%',#{tempName},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempContent and ''!=tempContent">
+				    <!-- 	AND temp_content LIKE '%'||#{tempContent}||'%' oracle -->
+			   			AND temp_content LIKE concat('%',#{tempContent},'%')
+			   			
+			   		</if>
+				    <if test="null!=parseMethod and ''!=parseMethod">
+				    <!-- 	AND parse_method LIKE '%'||#{parseMethod}||'%' oracle -->
+			   			AND parse_method LIKE concat('%',#{parseMethod},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempParam and ''!=tempParam">
+				    <!-- 	AND temp_param LIKE '%'||#{tempParam}||'%' oracle -->
+			   			AND temp_param LIKE concat('%',#{tempParam},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempRemark and ''!=tempRemark">
+				    <!-- 	AND temp_remark LIKE '%'||#{tempRemark}||'%' oracle -->
+			   			AND temp_remark LIKE concat('%',#{tempRemark},'%')
+			   			
+			   		</if>
+				    <if test="null!=logRemark and ''!=logRemark">
+				    <!-- 	AND log_remark LIKE '%'||#{logRemark}||'%' oracle -->
+			   			AND log_remark LIKE concat('%',#{logRemark},'%')
+			   			
+			   		</if>
+				    <if test="null!=operatorId and ''!=operatorId">
+				    <!-- 	AND operator_id LIKE '%'||#{operatorId}||'%' oracle -->
+			   			AND operator_id LIKE concat('%',#{operatorId},'%')
+			   			
+			   		</if>
+				    <if test="null!=operatorName and ''!=operatorName">
+				    <!-- 	AND operator_name LIKE '%'||#{operatorName}||'%' oracle -->
+			   			AND operator_name LIKE concat('%',#{operatorName},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=templateId and ''!=templateId">
+			    AND template_id = #{templateId}
+			</if>
+		   	<if test="null!=merctId and ''!=merctId">
+			    AND merct_id = #{merctId}
+			</if>
+		   	<if test="null!=operateTimeBegin and ''!=operateTimeBegin">
+		   		AND operate_time >= #{operateTimeBegin}
+		   	</if>
+		   	<if test="null!=operateTimeEnd and ''!=operateTimeEnd">
+		   		AND operate_time &lt; #{operateTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM sms_template_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="SmsTemplateLog">
+    	SELECT <include refid="columns"/> FROM sms_template_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="SmsTemplateLog">
+	    SELECT <include refid="columns"/> FROM sms_template_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="getLastUpdateContent" resultMap="SmsTemplateLog">
+		select <include refid="columns"/> FROM sms_template_log 
+		where template_id = ${_parameter} order by operate_time desc limit 1
+	</select>
+	
+	<select id="getPreviousContent" resultMap="SmsTemplateLog">
+		select <include refid="columns"/> FROM sms_template_log 
+		where template_id = #{templateId} AND operate_time &lt; #{operateTime}  order by operate_time desc limit 1
+	</select>
+</mapper>

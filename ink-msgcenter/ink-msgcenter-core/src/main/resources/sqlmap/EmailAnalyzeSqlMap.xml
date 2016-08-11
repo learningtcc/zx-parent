@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EmailAnalyze">
+
+    <resultMap id="EmailAnalyze" type="com.ink.msgcenter.core.po.EmailAnalyze">
+        <result property="id" column="id"/>
+        <result property="chnId" column="chn_id"/>
+        <result property="chnCode" column="chn_code"/>
+        <result property="sendCount" column="send_count"/>
+        <result property="successCount" column="success_count"/>
+        <result property="failCount" column="fail_count"/>
+        <result property="analyzeDate" column="analyze_date"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,chn_id ,chn_code ,send_count ,success_count ,fail_count ,analyze_date 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO email_analyze (
+	        id  ,
+	        chn_id  ,
+	        chn_code  ,
+	        send_count  ,
+	        success_count  ,
+	        fail_count  ,
+	        analyze_date  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{chnId, jdbcType=BIGINT} ,
+        	#{chnCode, jdbcType=CHAR} ,
+        	#{sendCount, jdbcType=BIGINT} ,
+        	#{successCount, jdbcType=BIGINT} ,
+        	#{failCount, jdbcType=BIGINT} ,
+        	#{analyzeDate, jdbcType=DATE} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO email_analyze ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.chnId, jdbcType=BIGINT} ,
+        	#{item.chnCode, jdbcType=CHAR} ,
+        	#{item.sendCount, jdbcType=BIGINT} ,
+        	#{item.successCount, jdbcType=BIGINT} ,
+        	#{item.failCount, jdbcType=BIGINT} ,
+        	#{item.analyzeDate, jdbcType=DATE} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE email_analyze SET
+	        chn_id = #{chnId, jdbcType=BIGINT} ,
+	        chn_code = #{chnCode, jdbcType=CHAR} ,
+	        send_count = #{sendCount, jdbcType=BIGINT} ,
+	        success_count = #{successCount, jdbcType=BIGINT} ,
+	        fail_count = #{failCount, jdbcType=BIGINT} ,
+	        analyze_date = #{analyzeDate, jdbcType=DATE} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM email_analyze WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="EmailAnalyze">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM email_analyze 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=chnCode and ''!=chnCode ">
+	   			 		AND chn_code = #{chnCode}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=chnCode and ''!=chnCode">
+				    <!-- 	AND chn_code LIKE '%'||#{chnCode}||'%' oracle -->
+			   			AND chn_code LIKE concat('%',#{chnCode},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=chnId and ''!=chnId">
+			    AND chn_id = #{chnId}
+			</if>
+		   	<if test="null!=sendCount and ''!=sendCount">
+			    AND send_count = #{sendCount}
+			</if>
+		   	<if test="null!=successCount and ''!=successCount">
+			    AND success_count = #{successCount}
+			</if>
+		   	<if test="null!=failCount and ''!=failCount">
+			    AND fail_count = #{failCount}
+			</if>
+		   	<if test="null!=analyzeDateBegin and ''!=analyzeDateBegin">
+		   		AND analyze_date >= #{analyzeDateBegin}
+		   	</if>
+		   	<if test="null!=analyzeDateEnd and ''!=analyzeDateEnd">
+		   		AND analyze_date &lt; #{analyzeDateEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM email_analyze <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="EmailAnalyze">
+    	SELECT <include refid="columns"/> FROM email_analyze 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="EmailAnalyze">
+	    SELECT <include refid="columns"/> FROM email_analyze 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    
+    
+	<select id="getByChnId" resultMap="EmailAnalyze">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM email_analyze 
+	        WHERE 
+		        chn_id = #{chnId} 
+	    ]]>
+	    AND analyze_date = date_format(now(),'%Y-%m-%d')
+    </select>
+    
+    <select id="getTotalByChnId" resultType="java.util.HashMap">
+	    SELECT IFNULL(sum(send_count),0) as total,IFNULL(sum(success_count),0) as success,IFNULL(sum(fail_count),0) as fail
+	        FROM email_analyze 
+	        WHERE 
+		        chn_id = #{chnId}
+		        AND  analyze_date != date_format(now(),'%Y-%m-%d')
+    </select>
+    
+    <update id="updateEmailStatics">
+    <![CDATA[
+        UPDATE email_analyze 
+        SET send_count = send_count + #{sendCount}, success_count = success_count + #{successCount}, fail_count = fail_count + #{failCount}
+        WHERE  chn_id = #{chnId} AND chn_code = #{chnCode} AND analyze_date = #{analyzeDate}
+    ]]>
+    </update>
+</mapper>

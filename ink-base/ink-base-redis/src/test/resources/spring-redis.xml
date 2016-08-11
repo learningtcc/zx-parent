@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 对象池 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="10000"/>
+        <property name="maxIdle" value="200"/>
+        <property name="maxWaitMillis" value="3000"/>
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+     
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">  
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1" value="127.0.0.1" type="java.lang.String"/>
+        <constructor-arg index="2" value="6379"/>
+        <constructor-arg index="3" value="3000"/>
+	</bean>
+	
+	<bean id="yedis" class="com.ink.base.redis.client.Yedis">
+        <property name="jedisPool" ref="jedisPool"/>
+        <property name="cacheCommand" ref="redisCommand"/>
+        <property name="bakCommand" ref="ehcacheCommand"/>
+
+	</bean>
+	
+	<bean id="redisCommand" class="com.ink.base.redis.core.redis.RedisCommand">
+        <property name="jedisPool" ref="jedisPool"/>
+        <property name="expireSwitch" value="exn" />
+	</bean>
+	
+	<bean id="ehcacheCommand" class="com.ink.base.redis.core.ehcache.EhcacheCommand"/>
+</beans>

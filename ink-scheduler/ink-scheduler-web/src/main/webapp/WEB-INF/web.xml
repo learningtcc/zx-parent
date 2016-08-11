@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	
+	<context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>classpath:logback.xml</param-value>
+    </context-param>
+    <filter>
+        <filter-name>loggerMdcFilter</filter-name>
+        <filter-class>com.yinker.base.log.filter.LoggerMDCFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loggerMdcFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-context.xml;</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 核心控制器 -->
+    <servlet>
+        <servlet-name>scheduler</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml;</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>scheduler</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>common/frame.do</welcome-file>
+    </welcome-file-list>
+    <!--
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    -->
+    <!-- ======================== 单点登录开始 ======================== -->
+    <!-- 用于单点退出，该过滤器用于实现单点登出功能，可选配置-->
+    <listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+    <!-- 该过滤器用于实现单点登出功能，可选配置。 -->
+    <filter>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CAS Filter</filter-name>
+        <filter-class>org.jasig.cas.client.authentication.AuthenticationAllFilter</filter-class>
+        <init-param>
+            <param-name>casServerLoginUrl</param-name>
+            <param-value>https://sso.yinker.com:9443/sso/login</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>http://localhost:9090</param-value>
+            <!--<param-value>http://192.168.204.246:8080</param-value>-->
+        </init-param>
+        <init-param>
+            <param-name>staticSuffixs</param-name>
+            <param-value>js,css,png,gif,jpg,ico</param-value>
+        </init-param>
+        <init-param>
+            <param-name>excludedPages</param-name>
+            <param-value>/login/login.do,/login/checkUser.do,/login/ssologin.do</param-value>
+        </init-param>
+        <init-param>
+            <param-name>appLoginUrl</param-name>
+            <!--<param-value>http://192.168.204.246:8080/msgcenter-web/login/login.do</param-value>-->
+            <param-value>http://localhost:9090/scheduler/login/login.do</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 该过滤器负责对Ticket的校验工作，必须启用它 -->
+    <filter>
+        <filter-name>CAS Validation Filter</filter-name>
+        <filter-class>
+            org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>https://sso.yinker.com:9443/sso</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <!--<param-value>http://192.168.204.246:8080</param-value>-->
+            <param-value>http://localhost:9090</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookieExpire</param-name>
+            <param-value>180</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookieDomain</param-name>
+            <param-value>.yinker.com</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Validation Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--
+        该过滤器负责实现HttpServletRequest请求的包裹，
+        比如允许开发者通过HttpServletRequest的getRemoteUser()方法获得SSO登录用户的登录名，可选配置。
+    -->
+    <filter>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <filter-class>
+            org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--
+        该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。
+        比如AssertionHolder.getAssertion().getPrincipal().getName()。
+        -->
+    <filter>
+        <filter-name>CAS Assertion Thread Local Filter</filter-name>
+        <filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Assertion Thread Local Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- ======================== 单点登录结束 ======================== -->
+</web-app>

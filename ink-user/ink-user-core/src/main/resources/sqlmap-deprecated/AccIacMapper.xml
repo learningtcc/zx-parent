@@ -1,0 +1,1146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccIac">
+	<resultMap id="BaseResultMap" type="com.yinker.user.core.po.AccIac">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="owner_group" property="ownerGroup" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="iac_id" property="iacId" jdbcType="BIGINT" />
+		<result column="mch_id" property="mchId" jdbcType="BIGINT" />
+		<result column="org_id" property="orgId" jdbcType="BIGINT" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="up_item_id" property="upItemId" jdbcType="VARCHAR" />
+		<result column="iac_type" property="iacType" jdbcType="INTEGER" />
+		<result column="lst_bal" property="lstBal" jdbcType="DECIMAL" />
+		<result column="cur_bal" property="curBal" jdbcType="DECIMAL" />
+		<result column="tmp_bal" property="tmpBal" jdbcType="DECIMAL" />
+		<result column="min_bal" property="minBal" jdbcType="DECIMAL" />
+		<result column="bal_dir" property="balDir" jdbcType="VARCHAR" />
+		<result column="txn_dir" property="txnDir" jdbcType="INTEGER" />
+		<result column="open_date" property="openDate" jdbcType="DATE" />
+		<result column="close_date" property="closeDate" jdbcType="DATE" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="acc_deposit_type" property="accDepositType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapExt" type="com.yinker.user.core.po.AccIac">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="owner_group" property="ownerGroup" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="iac_id" property="iacId" jdbcType="VARCHAR" />
+		<result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="up_item_id" property="upItemId" jdbcType="VARCHAR" />
+		<result column="iac_type" property="iacType" jdbcType="INTEGER" />
+		<result column="lst_bal" property="lstBal" jdbcType="DECIMAL" />
+		<result column="cur_bal" property="curBal" jdbcType="DECIMAL" />
+		<result column="tmp_bal" property="tmpBal" jdbcType="DECIMAL" />
+		<result column="min_bal" property="minBal" jdbcType="DECIMAL" />
+		<result column="bal_dir" property="balDir" jdbcType="VARCHAR" />
+		<result column="txn_dir" property="txnDir" jdbcType="INTEGER" />
+		<result column="open_date" property="openDate" jdbcType="DATE" />
+		<result column="close_date" property="closeDate" jdbcType="DATE" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+		<result column="org_sname" property="orgSname" jdbcType="VARCHAR" />
+		<result column="item_name" property="itemName" jdbcType="VARCHAR" />
+		<result column="acc_deposit_type" property="accDepositType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.yinker.user.core.po.AccIac"
+		extends="BaseResultMap">
+		<result column="iac_mac" property="iacMac" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, owner, owner_group, create_time, last_update_time,
+		iac_id, cur,
+		up_item_id, iac_type,
+		lst_bal, cur_bal, tmp_bal,
+		min_bal,
+		bal_dir, txn_dir, open_date, close_date,
+		status,
+		del_flag, filler1,
+		filler2, filler3, version,org_id,mch_id,acc_deposit_type
+	</sql>
+	<sql id="Blob_Column_List">
+		iac_mac
+	</sql>
+	
+	<!-- 基础方法Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into acc_iac (id,
+		owner, owner_group,
+		create_time, last_update_time, iac_id,
+		cur,
+		up_item_id, iac_type,
+		lst_bal, cur_bal, tmp_bal,
+		min_bal, bal_dir,
+		txn_dir,
+		open_date, close_date, status,
+		del_flag, filler1,
+		filler2,
+		filler3, version, iac_mac,mch_id,org_id,acc_deposit_type
+		)
+		values
+		(#{record.id,jdbcType=BIGINT},
+		#{record.owner,jdbcType=VARCHAR},
+		#{record.ownerGroup,jdbcType=VARCHAR},
+		#{record.createTime,jdbcType=TIMESTAMP},
+		#{record.lastUpdateTime,jdbcType=TIMESTAMP},
+		#{record.iacId,jdbcType=BIGINT},
+		#{record.cur,jdbcType=VARCHAR},
+		#{record.upItemId,jdbcType=VARCHAR},
+		#{record.iacType,jdbcType=INTEGER},
+		#{record.lstBal,jdbcType=DECIMAL},
+		#{record.curBal,jdbcType=DECIMAL}, #{record.tmpBal,jdbcType=DECIMAL},
+		#{record.minBal,jdbcType=DECIMAL}, #{record.balDir,jdbcType=VARCHAR},
+		#{record.txnDir,jdbcType=INTEGER},
+		#{record.openDate,jdbcType=DATE},
+		#{record.closeDate,jdbcType=DATE}, #{record.status,jdbcType=INTEGER},
+		#{record.delFlag,jdbcType=INTEGER},
+		#{record.filler1,jdbcType=VARCHAR},
+		#{record.filler2,jdbcType=VARCHAR},
+		#{record.filler3,jdbcType=VARCHAR},
+		#{record.version,jdbcType=INTEGER},
+		#{record.iacMac,jdbcType=LONGVARCHAR},
+		#{record.mchId,jdbcType=VARCHAR},
+		#{record.orgId,jdbcType=VARCHAR},
+		#{record.accDepositType,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_iac ( <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.iacId, jdbcType=BIGINT} ,
+        	#{item.cur, jdbcType=VARCHAR} ,
+        	#{item.upItemId, jdbcType=VARCHAR} ,
+        	#{item.iacType, jdbcType=BIT} ,
+        	#{item.lstBal, jdbcType=DECIMAL} ,
+        	#{item.curBal, jdbcType=DECIMAL} ,
+        	#{item.tmpBal, jdbcType=DECIMAL} ,
+        	#{item.minBal, jdbcType=DECIMAL} ,
+        	#{item.balDir, jdbcType=VARCHAR} ,
+        	#{item.txnDir, jdbcType=BIT} ,
+        	#{item.openDate, jdbcType=DATE} ,
+        	#{item.closeDate, jdbcType=DATE} ,
+        	#{item.status, jdbcType=BIT} ,
+        	#{item.iacMac, jdbcType=VARCHAR} ,
+        	#{item.delFlag, jdbcType=BIT} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} ,
+        	#{item.owner, jdbcType=VARCHAR} ,
+        	#{item.ownerGroup, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.mchId, jdbcType=BIGINT} ,
+        	#{item.orgId, jdbcType=BIGINT} ,
+        	#{item.accDepositType, jdbcType=CHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_iac SET
+	        version = #{version, jdbcType=INTEGER} ,
+	        iac_id = #{iacId, jdbcType=BIGINT} ,
+	        cur = #{cur, jdbcType=VARCHAR} ,
+	        up_item_id = #{upItemId, jdbcType=VARCHAR} ,
+	        iac_type = #{iacType, jdbcType=BIT} ,
+	        lst_bal = #{lstBal, jdbcType=DECIMAL} ,
+	        cur_bal = #{curBal, jdbcType=DECIMAL} ,
+	        tmp_bal = #{tmpBal, jdbcType=DECIMAL} ,
+	        min_bal = #{minBal, jdbcType=DECIMAL} ,
+	        bal_dir = #{balDir, jdbcType=VARCHAR} ,
+	        txn_dir = #{txnDir, jdbcType=BIT} ,
+	        open_date = #{openDate, jdbcType=DATE} ,
+	        close_date = #{closeDate, jdbcType=DATE} ,
+	        status = #{status, jdbcType=BIT} ,
+	        iac_mac = #{iacMac, jdbcType=VARCHAR} ,
+	        del_flag = #{delFlag, jdbcType=BIT} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} ,
+	        owner = #{owner, jdbcType=VARCHAR} ,
+	        owner_group = #{ownerGroup, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        mch_id = #{mchId, jdbcType=BIGINT} ,
+	        org_id = #{orgId, jdbcType=BIGINT} ,
+	        acc_deposit_type = #{accDepositType, jdbcType=CHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_iac WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="ResultMapWithBLOBs">
+	    SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />
+	    <![CDATA[
+	        FROM acc_iac 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=upItemId and ''!=upItemId ">
+	   			 		AND up_item_id = #{upItemId}
+	   			   	</if>
+			       	<if test="null!=balDir and ''!=balDir ">
+	   			 		AND bal_dir = #{balDir}
+	   			   	</if>
+			       	<if test="null!=iacMac and ''!=iacMac ">
+	   			 		AND iac_mac = #{iacMac}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+			       	<if test="null!=owner and ''!=owner ">
+	   			 		AND owner = #{owner}
+	   			   	</if>
+			       	<if test="null!=ownerGroup and ''!=ownerGroup ">
+	   			 		AND owner_group = #{ownerGroup}
+	   			   	</if>
+			       	<if test="null!=accDepositType and ''!=accDepositType ">
+	   			 		AND acc_deposit_type = #{accDepositType}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=upItemId and ''!=upItemId">
+				    <!-- 	AND up_item_id LIKE '%'||#{upItemId}||'%' oracle -->
+			   			AND up_item_id LIKE concat('%',#{upItemId},'%')
+			   			
+			   		</if>
+				    <if test="null!=balDir and ''!=balDir">
+				    <!-- 	AND bal_dir LIKE '%'||#{balDir}||'%' oracle -->
+			   			AND bal_dir LIKE concat('%',#{balDir},'%')
+			   			
+			   		</if>
+				    <if test="null!=iacMac and ''!=iacMac">
+				    <!-- 	AND iac_mac LIKE '%'||#{iacMac}||'%' oracle -->
+			   			AND iac_mac LIKE concat('%',#{iacMac},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+				    <if test="null!=owner and ''!=owner">
+				    <!-- 	AND owner LIKE '%'||#{owner}||'%' oracle -->
+			   			AND owner LIKE concat('%',#{owner},'%')
+			   			
+			   		</if>
+				    <if test="null!=ownerGroup and ''!=ownerGroup">
+				    <!-- 	AND owner_group LIKE '%'||#{ownerGroup}||'%' oracle -->
+			   			AND owner_group LIKE concat('%',#{ownerGroup},'%')
+			   			
+			   		</if>
+				    <if test="null!=accDepositType and ''!=accDepositType">
+				    <!-- 	AND acc_deposit_type LIKE '%'||#{accDepositType}||'%' oracle -->
+			   			AND acc_deposit_type LIKE concat('%',#{accDepositType},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=iacId and ''!=iacId">
+			    AND iac_id = #{iacId}
+			</if>
+		   	<if test="null!=iacType and ''!=iacType">
+			    AND iac_type = #{iacType}
+			</if>
+		   	<if test="null!=lstBal and ''!=lstBal">
+			    AND lst_bal = #{lstBal}
+			</if>
+		   	<if test="null!=curBal and ''!=curBal">
+			    AND cur_bal = #{curBal}
+			</if>
+		   	<if test="null!=tmpBal and ''!=tmpBal">
+			    AND tmp_bal = #{tmpBal}
+			</if>
+		   	<if test="null!=minBal and ''!=minBal">
+			    AND min_bal = #{minBal}
+			</if>
+		   	<if test="null!=txnDir and ''!=txnDir">
+			    AND txn_dir = #{txnDir}
+			</if>
+		   	<if test="null!=openDateBegin and ''!=openDateBegin">
+		   		AND open_date >= #{openDateBegin}
+		   	</if>
+		   	<if test="null!=openDateEnd and ''!=openDateEnd">
+		   		AND open_date &lt; #{openDateEnd}
+		   	</if>
+		   	<if test="null!=closeDateBegin and ''!=closeDateBegin">
+		   		AND close_date >= #{closeDateBegin}
+		   	</if>
+		   	<if test="null!=closeDateEnd and ''!=closeDateEnd">
+		   		AND close_date &lt; #{closeDateEnd}
+		   	</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=orgId and ''!=orgId">
+			    AND org_id = #{orgId}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_iac <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="ResultMapWithBLOBs">
+    	SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" /> FROM acc_iac 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+    <select id="getByIacId" resultMap="ResultMapWithBLOBs" >
+	    SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />
+	    <![CDATA[
+	        FROM acc_iac WHERE iac_id = #iacId#
+	    ]]>
+    </select>
+	<select id="find" resultMap="ResultMapWithBLOBs">
+	    SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" /> FROM acc_iac 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+	<!-- 基础方法End -->
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_iac
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		acc_iac
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.yinker.user.core.po.AccIac">
+		insert into acc_iac
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="owner != null">
+				owner,
+			</if>
+			<if test="ownerGroup != null">
+				owner_group,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="iacId != null">
+				iac_id,
+			</if>
+			<if test="cur != null">
+				cur,
+			</if>
+			<if test="upItemId != null">
+				up_item_id,
+			</if>
+			<if test="iacType != null">
+				iac_type,
+			</if>
+			<if test="lstBal != null">
+				lst_bal,
+			</if>
+			<if test="curBal != null">
+				cur_bal,
+			</if>
+			<if test="tmpBal != null">
+				tmp_bal,
+			</if>
+			<if test="minBal != null">
+				min_bal,
+			</if>
+			<if test="balDir != null">
+				bal_dir,
+			</if>
+			<if test="txnDir != null">
+				txn_dir,
+			</if>
+			<if test="openDate != null">
+				open_date,
+			</if>
+			<if test="closeDate != null">
+				close_date,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="iacMac != null">
+				iac_mac,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="mchId != null">
+				mch_id,
+			</if>
+			<if test="accDepositType != null">
+				acc_deposit_type
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="owner != null">
+				#{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				#{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iacId != null">
+				#{iacId,jdbcType=BIGINT},
+			</if>
+			<if test="cur != null">
+				#{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="upItemId != null">
+				#{upItemId,jdbcType=VARCHAR},
+			</if>
+			<if test="iacType != null">
+				#{iacType,jdbcType=INTEGER},
+			</if>
+			<if test="lstBal != null">
+				#{lstBal,jdbcType=DECIMAL},
+			</if>
+			<if test="curBal != null">
+				#{curBal,jdbcType=DECIMAL},
+			</if>
+			<if test="tmpBal != null">
+				#{tmpBal,jdbcType=DECIMAL},
+			</if>
+			<if test="minBal != null">
+				#{minBal,jdbcType=DECIMAL},
+			</if>
+			<if test="balDir != null">
+				#{balDir,jdbcType=VARCHAR},
+			</if>
+			<if test="txnDir != null">
+				#{txnDir,jdbcType=INTEGER},
+			</if>
+			<if test="openDate != null">
+				#{openDate,jdbcType=DATE},
+			</if>
+			<if test="closeDate != null">
+				#{closeDate,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="iacMac != null">
+				#{iacMac,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				#{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="accDepositType != null">
+				#{accDepositType,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yinker.user.core.po.AccIac">
+		update acc_iac
+		<set>
+			<if test="owner != null">
+				owner = #{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				owner_group = #{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iacId != null">
+				iac_id = #{iacId,jdbcType=BIGINT},
+			</if>
+			<if test="cur != null">
+				cur = #{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="upItemId != null">
+				up_item_id = #{upItemId,jdbcType=VARCHAR},
+			</if>
+			<if test="iacType != null">
+				iac_type = #{iacType,jdbcType=INTEGER},
+			</if>
+			<if test="lstBal != null">
+				lst_bal = #{lstBal,jdbcType=DECIMAL},
+			</if>
+			<if test="curBal != null">
+				cur_bal = #{curBal,jdbcType=DECIMAL},
+			</if>
+			<if test="tmpBal != null">
+				tmp_bal = #{tmpBal,jdbcType=DECIMAL},
+			</if>
+			<if test="minBal != null">
+				min_bal = #{minBal,jdbcType=DECIMAL},
+			</if>
+			<if test="balDir != null">
+				bal_dir = #{balDir,jdbcType=VARCHAR},
+			</if>
+			<if test="txnDir != null">
+				txn_dir = #{txnDir,jdbcType=INTEGER},
+			</if>
+			<if test="openDate != null">
+				open_date = #{openDate,jdbcType=DATE},
+			</if>
+			<if test="closeDate != null">
+				close_date = #{closeDate,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="iacMac != null">
+				iac_mac = #{iacMac,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				mch_id = #{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="accDepositType != null">
+				acc_deposit_type = #{accDepositType,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yinker.user.core.po.AccIac">
+		update acc_iac
+		set owner = #{owner,jdbcType=VARCHAR},
+		owner_group
+		=
+		#{ownerGroup,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		iac_id =
+		#{iacId,jdbcType=BIGINT},
+		cur
+		= #{cur,jdbcType=VARCHAR},
+		up_item_id = #{upItemId,jdbcType=VARCHAR},
+		iac_type =
+		#{iacType,jdbcType=INTEGER},
+		lst_bal =
+		#{lstBal,jdbcType=DECIMAL},
+		cur_bal = #{curBal,jdbcType=DECIMAL},
+		tmp_bal = #{tmpBal,jdbcType=DECIMAL},
+		min_bal =
+		#{minBal,jdbcType=DECIMAL},
+		bal_dir = #{balDir,jdbcType=VARCHAR},
+		txn_dir = #{txnDir,jdbcType=INTEGER},
+		open_date =
+		#{openDate,jdbcType=DATE},
+		close_date =
+		#{closeDate,jdbcType=DATE},
+		status = #{status,jdbcType=INTEGER},
+		del_flag =
+		#{delFlag,jdbcType=INTEGER},
+		filler1 =
+		#{filler1,jdbcType=VARCHAR},
+		filler2 =
+		#{filler2,jdbcType=VARCHAR},
+		filler3 =
+		#{filler3,jdbcType=VARCHAR},
+		iac_mac =
+		#{iacMac,jdbcType=LONGVARCHAR},
+		org_id =
+		#{orgId,jdbcType=VARCHAR},
+		mch_id =
+		#{mchId,jdbcType=VARCHAR},
+		acc_deposit_type = #{accDepositType,jdbcType=VARCHAR},
+		version =
+		#{version,jdbcType=INTEGER} + 1,
+		<choose>
+			<when test="lastUpdateTime != null and lastUpdateTime !=''">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP}
+			</when>
+			<otherwise>
+				last_update_time = NOW()
+			</otherwise>
+		</choose>
+		where id = #{id,jdbcType=BIGINT} and
+		version =
+		#{version,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yinker.user.core.po.AccIac">
+		update acc_iac
+		set owner = #{owner,jdbcType=VARCHAR},
+		owner_group =
+		#{ownerGroup,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		iac_id =
+		#{iacId,jdbcType=BIGINT},
+		cur
+		= #{cur,jdbcType=VARCHAR},
+		up_item_id = #{upItemId,jdbcType=VARCHAR},
+		iac_type =
+		#{iacType,jdbcType=INTEGER},
+		lst_bal =
+		#{lstBal,jdbcType=DECIMAL},
+		cur_bal = #{curBal,jdbcType=DECIMAL},
+		tmp_bal = #{tmpBal,jdbcType=DECIMAL},
+		min_bal =
+		#{minBal,jdbcType=DECIMAL},
+		bal_dir = #{balDir,jdbcType=VARCHAR},
+		txn_dir = #{txnDir,jdbcType=INTEGER},
+		open_date =
+		#{openDate,jdbcType=DATE},
+		close_date =
+		#{closeDate,jdbcType=DATE},
+		status = #{status,jdbcType=INTEGER},
+		del_flag =
+		#{delFlag,jdbcType=INTEGER},
+		filler1 =
+		#{filler1,jdbcType=VARCHAR},
+		filler2 =
+		#{filler2,jdbcType=VARCHAR},
+		filler3 =
+		#{filler3,jdbcType=VARCHAR},
+		org_id =
+		#{orgId,jdbcType=VARCHAR},
+		mch_id =
+		#{mchId,jdbcType=VARCHAR},
+		version =
+		#{version,jdbcType=INTEGER} + 1,
+		<choose>
+			<when test="lastUpdateTime != null and lastUpdateTime !=''">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP}
+			</when>
+			<otherwise>
+				last_update_time = NOW()
+			</otherwise>
+		</choose>
+		where id = #{id,jdbcType=BIGINT} and
+		version =
+		#{version,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="forUpdatePrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_iac where id = #{id,jdbcType=BIGINT} for update
+	</select>
+
+	<!-- 根据内部账户号查询内部账户信息 -->
+	<select id="selectAccIacByIacId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_iac where iac_id=#{iacId,jdbcType=BIGINT}
+		and del_flag = '0'
+	</select>
+	<!-- 根据内部账户号查询内部账户信息(包含MAC数据) -->
+	<select id="selectAccIacByIacIdWithBLOBs" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_iac where iac_id=#{iacId,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectAccOrgIacByOrgIdAndCurAndUpItemId" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_iac
+		<where>
+			1=1
+			<if test="orgId != null and orgId != ''">
+				and org_id=#{orgId,jdbcType=VARCHAR}
+			</if>
+			and cur=#{cur,jdbcType=VARCHAR}
+			and up_item_id=#{upItemId,jdbcType=VARCHAR}
+			and status = 1
+			and del_flag =
+			0
+		</where>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="findPageListTnsIac" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM tns_ace
+				<include refid="dynamicPageWhere" />
+				<include refid="createDateWhere" />
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+
+	<sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from tns_ace
+		<include refid="dynamicPageWhere" />
+		<include refid="createDateWhere" />
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+	<sql id="baseDynamicQuery1">
+		select
+		<include refid="Base_Column_List" />
+		from acc_iac
+		<include refid="dynamicPageWhere" />
+		<include refid="createDateWhere" />
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+	<!-- 分页查询记录总记录数 -->
+	<select id="findListPageCount" resultType="int">
+		SELECT
+		count(1)
+		FROM tns_ace
+		<include refid="dynamicPageWhere" />
+		<include refid="createDateWhere" />
+	</select>
+
+
+	<sql id="dynamicPageWhere">
+		<where>
+			1=1
+			<if test="accIacVO.owner != null and accIacVO.owner != ''">
+				and owner = #{accIacVO.owner,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.ownerGroup != null and accIacVO.ownerGroup != ''">
+				and owner_group = #{accIacVO.ownerGroup,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.createTime != null and accIacVO.createTime != ''">
+				and create_time =
+				#{accIacVO.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="accIacVO.lastUpdateTime != null and accIacVO.lastUpdateTime != ''">
+				and last_update_time =
+				#{accIacVO.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="accIacVO.iacId != null and accIacVO.iacId != ''">
+				and iac_id = #{accIacVO.iacId,jdbcType=BIGINT}
+			</if>
+			<if test="accIacVO.cur != null and accIacVO.cur != ''">
+				and cur = #{accIacVO.cur,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.upItemId != null and accIacVO.upItemId != ''">
+				and up_item_id = #{accIacVO.upItemId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.iacType != null and accIacVO.iacType != ''">
+				and iac_type = #{accIacVO.iacType,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.lstBal != null and accIacVO.lstBal != ''">
+				and lst_bal = #{accIacVO.lstBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.curBal != null and accIacVO.curBal != ''">
+				and cur_bal = #{accIacVO.curBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.tmpBal != null and accIacVO.tmpBal != ''">
+				and tmp_bal = #{accIacVO.tmpBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.minBal != null and accIacVO.minBal != ''">
+				and min_bal = #{accIacVO.minBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.balDir != null and accIacVO.balDir != ''">
+				and bal_dir = #{accIacVO.balDir,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.txnDir != null and accIacVO.txnDir != ''">
+				and txn_dir = #{accIacVO.txnDir,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.openDate != null and accIacVO.openDate != ''">
+				and open_date = #{accIacVO.openDate,jdbcType=DATE}
+			</if>
+			<if test="accIacVO.closeDate != null and accIacVO.closeDate != ''">
+				and close_date = #{accIacVO.closeDate,jdbcType=DATE}
+			</if>
+			<if test="accIacVO.status != null and accIacVO.status != ''">
+				and status = #{accIacVO.status,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.delFlag != null and accIacVO.delFlag != ''">
+				and del_flag = #{accIacVO.delFlag,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.filler1 != null and accIacVO.filler1 != ''">
+				and filler1 = #{accIacVO.filler1,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.filler2 != null and accIacVO.filler2 != ''">
+				and filler2 = #{accIacVO.filler2,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.filler3 != null and accIacVO.filler3 != ''">
+				and filler3 = #{accIacVO.filler3,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.version != null and accIacVO.version != ''">
+				and version = #{accIacVO.version,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.orgId != null and accIacVO.orgId != ''">
+				and org_id = #{accIacVO.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.mchId != null and accIacVO.mchId != ''">
+				and mch_id = #{accIacVO.mchId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.accDepositType != null">
+				and acc_deposit_type =
+				#{accIacVO.accDepositType,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<!-- 交易时间查询 -->
+	<!-- vo中日期段定义的是string类型与创建时间类型不一致！！！！！带测试 -->
+	<sql id="createDateWhere">
+		<if test="accIacVO.begDate !=null and accIacVO.begDate !=''">
+			<![CDATA[ and create_time >= #{accIacVO.begDate, jdbcType=VARCHAR}]]>
+		</if>
+		<if test="accIacVO.endDate !=null and accIacVO.endDate !=''">
+			<![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{accIacVO.endDate, jdbcType=VARCHAR}]]>
+		</if>
+	</sql>
+
+	<sql id="dynamicAccIacWhere">
+		<where>
+			1=1
+			<if test="accIacVO.openDateStart !=null and accIacVO.openDateStart !=''">
+			<![CDATA[ and open_date >= #{accIacVO.openDateStart, jdbcType=VARCHAR}]]>
+			</if>
+			<if test="accIacVO.openDateEnd !=null and accIacVO.openDateEnd !=''">
+			<![CDATA[ and DATE_FORMAT(open_date,'%Y-%m-%d') <= #{accIacVO.openDateEnd, jdbcType=VARCHAR}]]>
+			</if>
+			<if test="accIacVO.owner != null and accIacVO.owner != ''">
+				and acc_iac_a.owner = #{accIacVO.owner,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.ownerGroup != null and accIacVO.ownerGroup != ''">
+				and acc_iac_a.owner_group =
+				#{accIacVO.ownerGroup,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.createTime != null and accIacVO.createTime != ''">
+				and acc_iac_a.create_time =
+				#{accIacVO.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="accIacVO.lastUpdateTime != null and accIacVO.lastUpdateTime != ''">
+				and acc_iac_a.last_update_time =
+				#{accIacVO.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="accIacVO.iacId != null and accIacVO.iacId != ''">
+				and acc_iac_a.iac_id = #{accIacVO.iacId,jdbcType=BIGINT}
+			</if>
+			<if test="accIacVO.cur != null and accIacVO.cur != ''">
+				and acc_iac_a.cur = #{accIacVO.cur,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.upItemId != null and accIacVO.upItemId != ''">
+				and acc_iac_a.up_item_id =
+				#{accIacVO.upItemId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.iacType != null and accIacVO.iacType != ''">
+				and acc_iac_a.iac_type =
+				#{accIacVO.iacType,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.lstBal != null and accIacVO.lstBal != ''">
+				and acc_iac_a.lst_bal =
+				#{accIacVO.lstBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.curBal != null and accIacVO.curBal != ''">
+				and acc_iac_a.cur_bal =
+				#{accIacVO.curBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.tmpBal != null and accIacVO.tmpBal != ''">
+				and acc_iac_a.tmp_bal =
+				#{accIacVO.tmpBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.minBal != null and accIacVO.minBal != ''">
+				and acc_iac_a.min_bal =
+				#{accIacVO.minBal,jdbcType=DECIMAL}
+			</if>
+			<if test="accIacVO.balDir != null and accIacVO.balDir != ''">
+				and acc_iac_a.bal_dir =
+				#{accIacVO.balDir,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.txnDir != null and accIacVO.txnDir != ''">
+				and acc_iac_a.txn_dir =
+				#{accIacVO.txnDir,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.openDate != null and accIacVO.openDate != ''">
+				and acc_iac_a.open_date =
+				#{accIacVO.openDate,jdbcType=DATE}
+			</if>
+			<if test="accIacVO.closeDate != null and accIacVO.closeDate != ''">
+				and acc_iac_a.close_date =
+				#{accIacVO.closeDate,jdbcType=DATE}
+			</if>
+			<if test="accIacVO.status != null and accIacVO.status != ''">
+				and acc_iac_a.status =
+				#{accIacVO.status,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.delFlag != null and accIacVO.delFlag != ''">
+				and acc_iac_a.del_flag =
+				#{accIacVO.delFlag,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.filler1 != null and accIacVO.filler1 != ''">
+				and acc_iac_a.filler1 =
+				#{accIacVO.filler1,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.filler2 != null and accIacVO.filler2 != ''">
+				and acc_iac_a.filler2 =
+				#{accIacVO.filler2,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.filler3 != null and accIacVO.filler3 != ''">
+				and acc_iac_a.filler3 =
+				#{accIacVO.filler3,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.version != null and accIacVO.version != ''">
+				and acc_iac_a.version =
+				#{accIacVO.version,jdbcType=INTEGER}
+			</if>
+			<if test="accIacVO.orgId != null and accIacVO.orgId != ''">
+				and acc_iac_a.org_id = #{accIacVO.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.mchId != null and accIacVO.mchId != ''">
+				and acc_iac_a.mch_id = #{accIacVO.mchId,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.orgName != null and accIacVO.orgName != ''">
+				and acc_iac_a.org_name =
+				#{accIacVO.orgName,jdbcType=VARCHAR}
+			</if>
+			<if test="accIacVO.orgSname != null and accIacVO.orgSname != ''">
+				and acc_iac_a.org_sname =
+				#{accIacVO.orgSname,jdbcType=VARCHAR}
+			</if>
+
+			<if test="accIacVO.itemName != null and accIacVO.itemName != ''">
+				and acc_iac_a.item_name =
+				#{accIacVO.itemName,jdbcType=VARCHAR}
+			</if>
+
+			<if test="accIacVO.accOrgId != null and accIacVO.accOrgId != ''">
+				and acc_iac_a.accorgid =
+				#{accIacVO.accOrgId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="accIacVO.accDepositType != null">
+				and acc_iac_a.acc_deposit_type =
+				#{accIacVO.accDepositType,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<sql id="accIacJoinOrg">
+		(select acc_iac.*,acc_org.org_name,acc_org.id as
+		accorgid,acc_org.org_sname,acc_item.item_name from acc_iac
+		LEFT JOIN
+		acc_org ON acc_iac.org_id=acc_org.org_id
+		LEFT JOIN acc_item on
+		acc_iac.up_item_id=acc_item.item_id) acc_iac_a
+	</sql>
+	<!-- 分页查询记录总记录数 -->
+	<select id="findPageListCount" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		<include refid="accIacJoinOrg"></include>
+		<include refid="dynamicAccIacWhere" />
+		<include refid="createDateWhere" />
+	</select>
+	<!-- 分页查询 -->
+	<select id="findPageList" resultMap="BaseResultMapExt">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery1" />
+			</when>
+			<otherwise>
+				SELECT
+				acc_iac_a.org_sname,acc_iac_a.org_name,acc_iac_a.item_name,
+				acc_iac_a.id, acc_iac_a.owner, acc_iac_a.owner_group,
+				acc_iac_a.create_time, acc_iac_a.last_update_time, acc_iac_a.iac_id,
+				acc_iac_a.cur, acc_iac_a.up_item_id, acc_iac_a.iac_type,
+				acc_iac_a.lst_bal, acc_iac_a.cur_bal, acc_iac_a.tmp_bal,
+				acc_iac_a.min_bal,
+				acc_iac_a.bal_dir, acc_iac_a.txn_dir,
+				acc_iac_a.open_date, acc_iac_a.close_date,
+				acc_iac_a.status,
+				acc_iac_a.del_flag, acc_iac_a.filler1, acc_iac_a.filler2,
+				acc_iac_a.filler3,
+				acc_iac_a.version,org_id,acc_iac_a.mch_id
+				FROM
+				<include refid="accIacJoinOrg"></include>
+				<include refid="dynamicAccIacWhere" />
+				<include refid="createDateWhere" />
+				<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+					order by create_time desc
+				</if>
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy}
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

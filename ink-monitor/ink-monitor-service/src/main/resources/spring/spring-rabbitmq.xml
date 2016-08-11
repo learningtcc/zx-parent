@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xmlns:ykrabbit="http://www.yinker.com/schema/ykrabbit"  
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   			http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+       			http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+       http://www.yinker.com/schema/ykrabbit
+                http://www.yinker.com/schema/ykrabbit/yinker-rabbit-1.0.xsd">
+
+	<bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+		<property name="host" value="${rabbitmq.host}" />
+		<property name="port" value="${rabbitmq.port}" />
+	</bean>
+
+	<rabbit:admin connection-factory="connectionFactory" />
+	<ykrabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+
+    <!-- 错误日志队列，用于对ERROR信息进行计数 -->
+	<rabbit:direct-exchange name="monitor.errorLog.exchange" durable="true" auto-delete="false" id="monitor.errorLog.exchange">
+		<rabbit:bindings>
+			<rabbit:binding queue="monitor.errorLog.queue" key="monitor.errorLog.key"/>
+			<rabbit:binding queue="monitor.warn.queue" key="monitor.warn.key"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	
+	<rabbit:direct-exchange name="monitor.mq.exchange" durable="true" auto-delete="false">
+		<rabbit:bindings>
+			<rabbit:binding queue="monitor.mq.exception.queue" key="monitor.mq.exception.key"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	
+	<rabbit:queue name="monitor.mq.exception.queue" durable="true" auto-delete="false" exclusive="false"/>
+	
+    <!-- Error日志队列 -->
+    <rabbit:queue name="monitor.errorLog.queue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 预警策略处理队列 -->
+    <rabbit:queue name="monitor.warn.queue" durable="true" auto-delete="false" exclusive="false"/>
+    
+    <!-- 日志监听器 -->
+    <bean id="logProcessListener" class="com.ink.monitor.mq.listener.LogProcessListener"/>
+	<!--mq异常监听-->
+	<bean id="mqLogExceptionListener" class="com.ink.monitor.mq.listener.MqLogExceptionListener"/>
+    
+    <ykrabbit:listener-container connection-factory="connectionFactory" concurrency="8">
+        <ykrabbit:listener queues="monitor.errorLog.queue" ref="logProcessListener" method="handleErrorCount" response-exchange="monitor.errorLog.exchange" response-routing-key="monitor.warn.key"/>
+    </ykrabbit:listener-container>
+    <ykrabbit:listener-container connection-factory="connectionFactory" concurrency="2">
+        <ykrabbit:listener queues="monitor.warn.queue" ref="logProcessListener" method="handleWarnError"/>
+    </ykrabbit:listener-container>
+
+	<ykrabbit:listener-container connection-factory="connectionFactory" concurrency="2">
+		<ykrabbit:listener queues="monitor.mq.exception.queue" ref="mqLogExceptionListener" method="execute"/>
+	</ykrabbit:listener-container>
+    
+    <bean id="exceptionMessageRecoverer" class="com.ink.base.log.rabbit.retry.ExceptionMessageRecoverer">
+		<property name="amqpTemplate" ref="amqpTemplate"/>
+		<property name="customizedPropertyConfigurer" ref="customizedPropertyConfigurer"/>
+	</bean>
+    
+    <bean id="retryInterceptor" class="org.springframework.amqp.rabbit.config.StatefulRetryOperationsInterceptorFactoryBean">
+		<property name="retryOperations" ref="retryTemplate" />
+		<property name="messageRecoverer" ref="exceptionMessageRecoverer"/>
+	</bean>
+	
+	<bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
+		<property name="backOffPolicy">
+			<bean class="org.springframework.retry.backoff.ExponentialBackOffPolicy">
+				<property name="initialInterval" value="5000" />
+				<property name="maxInterval" value="120000" />
+				<property name="multiplier" value="2" />
+			</bean>		
+		</property>
+		<property name="retryPolicy">
+			<bean class="org.springframework.retry.policy.SimpleRetryPolicy">
+				<property name="maxAttempts" value="3" />
+			</bean>		
+		</property>
+	</bean>
+    
+</beans>

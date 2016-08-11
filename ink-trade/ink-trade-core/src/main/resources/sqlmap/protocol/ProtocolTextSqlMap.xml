@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProtocolText">
+
+    <resultMap id="ProtocolText" type="com.ink.protocol.core.po.ProtocolText">
+        <result property="id" column="id"/>
+        <result property="agreeProtocolName" column="agree_protocol_name"/>
+        <result property="agreeProtocolNum" column="agree_protocol_num"/>
+        <result property="agreeProtocolType" column="agree_protocol_type"/>
+        <result property="agreeProtocolContent" column="agree_protocol_content"/>
+        <result property="agreeProtocolTypeNum" column="agree_protocol_type_num"/>
+        <result property="protocolStartTime" column="protocol_start_time"/>
+        <result property="protocolEndTime" column="protocol_end_time"/>
+        <result property="agreeProtocolStatus" column="agree_protocol_status"/>
+        <result property="auditerName" column="auditer_name"/>
+        <result property="auditerId" column="auditer_id"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="auditOpinion" column="audit_opinion"/>
+        <result property="asuitStatus" column="asuit_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createrId" column="creater_id"/>
+        <result property="createrName" column="creater_name"/>
+        <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,agree_protocol_name ,agree_protocol_num ,agree_protocol_type ,agree_protocol_content ,agree_protocol_type_num ,protocol_start_time ,protocol_end_time ,agree_protocol_status ,auditer_name ,auditer_id ,audit_time ,audit_opinion ,asuit_status ,remark ,create_time ,creater_id ,creater_name ,is_delete 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO protocol_text (
+	        id  ,
+	        agree_protocol_name  ,
+	        agree_protocol_num  ,
+	        agree_protocol_type  ,
+	        agree_protocol_content  ,
+	        agree_protocol_type_num  ,
+	        protocol_start_time  ,
+	        protocol_end_time  ,
+	        agree_protocol_status  ,
+	        auditer_name  ,
+	        auditer_id  ,
+	        audit_time  ,
+	        audit_opinion  ,
+	        asuit_status  ,
+	        remark  ,
+	        create_time  ,
+	        creater_id  ,
+	        creater_name  ,
+	        is_delete  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{agreeProtocolName, jdbcType=VARCHAR} ,
+        	#{agreeProtocolNum, jdbcType=VARCHAR} ,
+        	#{agreeProtocolType, jdbcType=TINYINT} ,
+        	#{agreeProtocolContent, jdbcType=VARCHAR} ,
+        	#{agreeProtocolTypeNum, jdbcType=VARCHAR} ,
+        	#{protocolStartTime, jdbcType=TIMESTAMP} ,
+        	#{protocolEndTime, jdbcType=TIMESTAMP} ,
+        	#{agreeProtocolStatus, jdbcType=CHAR} ,
+        	#{auditerName, jdbcType=VARCHAR} ,
+        	#{auditerId, jdbcType=BIGINT} ,
+        	#{auditTime, jdbcType=TIMESTAMP} ,
+        	#{auditOpinion, jdbcType=VARCHAR} ,
+        	#{asuitStatus, jdbcType=CHAR} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{createrId, jdbcType=BIGINT} ,
+        	#{createrName, jdbcType=VARCHAR} ,
+        	#{isDelete, jdbcType=CHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO protocol_text ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.agreeProtocolName, jdbcType=VARCHAR} ,
+        	#{item.agreeProtocolNum, jdbcType=VARCHAR} ,
+        	#{item.agreeProtocolType, jdbcType=TINYINT} ,
+        	#{item.agreeProtocolContent, jdbcType=VARCHAR} ,
+        	#{item.agreeProtocolTypeNum, jdbcType=VARCHAR} ,
+        	#{item.protocolStartTime, jdbcType=TIMESTAMP} ,
+        	#{item.protocolEndTime, jdbcType=TIMESTAMP} ,
+        	#{item.agreeProtocolStatus, jdbcType=CHAR} ,
+        	#{item.auditerName, jdbcType=VARCHAR} ,
+        	#{item.auditerId, jdbcType=BIGINT} ,
+        	#{item.auditTime, jdbcType=TIMESTAMP} ,
+        	#{item.auditOpinion, jdbcType=VARCHAR} ,
+        	#{item.asuitStatus, jdbcType=CHAR} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.createrId, jdbcType=BIGINT} ,
+        	#{item.createrName, jdbcType=VARCHAR} ,
+        	#{item.isDelete, jdbcType=CHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE protocol_text SET
+	        agree_protocol_name = #{agreeProtocolName, jdbcType=VARCHAR} ,
+	        agree_protocol_num = #{agreeProtocolNum, jdbcType=VARCHAR} ,
+	        agree_protocol_type = #{agreeProtocolType, jdbcType=TINYINT} ,
+	        agree_protocol_content = #{agreeProtocolContent, jdbcType=VARCHAR} ,
+	        agree_protocol_type_num = #{agreeProtocolTypeNum, jdbcType=VARCHAR} ,
+	        protocol_start_time = #{protocolStartTime, jdbcType=TIMESTAMP} ,
+	        protocol_end_time = #{protocolEndTime, jdbcType=TIMESTAMP} ,
+	        agree_protocol_status = #{agreeProtocolStatus, jdbcType=CHAR} ,
+	        auditer_name = #{auditerName, jdbcType=VARCHAR} ,
+	        auditer_id = #{auditerId, jdbcType=BIGINT} ,
+	        audit_time = #{auditTime, jdbcType=TIMESTAMP} ,
+	        audit_opinion = #{auditOpinion, jdbcType=VARCHAR} ,
+	        asuit_status = #{asuitStatus, jdbcType=CHAR} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        creater_id = #{createrId, jdbcType=BIGINT} ,
+	        creater_name = #{createrName, jdbcType=VARCHAR} ,
+	        is_delete = #{isDelete, jdbcType=CHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM protocol_text WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="ProtocolText">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM protocol_text 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=agreeProtocolName and ''!=agreeProtocolName ">
+	   			 		AND agree_protocol_name = #{agreeProtocolName}
+	   			   	</if>
+			       	<if test="null!=agreeProtocolNum and ''!=agreeProtocolNum ">
+	   			 		AND agree_protocol_num = #{agreeProtocolNum}
+	   			   	</if>
+			       	<if test="null!=agreeProtocolContent and ''!=agreeProtocolContent ">
+	   			 		AND agree_protocol_content = #{agreeProtocolContent}
+	   			   	</if>
+			       	<if test="null!=agreeProtocolTypeNum and ''!=agreeProtocolTypeNum ">
+	   			 		AND agree_protocol_type_num = #{agreeProtocolTypeNum}
+	   			   	</if>
+			       	<if test="null!=agreeProtocolStatus and ''!=agreeProtocolStatus ">
+	   			 		AND agree_protocol_status = #{agreeProtocolStatus}
+	   			   	</if>
+			       	<if test="null!=auditerName and ''!=auditerName ">
+	   			 		AND auditer_name = #{auditerName}
+	   			   	</if>
+			       	<if test="null!=auditOpinion and ''!=auditOpinion ">
+	   			 		AND audit_opinion = #{auditOpinion}
+	   			   	</if>
+			       	<if test="null!=asuitStatus and ''!=asuitStatus ">
+	   			 		AND asuit_status = #{asuitStatus}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=createrName and ''!=createrName ">
+	   			 		AND creater_name = #{createrName}
+	   			   	</if>
+			       	<if test="null!=isDelete and ''!=isDelete ">
+	   			 		AND is_delete = #{isDelete}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=agreeProtocolName and ''!=agreeProtocolName">
+				    <!-- 	AND agree_protocol_name LIKE '%'||#{agreeProtocolName}||'%' oracle -->
+			   			AND agree_protocol_name LIKE concat('%',#{agreeProtocolName},'%')
+			   			
+			   		</if>
+				    <if test="null!=agreeProtocolNum and ''!=agreeProtocolNum">
+				    <!-- 	AND agree_protocol_num LIKE '%'||#{agreeProtocolNum}||'%' oracle -->
+			   			AND agree_protocol_num LIKE concat('%',#{agreeProtocolNum},'%')
+			   			
+			   		</if>
+				    <if test="null!=agreeProtocolContent and ''!=agreeProtocolContent">
+				    <!-- 	AND agree_protocol_content LIKE '%'||#{agreeProtocolContent}||'%' oracle -->
+			   			AND agree_protocol_content LIKE concat('%',#{agreeProtocolContent},'%')
+			   			
+			   		</if>
+				    <if test="null!=agreeProtocolTypeNum and ''!=agreeProtocolTypeNum">
+				    <!-- 	AND agree_protocol_type_num LIKE '%'||#{agreeProtocolTypeNum}||'%' oracle -->
+			   			AND agree_protocol_type_num LIKE concat('%',#{agreeProtocolTypeNum},'%')
+			   			
+			   		</if>
+				    <if test="null!=agreeProtocolStatus and ''!=agreeProtocolStatus">
+				    <!-- 	AND agree_protocol_status LIKE '%'||#{agreeProtocolStatus}||'%' oracle -->
+			   			AND agree_protocol_status LIKE concat('%',#{agreeProtocolStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditerName and ''!=auditerName">
+				    <!-- 	AND auditer_name LIKE '%'||#{auditerName}||'%' oracle -->
+			   			AND auditer_name LIKE concat('%',#{auditerName},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditOpinion and ''!=auditOpinion">
+				    <!-- 	AND audit_opinion LIKE '%'||#{auditOpinion}||'%' oracle -->
+			   			AND audit_opinion LIKE concat('%',#{auditOpinion},'%')
+			   			
+			   		</if>
+				    <if test="null!=asuitStatus and ''!=asuitStatus">
+				    <!-- 	AND asuit_status LIKE '%'||#{asuitStatus}||'%' oracle -->
+			   			AND asuit_status LIKE concat('%',#{asuitStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=createrName and ''!=createrName">
+				    <!-- 	AND creater_name LIKE '%'||#{createrName}||'%' oracle -->
+			   			AND creater_name LIKE concat('%',#{createrName},'%')
+			   			
+			   		</if>
+				    <if test="null!=isDelete and ''!=isDelete">
+				    <!-- 	AND is_delete LIKE '%'||#{isDelete}||'%' oracle -->
+			   			AND is_delete LIKE concat('%',#{isDelete},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=agreeProtocolType and ''!=agreeProtocolType">
+			    AND agree_protocol_type = #{agreeProtocolType}
+			</if>
+		   	<if test="null!=protocolStartTimeBegin and ''!=protocolStartTimeBegin">
+		   		AND protocol_start_time >= #{protocolStartTimeBegin}
+		   	</if>
+		   	<if test="null!=protocolStartTimeEnd and ''!=protocolStartTimeEnd">
+		   		AND protocol_start_time &lt; #{protocolStartTimeEnd}
+		   	</if>
+		   	<if test="null!=protocolEndTimeBegin and ''!=protocolEndTimeBegin">
+		   		AND protocol_end_time >= #{protocolEndTimeBegin}
+		   	</if>
+		   	<if test="null!=protocolEndTimeEnd and ''!=protocolEndTimeEnd">
+		   		AND protocol_end_time &lt; #{protocolEndTimeEnd}
+		   	</if>
+		   	<if test="null!=auditerId and ''!=auditerId">
+			    AND auditer_id = #{auditerId}
+			</if>
+		   	<if test="null!=auditTimeBegin and ''!=auditTimeBegin">
+		   		AND audit_time >= #{auditTimeBegin}
+		   	</if>
+		   	<if test="null!=auditTimeEnd and ''!=auditTimeEnd">
+		   		AND audit_time &lt; #{auditTimeEnd}
+		   	</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=createrId and ''!=createrId">
+			    AND creater_id = #{createrId}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM protocol_text <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="ProtocolText">
+    	SELECT <include refid="columns"/> FROM protocol_text 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="ProtocolText">
+	    SELECT <include refid="columns"/> FROM protocol_text 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

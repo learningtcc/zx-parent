@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccProd" >
+  <resultMap id="BaseResultMap" type="com.ink.user.core.po.AccProd" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="owner_group" property="ownerGroup" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="prod_name" property="prodName" jdbcType="VARCHAR" />
+    <result column="cust_type" property="custType" jdbcType="INTEGER" />
+    <result column="pswd_errlmt_cnt" property="pswdErrlmtCnt" jdbcType="INTEGER" />
+    <result column="pswd_err_lockhours" property="pswdErrLockhours" jdbcType="INTEGER" />
+    <result column="pswd_err_cleanhours" property="pswdErrCleanhours" jdbcType="INTEGER" />
+    <result column="day_inlmt_amt" property="dayInlmtAmt" jdbcType="DECIMAL" />
+    <result column="day_inlmt_cnt" property="dayInlmtCnt" jdbcType="INTEGER" />
+    <result column="day_paylmt_amt" property="dayPaylmtAmt" jdbcType="DECIMAL" />
+    <result column="day_paylmt_cnt" property="dayPaylmtCnt" jdbcType="INTEGER" />
+    <result column="mon_inlmt_amt" property="monInlmtAmt" jdbcType="DECIMAL" />
+    <result column="mon_inlmt_cnt" property="monInlmtCnt" jdbcType="INTEGER" />
+    <result column="mon_paylmt_amt" property="monPaylmtAmt" jdbcType="DECIMAL" />
+    <result column="mon_paylmt_cnt" property="monPaylmtCnt" jdbcType="INTEGER" />
+    <result column="day_nopswdlmt_amt" property="dayNopswdlmtAmt" jdbcType="DECIMAL" />
+    <result column="day_nopswdlmt_cnt" property="dayNopswdlmtCnt" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, owner, owner_group, create_time, last_update_time, prod_id, prod_name, cust_type, 
+    pswd_errlmt_cnt, pswd_err_lockhours, pswd_err_cleanhours, day_inlmt_amt, day_inlmt_cnt, 
+    day_paylmt_amt, day_paylmt_cnt, mon_inlmt_amt, mon_inlmt_cnt, mon_paylmt_amt, mon_paylmt_cnt, 
+    day_nopswdlmt_amt, day_nopswdlmt_cnt, status, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from acc_prod
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from acc_prod
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ink.user.core.po.AccProd" >
+    insert into acc_prod (id, owner, owner_group, 
+      create_time, last_update_time, prod_id, 
+      prod_name, cust_type, pswd_errlmt_cnt, 
+      pswd_err_lockhours, pswd_err_cleanhours, day_inlmt_amt, 
+      day_inlmt_cnt, day_paylmt_amt, day_paylmt_cnt, 
+      mon_inlmt_amt, mon_inlmt_cnt, mon_paylmt_amt, 
+      mon_paylmt_cnt, day_nopswdlmt_amt, day_nopswdlmt_cnt, 
+      status, version)
+    values (#{id,jdbcType=BIGINT}, #{owner,jdbcType=VARCHAR}, #{ownerGroup,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{prodId,jdbcType=VARCHAR}, 
+      #{prodName,jdbcType=VARCHAR}, #{custType,jdbcType=INTEGER}, #{pswdErrlmtCnt,jdbcType=INTEGER}, 
+      #{pswdErrLockhours,jdbcType=INTEGER}, #{pswdErrCleanhours,jdbcType=INTEGER}, #{dayInlmtAmt,jdbcType=DECIMAL}, 
+      #{dayInlmtCnt,jdbcType=INTEGER}, #{dayPaylmtAmt,jdbcType=DECIMAL}, #{dayPaylmtCnt,jdbcType=INTEGER}, 
+      #{monInlmtAmt,jdbcType=DECIMAL}, #{monInlmtCnt,jdbcType=INTEGER}, #{monPaylmtAmt,jdbcType=DECIMAL}, 
+      #{monPaylmtCnt,jdbcType=INTEGER}, #{dayNopswdlmtAmt,jdbcType=DECIMAL}, #{dayNopswdlmtCnt,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ink.user.core.po.AccProd" >
+    insert into acc_prod
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="ownerGroup != null" >
+        owner_group,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="prodName != null" >
+        prod_name,
+      </if>
+      <if test="custType != null" >
+        cust_type,
+      </if>
+      <if test="pswdErrlmtCnt != null" >
+        pswd_errlmt_cnt,
+      </if>
+      <if test="pswdErrLockhours != null" >
+        pswd_err_lockhours,
+      </if>
+      <if test="pswdErrCleanhours != null" >
+        pswd_err_cleanhours,
+      </if>
+      <if test="dayInlmtAmt != null" >
+        day_inlmt_amt,
+      </if>
+      <if test="dayInlmtCnt != null" >
+        day_inlmt_cnt,
+      </if>
+      <if test="dayPaylmtAmt != null" >
+        day_paylmt_amt,
+      </if>
+      <if test="dayPaylmtCnt != null" >
+        day_paylmt_cnt,
+      </if>
+      <if test="monInlmtAmt != null" >
+        mon_inlmt_amt,
+      </if>
+      <if test="monInlmtCnt != null" >
+        mon_inlmt_cnt,
+      </if>
+      <if test="monPaylmtAmt != null" >
+        mon_paylmt_amt,
+      </if>
+      <if test="monPaylmtCnt != null" >
+        mon_paylmt_cnt,
+      </if>
+      <if test="dayNopswdlmtAmt != null" >
+        day_nopswdlmt_amt,
+      </if>
+      <if test="dayNopswdlmtCnt != null" >
+        day_nopswdlmt_cnt,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerGroup != null" >
+        #{ownerGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null" >
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null" >
+        #{custType,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrlmtCnt != null" >
+        #{pswdErrlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrLockhours != null" >
+        #{pswdErrLockhours,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrCleanhours != null" >
+        #{pswdErrCleanhours,jdbcType=INTEGER},
+      </if>
+      <if test="dayInlmtAmt != null" >
+        #{dayInlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayInlmtCnt != null" >
+        #{dayInlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dayPaylmtAmt != null" >
+        #{dayPaylmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayPaylmtCnt != null" >
+        #{dayPaylmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="monInlmtAmt != null" >
+        #{monInlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInlmtCnt != null" >
+        #{monInlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="monPaylmtAmt != null" >
+        #{monPaylmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monPaylmtCnt != null" >
+        #{monPaylmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dayNopswdlmtAmt != null" >
+        #{dayNopswdlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayNopswdlmtCnt != null" >
+        #{dayNopswdlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.AccProd" >
+    update acc_prod
+    <set >
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerGroup != null" >
+        owner_group = #{ownerGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null" >
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null" >
+        cust_type = #{custType,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrlmtCnt != null" >
+        pswd_errlmt_cnt = #{pswdErrlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrLockhours != null" >
+        pswd_err_lockhours = #{pswdErrLockhours,jdbcType=INTEGER},
+      </if>
+      <if test="pswdErrCleanhours != null" >
+        pswd_err_cleanhours = #{pswdErrCleanhours,jdbcType=INTEGER},
+      </if>
+      <if test="dayInlmtAmt != null" >
+        day_inlmt_amt = #{dayInlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayInlmtCnt != null" >
+        day_inlmt_cnt = #{dayInlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dayPaylmtAmt != null" >
+        day_paylmt_amt = #{dayPaylmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayPaylmtCnt != null" >
+        day_paylmt_cnt = #{dayPaylmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="monInlmtAmt != null" >
+        mon_inlmt_amt = #{monInlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monInlmtCnt != null" >
+        mon_inlmt_cnt = #{monInlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="monPaylmtAmt != null" >
+        mon_paylmt_amt = #{monPaylmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="monPaylmtCnt != null" >
+        mon_paylmt_cnt = #{monPaylmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dayNopswdlmtAmt != null" >
+        day_nopswdlmt_amt = #{dayNopswdlmtAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dayNopswdlmtCnt != null" >
+        day_nopswdlmt_cnt = #{dayNopswdlmtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.AccProd" >
+    update acc_prod
+    set owner = #{owner,jdbcType=VARCHAR},
+      owner_group = #{ownerGroup,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      prod_id = #{prodId,jdbcType=VARCHAR},
+      prod_name = #{prodName,jdbcType=VARCHAR},
+      cust_type = #{custType,jdbcType=INTEGER},
+      pswd_errlmt_cnt = #{pswdErrlmtCnt,jdbcType=INTEGER},
+      pswd_err_lockhours = #{pswdErrLockhours,jdbcType=INTEGER},
+      pswd_err_cleanhours = #{pswdErrCleanhours,jdbcType=INTEGER},
+      day_inlmt_amt = #{dayInlmtAmt,jdbcType=DECIMAL},
+      day_inlmt_cnt = #{dayInlmtCnt,jdbcType=INTEGER},
+      day_paylmt_amt = #{dayPaylmtAmt,jdbcType=DECIMAL},
+      day_paylmt_cnt = #{dayPaylmtCnt,jdbcType=INTEGER},
+      mon_inlmt_amt = #{monInlmtAmt,jdbcType=DECIMAL},
+      mon_inlmt_cnt = #{monInlmtCnt,jdbcType=INTEGER},
+      mon_paylmt_amt = #{monPaylmtAmt,jdbcType=DECIMAL},
+      mon_paylmt_cnt = #{monPaylmtCnt,jdbcType=INTEGER},
+      day_nopswdlmt_amt = #{dayNopswdlmtAmt,jdbcType=DECIMAL},
+      day_nopswdlmt_cnt = #{dayNopswdlmtCnt,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

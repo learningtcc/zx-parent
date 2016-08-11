@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AsileFee">
+
+    <resultMap id="AsileFee" type="com.ink.asile.core.po.AsileFee">
+        <result property="id" column="id"/>
+        <result property="asileName" column="asile_name"/>
+        <result property="asileCode" column="asile_code"/>
+        <result property="asileProductCode" column="asile_product_code"/>
+        <result property="asileProductName" column="asile_product_name"/>
+        <result property="payType" column="pay_type"/>
+        <result property="bankCardType" column="bank_card_type"/>
+        <result property="terminalType" column="terminal_type"/>
+        <result property="feeId" column="fee_id"/>
+        <result property="feeType" column="fee_type"/>
+        <result property="feeName" column="fee_name"/>
+        <result property="chargingType" column="charging_type"/>
+        <result property="paymentType" column="payment_type"/>
+        <result property="chargingCrash" column="charging_crash"/>
+        <result property="chargingCrashUpLimit" column="charging_crash_up_limit"/>
+        <result property="chargingCrashDownLimit" column="charging_crash_down_limit"/>
+        <result property="discountRate" column="discount_rate"/>
+        <result property="reduceCrash" column="reduce_crash"/>
+        <result property="feeStatus" column="fee_status"/>
+        <result property="feeBeginTime" column="fee_begin_time"/>
+        <result property="feeEndTime" column="fee_end_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createrId" column="creater_id"/>
+        <result property="createrName" column="creater_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterName" column="updater_name"/>
+        <result property="auditStatus" column="audit_status"/>
+        <result property="auditerName" column="auditer_name"/>
+        <result property="auditerId" column="auditer_id"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="auditOpinion" column="audit_opinion"/>
+        <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,asile_name ,asile_code ,asile_product_code ,asile_product_name ,pay_type ,bank_card_type ,terminal_type ,fee_id ,fee_type ,fee_name ,charging_type ,payment_type ,charging_crash ,charging_crash_up_limit ,charging_crash_down_limit ,discount_rate ,reduce_crash ,fee_status ,fee_begin_time ,fee_end_time ,remark ,create_time ,creater_id ,creater_name ,update_time ,updater_id ,updater_name ,audit_status ,auditer_name ,auditer_id ,audit_time ,audit_opinion ,is_delete 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" >
+    <![CDATA[
+        INSERT INTO asile_fee (
+	        id  ,
+	        asile_name  ,
+	        asile_code  ,
+	        asile_product_code  ,
+	        asile_product_name  ,
+	        pay_type  ,
+	        bank_card_type  ,
+	        terminal_type  ,
+	        fee_id  ,
+	        fee_type  ,
+	        fee_name  ,
+	        charging_type  ,
+	        payment_type  ,
+	        charging_crash  ,
+	        charging_crash_up_limit  ,
+	        charging_crash_down_limit  ,
+	        discount_rate  ,
+	        reduce_crash  ,
+	        fee_status  ,
+	        fee_begin_time  ,
+	        fee_end_time  ,
+	        remark  ,
+	        create_time  ,
+	        creater_id  ,
+	        creater_name  ,
+	        update_time  ,
+	        updater_id  ,
+	        updater_name  ,
+	        audit_status  ,
+	        auditer_name  ,
+	        auditer_id  ,
+	        audit_time  ,
+	        audit_opinion  ,
+	        is_delete  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{asileName, jdbcType=VARCHAR} ,
+        	#{asileCode, jdbcType=BIGINT} ,
+        	#{asileProductCode, jdbcType=VARCHAR} ,
+        	#{asileProductName, jdbcType=VARCHAR} ,
+        	#{payType, jdbcType=CHAR} ,
+        	#{bankCardType, jdbcType=CHAR} ,
+        	#{terminalType, jdbcType=CHAR} ,
+        	#{feeId, jdbcType=BIGINT} ,
+        	#{feeType, jdbcType=CHAR} ,
+        	#{feeName, jdbcType=VARCHAR} ,
+        	#{chargingType, jdbcType=CHAR} ,
+        	#{paymentType, jdbcType=CHAR} ,
+        	#{chargingCrash, jdbcType=DECIMAL} ,
+        	#{chargingCrashUpLimit, jdbcType=DECIMAL} ,
+        	#{chargingCrashDownLimit, jdbcType=DECIMAL} ,
+        	#{discountRate, jdbcType=DECIMAL} ,
+        	#{reduceCrash, jdbcType=DECIMAL} ,
+        	#{feeStatus, jdbcType=CHAR} ,
+        	#{feeBeginTime, jdbcType=TIMESTAMP} ,
+        	#{feeEndTime, jdbcType=TIMESTAMP} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{createrId, jdbcType=BIGINT} ,
+        	#{createrName, jdbcType=VARCHAR} ,
+        	#{updateTime, jdbcType=TIMESTAMP} ,
+        	#{updaterId, jdbcType=BIGINT} ,
+        	#{updaterName, jdbcType=VARCHAR} ,
+        	#{auditStatus, jdbcType=CHAR} ,
+        	#{auditerName, jdbcType=VARCHAR} ,
+        	#{auditerId, jdbcType=CHAR} ,
+        	#{auditTime, jdbcType=TIMESTAMP} ,
+        	#{auditOpinion, jdbcType=VARCHAR} ,
+        	#{isDelete, jdbcType=CHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO asile_fee ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.asileName, jdbcType=VARCHAR} ,
+        	#{item.asileCode, jdbcType=BIGINT} ,
+        	#{item.asileProductCode, jdbcType=VARCHAR} ,
+        	#{item.asileProductName, jdbcType=VARCHAR} ,
+        	#{item.payType, jdbcType=CHAR} ,
+        	#{item.bankCardType, jdbcType=CHAR} ,
+        	#{item.terminalType, jdbcType=CHAR} ,
+        	#{item.feeId, jdbcType=BIGINT} ,
+        	#{item.feeType, jdbcType=CHAR} ,
+        	#{item.feeName, jdbcType=VARCHAR} ,
+        	#{item.chargingType, jdbcType=CHAR} ,
+        	#{item.paymentType, jdbcType=CHAR} ,
+        	#{item.chargingCrash, jdbcType=DECIMAL} ,
+        	#{item.chargingCrashUpLimit, jdbcType=DECIMAL} ,
+        	#{item.chargingCrashDownLimit, jdbcType=DECIMAL} ,
+        	#{item.discountRate, jdbcType=DECIMAL} ,
+        	#{item.reduceCrash, jdbcType=DECIMAL} ,
+        	#{item.feeStatus, jdbcType=CHAR} ,
+        	#{item.feeBeginTime, jdbcType=TIMESTAMP} ,
+        	#{item.feeEndTime, jdbcType=TIMESTAMP} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.createrId, jdbcType=BIGINT} ,
+        	#{item.createrName, jdbcType=VARCHAR} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} ,
+        	#{item.updaterId, jdbcType=BIGINT} ,
+        	#{item.updaterName, jdbcType=VARCHAR} ,
+        	#{item.auditStatus, jdbcType=CHAR} ,
+        	#{item.auditerName, jdbcType=VARCHAR} ,
+        	#{item.auditerId, jdbcType=CHAR} ,
+        	#{item.auditTime, jdbcType=TIMESTAMP} ,
+        	#{item.auditOpinion, jdbcType=VARCHAR} ,
+        	#{item.isDelete, jdbcType=CHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE asile_fee SET
+	        asile_name = #{asileName, jdbcType=VARCHAR} ,
+	        asile_code = #{asileCode, jdbcType=BIGINT} ,
+	        asile_product_code = #{asileProductCode, jdbcType=VARCHAR} ,
+	        asile_product_name = #{asileProductName, jdbcType=VARCHAR} ,
+	        pay_type = #{payType, jdbcType=CHAR} ,
+	        bank_card_type = #{bankCardType, jdbcType=CHAR} ,
+	        terminal_type = #{terminalType, jdbcType=CHAR} ,
+	        fee_id = #{feeId, jdbcType=BIGINT} ,
+	        fee_type = #{feeType, jdbcType=CHAR} ,
+	        fee_name = #{feeName, jdbcType=VARCHAR} ,
+	        charging_type = #{chargingType, jdbcType=CHAR} ,
+	        payment_type = #{paymentType, jdbcType=CHAR} ,
+	        charging_crash = #{chargingCrash, jdbcType=DECIMAL} ,
+	        charging_crash_up_limit = #{chargingCrashUpLimit, jdbcType=DECIMAL} ,
+	        charging_crash_down_limit = #{chargingCrashDownLimit, jdbcType=DECIMAL} ,
+	        discount_rate = #{discountRate, jdbcType=DECIMAL} ,
+	        reduce_crash = #{reduceCrash, jdbcType=DECIMAL} ,
+	        fee_status = #{feeStatus, jdbcType=CHAR} ,
+	        fee_begin_time = #{feeBeginTime, jdbcType=TIMESTAMP} ,
+	        fee_end_time = #{feeEndTime, jdbcType=TIMESTAMP} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        creater_id = #{createrId, jdbcType=BIGINT} ,
+	        creater_name = #{createrName, jdbcType=VARCHAR} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	        updater_id = #{updaterId, jdbcType=BIGINT} ,
+	        updater_name = #{updaterName, jdbcType=VARCHAR} ,
+	        audit_status = #{auditStatus, jdbcType=CHAR} ,
+	        auditer_name = #{auditerName, jdbcType=VARCHAR} ,
+	        auditer_id = #{auditerId, jdbcType=CHAR} ,
+	        audit_time = #{auditTime, jdbcType=TIMESTAMP} ,
+	        audit_opinion = #{auditOpinion, jdbcType=VARCHAR} ,
+	        is_delete = #{isDelete, jdbcType=CHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM asile_fee WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="AsileFee">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM asile_fee 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=asileName and ''!=asileName ">
+	   			 		AND asile_name = #{asileName}
+	   			   	</if>
+			       	<if test="null!=asileProductCode and ''!=asileProductCode ">
+	   			 		AND asile_product_code = #{asileProductCode}
+	   			   	</if>
+			       	<if test="null!=asileProductName and ''!=asileProductName ">
+	   			 		AND asile_product_name = #{asileProductName}
+	   			   	</if>
+			       	<if test="null!=payType and ''!=payType ">
+	   			 		AND pay_type = #{payType}
+	   			   	</if>
+			       	<if test="null!=bankCardType and ''!=bankCardType ">
+	   			 		AND bank_card_type = #{bankCardType}
+	   			   	</if>
+			       	<if test="null!=terminalType and ''!=terminalType ">
+	   			 		AND terminal_type = #{terminalType}
+	   			   	</if>
+			       	<if test="null!=feeType and ''!=feeType ">
+	   			 		AND fee_type = #{feeType}
+	   			   	</if>
+			       	<if test="null!=feeName and ''!=feeName ">
+	   			 		AND fee_name = #{feeName}
+	   			   	</if>
+			       	<if test="null!=chargingType and ''!=chargingType ">
+	   			 		AND charging_type = #{chargingType}
+	   			   	</if>
+			       	<if test="null!=paymentType and ''!=paymentType ">
+	   			 		AND payment_type = #{paymentType}
+	   			   	</if>
+			       	<if test="null!=feeStatus and ''!=feeStatus ">
+	   			 		AND fee_status = #{feeStatus}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=createrName and ''!=createrName ">
+	   			 		AND creater_name = #{createrName}
+	   			   	</if>
+			       	<if test="null!=updaterName and ''!=updaterName ">
+	   			 		AND updater_name = #{updaterName}
+	   			   	</if>
+			       	<if test="null!=auditStatus and ''!=auditStatus ">
+	   			 		AND audit_status = #{auditStatus}
+	   			   	</if>
+			       	<if test="null!=auditerName and ''!=auditerName ">
+	   			 		AND auditer_name = #{auditerName}
+	   			   	</if>
+			       	<if test="null!=auditerId and ''!=auditerId ">
+	   			 		AND auditer_id = #{auditerId}
+	   			   	</if>
+			       	<if test="null!=auditOpinion and ''!=auditOpinion ">
+	   			 		AND audit_opinion = #{auditOpinion}
+	   			   	</if>
+			       	<if test="null!=isDelete and ''!=isDelete ">
+	   			 		AND is_delete = #{isDelete}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=asileName and ''!=asileName">
+				    <!-- 	AND asile_name LIKE '%'||#{asileName}||'%' oracle -->
+			   			AND asile_name LIKE concat('%',#{asileName},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileProductCode and ''!=asileProductCode">
+				    <!-- 	AND asile_product_code LIKE '%'||#{asileProductCode}||'%' oracle -->
+			   			AND asile_product_code LIKE concat('%',#{asileProductCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileProductName and ''!=asileProductName">
+				    <!-- 	AND asile_product_name LIKE '%'||#{asileProductName}||'%' oracle -->
+			   			AND asile_product_name LIKE concat('%',#{asileProductName},'%')
+			   			
+			   		</if>
+				    <if test="null!=payType and ''!=payType">
+				    <!-- 	AND pay_type LIKE '%'||#{payType}||'%' oracle -->
+			   			AND pay_type LIKE concat('%',#{payType},'%')
+			   			
+			   		</if>
+				    <if test="null!=bankCardType and ''!=bankCardType">
+				    <!-- 	AND bank_card_type LIKE '%'||#{bankCardType}||'%' oracle -->
+			   			AND bank_card_type LIKE concat('%',#{bankCardType},'%')
+			   			
+			   		</if>
+				    <if test="null!=terminalType and ''!=terminalType">
+				    <!-- 	AND terminal_type LIKE '%'||#{terminalType}||'%' oracle -->
+			   			AND terminal_type LIKE concat('%',#{terminalType},'%')
+			   			
+			   		</if>
+				    <if test="null!=feeType and ''!=feeType">
+				    <!-- 	AND fee_type LIKE '%'||#{feeType}||'%' oracle -->
+			   			AND fee_type LIKE concat('%',#{feeType},'%')
+			   			
+			   		</if>
+				    <if test="null!=feeName and ''!=feeName">
+				    <!-- 	AND fee_name LIKE '%'||#{feeName}||'%' oracle -->
+			   			AND fee_name LIKE concat('%',#{feeName},'%')
+			   			
+			   		</if>
+				    <if test="null!=chargingType and ''!=chargingType">
+				    <!-- 	AND charging_type LIKE '%'||#{chargingType}||'%' oracle -->
+			   			AND charging_type LIKE concat('%',#{chargingType},'%')
+			   			
+			   		</if>
+				    <if test="null!=paymentType and ''!=paymentType">
+				    <!-- 	AND payment_type LIKE '%'||#{paymentType}||'%' oracle -->
+			   			AND payment_type LIKE concat('%',#{paymentType},'%')
+			   			
+			   		</if>
+				    <if test="null!=feeStatus and ''!=feeStatus">
+				    <!-- 	AND fee_status LIKE '%'||#{feeStatus}||'%' oracle -->
+			   			AND fee_status LIKE concat('%',#{feeStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=createrName and ''!=createrName">
+				    <!-- 	AND creater_name LIKE '%'||#{createrName}||'%' oracle -->
+			   			AND creater_name LIKE concat('%',#{createrName},'%')
+			   			
+			   		</if>
+				    <if test="null!=updaterName and ''!=updaterName">
+				    <!-- 	AND updater_name LIKE '%'||#{updaterName}||'%' oracle -->
+			   			AND updater_name LIKE concat('%',#{updaterName},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditStatus and ''!=auditStatus">
+				    <!-- 	AND audit_status LIKE '%'||#{auditStatus}||'%' oracle -->
+			   			AND audit_status LIKE concat('%',#{auditStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditerName and ''!=auditerName">
+				    <!-- 	AND auditer_name LIKE '%'||#{auditerName}||'%' oracle -->
+			   			AND auditer_name LIKE concat('%',#{auditerName},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditerId and ''!=auditerId">
+				    <!-- 	AND auditer_id LIKE '%'||#{auditerId}||'%' oracle -->
+			   			AND auditer_id LIKE concat('%',#{auditerId},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditOpinion and ''!=auditOpinion">
+				    <!-- 	AND audit_opinion LIKE '%'||#{auditOpinion}||'%' oracle -->
+			   			AND audit_opinion LIKE concat('%',#{auditOpinion},'%')
+			   			
+			   		</if>
+				    <if test="null!=isDelete and ''!=isDelete">
+				    <!-- 	AND is_delete LIKE '%'||#{isDelete}||'%' oracle -->
+			   			AND is_delete LIKE concat('%',#{isDelete},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=asileCode and ''!=asileCode">
+			    AND asile_code = #{asileCode}
+			</if>
+		   	<if test="null!=feeId and ''!=feeId">
+			    AND fee_id = #{feeId}
+			</if>
+		   	<if test="null!=chargingCrash and ''!=chargingCrash">
+			    AND charging_crash = #{chargingCrash}
+			</if>
+		   	<if test="null!=chargingCrashUpLimit and ''!=chargingCrashUpLimit">
+			    AND charging_crash_up_limit = #{chargingCrashUpLimit}
+			</if>
+		   	<if test="null!=chargingCrashDownLimit and ''!=chargingCrashDownLimit">
+			    AND charging_crash_down_limit = #{chargingCrashDownLimit}
+			</if>
+		   	<if test="null!=discountRate and ''!=discountRate">
+			    AND discount_rate = #{discountRate}
+			</if>
+		   	<if test="null!=reduceCrash and ''!=reduceCrash">
+			    AND reduce_crash = #{reduceCrash}
+			</if>
+		   	<if test="null!=feeBeginTimeBegin and ''!=feeBeginTimeBegin">
+		   		AND fee_begin_time >= #{feeBeginTimeBegin}
+		   	</if>
+		   	<if test="null!=feeBeginTimeEnd and ''!=feeBeginTimeEnd">
+		   		AND fee_begin_time &lt; #{feeBeginTimeEnd}
+		   	</if>
+		   	<if test="null!=feeEndTimeBegin and ''!=feeEndTimeBegin">
+		   		AND fee_end_time >= #{feeEndTimeBegin}
+		   	</if>
+		   	<if test="null!=feeEndTimeEnd and ''!=feeEndTimeEnd">
+		   		AND fee_end_time &lt; #{feeEndTimeEnd}
+		   	</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=createrId and ''!=createrId">
+			    AND creater_id = #{createrId}
+			</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND update_time >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND update_time &lt; #{updateTimeEnd}
+		   	</if>
+		   	<if test="null!=updaterId and ''!=updaterId">
+			    AND updater_id = #{updaterId}
+			</if>
+		   	<if test="null!=auditTimeBegin and ''!=auditTimeBegin">
+		   		AND audit_time >= #{auditTimeBegin}
+		   	</if>
+		   	<if test="null!=auditTimeEnd and ''!=auditTimeEnd">
+		   		AND audit_time &lt; #{auditTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM asile_fee <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="AsileFee">
+    	SELECT <include refid="columns"/> FROM asile_fee 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="AsileFee">
+	    SELECT <include refid="columns"/> FROM asile_fee 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

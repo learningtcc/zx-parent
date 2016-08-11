@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- mapper文件存放路径 -->
+		<property name="mapperLocations" value="classpath:sqlmap/**/*SqlMap.xml" />
+		<property name="configLocation" value="classpath:dialect.xml"></property>
+	</bean>
+	<bean id="sqlSessionSlave" class="org.mybatis.spring.SqlSessionTemplate"
+		  scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+	<!--<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
+		<!--<property name="dataSource" ref="tfs_dataSource" />-->
+	<!--</bean>-->
+</beans>    

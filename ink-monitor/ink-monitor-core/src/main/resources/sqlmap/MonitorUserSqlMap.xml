@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MonitorUser">
+
+    <resultMap id="MonitorUser" type="com.ink.monitor.core.po.MonitorUser">
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="fullName" column="fullName"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="status" column="status"/>
+        <result property="warnType" column="warnType"/>
+		<result property="password" column="passowrd"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        userId ,userName ,fullName ,mobile ,email ,warnType ,status,password ,createTime ,updateTime
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO monitor_user (
+	        userId  ,
+	        userName  ,
+	        fullName  ,
+	        mobile  ,
+	        email  ,
+	        warnType ,
+	        status  ,
+	        password,
+	        createTime  ,
+	        updateTime  
+        ) VALUES (
+        	#{userId, jdbcType=INTEGER} ,
+        	#{userName, jdbcType=VARCHAR} ,
+        	#{fullName, jdbcType=VARCHAR} ,
+        	#{mobile, jdbcType=VARCHAR} ,
+        	#{email, jdbcType=VARCHAR} ,
+        	#{warnType, jdbcType=VARCHAR} ,
+        	#{status, jdbcType=CHAR} ,
+        	#{password, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{updateTime, jdbcType=TIMESTAMP} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO monitor_user ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.userId, jdbcType=INTEGER} ,
+        	#{item.userName, jdbcType=VARCHAR} ,
+        	#{item.fullName, jdbcType=VARCHAR} ,
+        	#{item.mobile, jdbcType=VARCHAR} ,
+        	#{item.email, jdbcType=VARCHAR} ,
+        	#{item.warnType, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=CHAR} ,
+			#{item.password, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE monitor_user SET
+	        userName = #{userName, jdbcType=VARCHAR} ,
+	        fullName = #{fullName, jdbcType=VARCHAR} ,
+	        mobile = #{mobile, jdbcType=VARCHAR} ,
+	        email = #{email, jdbcType=VARCHAR} ,
+	        warnType = #{warnType, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=CHAR} ,
+	        createTime = #{createTime, jdbcType=TIMESTAMP} ,
+	        updateTime = #{updateTime, jdbcType=TIMESTAMP} 
+        WHERE 
+	        userId = #{userId} 
+    ]]>
+    </update>
+
+	<update id="updatePassword" >
+		<![CDATA[
+        UPDATE monitor_user SET
+	        password = #{password} ,
+	        updateTime = #{updateTime, jdbcType=TIMESTAMP}
+        WHERE
+	        userName = #{userName}
+    ]]>
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+    	UPDATE monitor_user SET status='2' WHERE userId = #{userId};
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="MonitorUser">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM monitor_user 
+	        WHERE 
+		        userId = #{userId} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=userName and ''!=userName ">
+	   			 		AND userName = #{userName}
+	   			   	</if>
+			       	<if test="null!=fullName and ''!=fullName ">
+	   			 		AND fullName = #{fullName}
+	   			   	</if>
+			       	<if test="null!=mobile and ''!=mobile ">
+	   			 		AND mobile = #{mobile}
+	   			   	</if>
+			       	<if test="null!=email and ''!=email ">
+	   			 		AND email = #{email}
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		AND status = #{status}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=userName and ''!=userName">
+				    <!-- 	AND userName LIKE '%'||#{userName}||'%' oracle -->
+			   			AND userName LIKE concat('%',#{userName},'%')
+			   			
+			   		</if>
+				    <if test="null!=fullName and ''!=fullName">
+				    <!-- 	AND fullName LIKE '%'||#{fullName}||'%' oracle -->
+			   			AND fullName LIKE concat('%',#{fullName},'%')
+			   			
+			   		</if>
+				    <if test="null!=mobile and ''!=mobile">
+				    <!-- 	AND mobile LIKE '%'||#{mobile}||'%' oracle -->
+			   			AND mobile LIKE concat('%',#{mobile},'%')
+			   			
+			   		</if>
+				    <if test="null!=email and ''!=email">
+				    <!-- 	AND email LIKE '%'||#{email}||'%' oracle -->
+			   			AND email LIKE concat('%',#{email},'%')
+			   			
+			   		</if>
+				    <if test="null!=status and ''!=status">
+				    <!-- 	AND status LIKE '%'||#{status}||'%' oracle -->
+			   			AND status LIKE concat('%',#{status},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=userId and ''!=userId">
+			    AND userId = #{userId}
+			</if>
+			<if test="null!=password and ''!=password">
+				AND password =#{password}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND createTime >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND createTime &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND updateTime >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND updateTime &lt; #{updateTimeEnd}
+		   	</if>
+		   	
+		   	<if test="null != statusArray">
+		   		AND status IN
+		   		<foreach collection="statusArray" index="index" item="status" open="(" separator="," close=")">
+				   #{status}
+				 </foreach>
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM monitor_user <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="MonitorUser">
+    	SELECT <include refid="columns"/> FROM monitor_user 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="MonitorUser">
+	    SELECT <include refid="columns"/> FROM monitor_user 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    
+    <select id="queryUserByPolicy" resultType="hashmap">
+	    SELECT u.userId,u.mobile,u.email,r.infoCode,u.warnType FROM monitor_user u join monitor_user_rule r on u.userId=r.userId
+		<where> 
+			AND u.status = '0'
+			AND r.sysCode = #{sysCode} AND r.moduleCode = #{moduleCode}
+		</where>
+    </select>
+	
+</mapper>

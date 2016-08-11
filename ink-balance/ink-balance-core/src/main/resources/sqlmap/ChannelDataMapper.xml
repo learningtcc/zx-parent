@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelData">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.ChannelData">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+		<result column="channel_no" property="channelNo" jdbcType="VARCHAR" />
+		<result column="platform_order_no" property="platformOrderNo"
+			jdbcType="VARCHAR" />
+		<result column="trans_no" property="transNo" jdbcType="VARCHAR" />
+		<result column="amt" property="amt" jdbcType="DECIMAL" />
+		<result column="received_amt" property="receivedAmt" jdbcType="DECIMAL" />
+		<result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+		<result column="trans_status" property="transStatus" jdbcType="INTEGER" />
+		<result column="pay_method" property="payMethod" jdbcType="VARCHAR" />
+		<result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+		<result column="reside_flag" property="resideFlag" jdbcType="INTEGER" />
+		<result column="reside_to_date" property="resideToDate"
+			jdbcType="DATE" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 对账汇总Map -->
+	<resultMap id="checkChannelResultMap" type="com.ink.balance.core.po.CheckChannel">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="check_date" property="checkDate" jdbcType="TIMESTAMP" />
+		<result column="trade_date" property="tradeDate" jdbcType="TIMESTAMP" />
+		<result column="channel_no" property="channelNo" jdbcType="VARCHAR" />
+		<result column="channel_merchant_no" property="channelMerchantNo"
+			jdbcType="VARCHAR" />
+		<result column="channel_amount" property="channelAmount"
+			jdbcType="DECIMAL" />
+		<result column="channel_count" property="channelCount"
+			jdbcType="INTEGER" />
+		<result column="platform_amount" property="platformAmount"
+			jdbcType="DECIMAL" />
+		<result column="platform_count" property="platformCount"
+			jdbcType="INTEGER" />
+		<result column="platform_side_count" property="platformSideCount"
+			jdbcType="INTEGER" />
+		<result column="channel_side_count" property="channelSideCount"
+			jdbcType="INTEGER" />
+		<result column="check_status" property="checkStatus" jdbcType="VARCHAR" />
+		<result column="difference_count" property="differenceCount"
+			jdbcType="INTEGER" />
+		<result column="channel_check_file" property="channelCheckFile"
+			jdbcType="VARCHAR" />
+		<result column="file_source" property="fileSource" jdbcType="VARCHAR" />
+		<result column="adjust_status" property="adjustStatus"
+			jdbcType="INTEGER" />
+		<result column="unhandle_count" property="unhandleCount"
+			jdbcType="INTEGER" />
+		<result column="handle_notes" property="handleNotes" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, merchant_no, channel_no, platform_order_no, trans_no,
+		amt,
+		received_amt, trans_time,
+		trans_status, pay_method, check_status,
+		reside_flag, reside_to_date, create_time,
+		update_time, del_flag,
+		version, remark,batch_id
+	</sql>
+
+	<sql id="columns">
+		id, merchant_no, channel_no, platform_order_no, trans_no,
+		amt,
+		received_amt, trans_time,
+		trans_status, pay_method, check_status,
+		reside_flag, reside_to_date, create_time,
+		update_time, del_flag,
+		version, remark,batch_id
+	</sql>
+	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from channel_data
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from channel_data
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		channel_data
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.ChannelData">
+		insert into channel_data (id,
+		merchant_no, channel_no,
+		platform_order_no, trans_no, amt,
+		received_amt, trans_time, trans_status,
+		pay_method, check_status,
+		reside_flag,
+		reside_to_date, create_time, update_time,
+		del_flag,
+		version, remark,batch_id
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{merchantNo,jdbcType=VARCHAR},
+		#{channelNo,jdbcType=VARCHAR},
+		#{platformOrderNo,jdbcType=VARCHAR}, #{transNo,jdbcType=VARCHAR},
+		#{amt,jdbcType=DECIMAL},
+		#{receivedAmt,jdbcType=DECIMAL},
+		#{transTime,jdbcType=TIMESTAMP},
+		#{transStatus,jdbcType=INTEGER},
+		#{payMethod,jdbcType=VARCHAR}, #{checkStatus,jdbcType=INTEGER},
+		#{resideFlag,jdbcType=INTEGER},
+		#{resideToDate,jdbcType=DATE},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{delFlag,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR},
+		#{batchId,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ink.balance.core.po.ChannelData">
+		insert into channel_data
+		(
+		merchant_no,
+		channel_no,
+		platform_order_no,
+		trans_no,
+		amt,
+		received_amt,
+		trans_time,
+		trans_status,
+		pay_method,
+		check_status,
+		reside_flag,
+		reside_to_date,
+		create_time,
+		update_time,
+		del_flag,
+		version,
+		remark,
+		batch_id
+		)
+		VALUES
+		<foreach collection="list" item="lt" index="index" separator=",">
+			(
+			#{lt.merchantNo,jdbcType=VARCHAR},
+			#{lt.channelNo,jdbcType=VARCHAR},
+			#{lt.platformOrderNo,jdbcType=VARCHAR},
+			#{lt.transNo,jdbcType=VARCHAR},
+			#{lt.amt,jdbcType=DECIMAL},
+			#{lt.receivedAmt,jdbcType=DECIMAL},
+			#{lt.transTime,jdbcType=TIMESTAMP},
+			#{lt.transStatus,jdbcType=INTEGER},
+			#{lt.payMethod,jdbcType=VARCHAR},
+			#{lt.checkStatus,jdbcType=INTEGER},
+			#{lt.resideFlag,jdbcType=INTEGER},
+			#{lt.resideToDate,jdbcType=DATE},
+			#{lt.createTime,jdbcType=TIMESTAMP},
+			#{lt.updateTime,jdbcType=TIMESTAMP},
+			#{lt.delFlag,jdbcType=INTEGER},
+			#{lt.version,jdbcType=INTEGER},
+			#{lt.remark,jdbcType=VARCHAR},
+			#{lt.batchId,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.ChannelData">
+		update channel_data
+		<set>
+			<if test="merchantNo != null">
+				merchant_no = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelNo != null">
+				channel_no = #{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="platformOrderNo != null">
+				platform_order_no = #{platformOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="transNo != null">
+				trans_no = #{transNo,jdbcType=VARCHAR},
+			</if>
+			<if test="amt != null">
+				amt = #{amt,jdbcType=DECIMAL},
+			</if>
+			<if test="receivedAmt != null">
+				received_amt = #{receivedAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="transTime != null">
+				trans_time = #{transTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="transStatus != null">
+				trans_status = #{transStatus,jdbcType=INTEGER},
+			</if>
+			<if test="payMethod != null">
+				pay_method = #{payMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="checkStatus != null">
+				check_status = #{checkStatus,jdbcType=INTEGER},
+			</if>
+			<if test="resideFlag != null">
+				reside_flag = #{resideFlag,jdbcType=INTEGER},
+			</if>
+			<if test="resideToDate != null">
+				reside_to_date = #{resideToDate,jdbcType=DATE},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="batchId != null">
+				batch_id = #{batchId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.ChannelData">
+		update
+		channel_data
+		set merchant_no = #{merchantNo,jdbcType=VARCHAR},
+		channel_no = #{channelNo,jdbcType=VARCHAR},
+		platform_order_no =
+		#{platformOrderNo,jdbcType=VARCHAR},
+		trans_no =
+		#{transNo,jdbcType=VARCHAR},
+		amt = #{amt,jdbcType=DECIMAL},
+		received_amt = #{receivedAmt,jdbcType=DECIMAL},
+		trans_time =
+		#{transTime,jdbcType=TIMESTAMP},
+		trans_status =
+		#{transStatus,jdbcType=INTEGER},
+		pay_method =
+		#{payMethod,jdbcType=VARCHAR},
+		check_status =
+		#{checkStatus,jdbcType=INTEGER},
+		reside_flag =
+		#{resideFlag,jdbcType=INTEGER},
+		reside_to_date =
+		#{resideToDate,jdbcType=DATE},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		update_time =
+		#{updateTime,jdbcType=TIMESTAMP},
+		del_flag =
+		#{delFlag,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		batch_id =
+		#{batchId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 获取渠道数据 -->
+	<select id="getChannelDataList" parameterType="com.ink.balance.core.query.ChannelDataQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_data
+		<where>
+			1=1
+			<if test="platformOrderNo !=null and  platformOrderNo!=''">
+				and platform_order_no =
+				#{platformOrderNo,jdbcType=VARCHAR}
+			</if>
+			<if test="channelNo !=null and  channelNo!=''">
+				and channel_no = #{channelNo,jdbcType=VARCHAR}
+			</if>
+			<if test="transTime !=null and  transTime!=''">
+				and DATE_FORMAT(trans_time,'%Y-%m-%d') =
+				DATE_FORMAT(#{transTime},'%Y-%m-%d')
+			</if>
+		</where>
+	</select>
+	<!-- 根据平台订单号修改渠道数据 -->
+	<update id="updateChannelByPlatformOrderNo" parameterType="com.ink.balance.core.query.ChannelDataQuery">
+		update
+		channel_data
+		<set>
+			<if test="checkStatus != null">
+				check_status = #{checkStatus,jdbcType=INTEGER},
+			</if>
+			<if test="resideFlag != null">
+				reside_flag = #{resideFlag,jdbcType=INTEGER},
+			</if>
+			<if test="resideToDate != null">
+				reside_to_date = #{resideToDate,jdbcType=DATE},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where platform_order_no = #{platformOrderNo,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 获取渠道对账数据 -->
+	<select id="getChannelBalanceList" parameterType="com.ink.balance.core.query.ChannelDataQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_data
+		<where>
+			( 1=1 and check_status = #{checkStatus,jdbcType=INTEGER}
+			<if test="platformOrderNo !=null and  platformOrderNo!=''">
+				and platform_order_no =
+				#{platformOrderNo,jdbcType=VARCHAR}
+			</if>
+			<if test="channelNo !=null and  channelNo!=''">
+				and channel_no = #{channelNo,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantNo != null and  merchantNo!=''">
+				and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="transTime !=null and  transTime!=''">
+				and DATE_FORMAT(trans_time,'%Y-%m-%d') =
+				DATE_FORMAT(#{transTime},'%Y-%m-%d')
+			</if>
+			<if test="transStatus != null  and  transStatus!=''">
+				and trans_status = #{transStatus,jdbcType=INTEGER}
+			</if>
+			)
+			<if
+				test="resideFlag !=null and  resideFlag!='' and channelNo !=null and  channelNo!='' and merchantNo != null and  merchantNo!='' ">
+				or ( reside_flag = #{resideFlag,jdbcType=INTEGER} and
+				channel_no = #{channelNo,jdbcType=VARCHAR} and merchant_no =
+				#{merchantNo,jdbcType=VARCHAR})
+			</if>
+		</where>
+	</select>
+	<!-- 获取渠道对账总笔数和总金额 -->
+	<select id="getChannelSumAmtAndCount" parameterType="com.ink.balance.core.query.ChannelDataQuery"
+		resultMap="checkChannelResultMap">
+		select
+		SUM(received_amt) as channel_amount ,COUNT(id) as channel_count
+		from channel_data
+		<where>
+			( 1=1 and check_status = #{checkStatus,jdbcType=INTEGER}
+			<if test="channelNo !=null and  channelNo!=''">
+				and channel_no = #{channelNo,jdbcType=VARCHAR}
+			</if>
+			<if test="transTime !=null and  transTime!=''">
+				and DATE_FORMAT(trans_time,'%Y-%m-%d') =
+				DATE_FORMAT(#{transTime},'%Y-%m-%d')
+			</if>
+			<if test="merchantNo != null and  merchantNo!=''">
+				and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="transStatus != null  and  transStatus!=''">
+				and trans_status = #{transStatus,jdbcType=INTEGER}
+			</if>
+			)
+			<if
+				test="resideFlag !=null and  resideFlag!='' and channelNo !=null and  channelNo!='' and merchantNo != null and  merchantNo!='' ">
+				or ( reside_flag = #{resideFlag,jdbcType=INTEGER} and
+				channel_no = #{channelNo,jdbcType=VARCHAR} and merchant_no =
+				#{merchantNo,jdbcType=VARCHAR})
+			</if>
+		</where>
+	</select>
+	<insert id="batchInsert" parameterType="List">
+		insert into channel_data (id,
+		merchant_no, channel_no,
+		platform_order_no, trans_no, amt,
+		received_amt, trans_time,
+		trans_status,
+		pay_method, check_status,
+		reside_flag,
+		reside_to_date,
+		create_time, update_time,
+		del_flag,
+		version, remark
+		)
+		values
+		<foreach collection="list" item="channel" index="index"
+			separator=",">
+			(#{channel.id,jdbcType=BIGINT},
+			#{channel.merchantNo,jdbcType=VARCHAR},
+			#{channel.channelNo,jdbcType=VARCHAR},
+			#{channel.platformOrderNo,jdbcType=VARCHAR},
+			#{channel.transNo,jdbcType=VARCHAR},
+			#{channel.amt,jdbcType=DECIMAL},
+			#{channel.receivedAmt,jdbcType=DECIMAL},
+			#{channel.transTime,jdbcType=TIMESTAMP},
+			#{channel.transStatus,jdbcType=INTEGER},
+			#{channel.payMethod,jdbcType=VARCHAR},
+			#{channel.checkStatus,jdbcType=INTEGER},
+			#{channel.resideFlag,jdbcType=INTEGER},
+			#{channel.resideToDate,jdbcType=DATE},
+			#{channel.createTime,jdbcType=TIMESTAMP},
+			#{channel.updateTime,jdbcType=TIMESTAMP},
+			#{channel.delFlag,jdbcType=INTEGER},
+			#{channel.version,jdbcType=INTEGER},
+			#{channel.remark,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
+
+	<sql id="findWhere">
+		<where>
+			1=1
+			<if test="checkStatus != -1">
+				AND check_status = #{checkStatus}
+			</if>
+			<if test="channelNo !=null and  channelNo!=''">
+				and channel_no = #{channelNo,jdbcType=VARCHAR}
+			</if>
+			<if test="transStatus != null and  transStatus!=''">
+				and trans_status = #{transStatus,jdbcType=INTEGER}
+			</if>
+			<if test="resideFlag != -1">
+				AND reside_flag = #{resideFlag}
+			</if>
+			<if test="platformOrderNo != null and  platformOrderNo!=''">
+				AND platform_order_no like CONCAT('%',
+				#{platformOrderNo,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="transNo != null and  transNo!=''">
+				AND trans_no = like CONCAT('%',
+				#{transNo,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="null!=tradeBeginTime and ''!=tradeBeginTime">
+				AND trans_time >= #{tradeBeginTime}
+			</if>
+			<if test="null!=tradeEndTime and ''!=tradeEndTime">
+				AND trans_time &lt; #{tradeEndTime}
+			</if>
+			<if test="merchantNo != null and  merchantNo!=''">
+				AND merchant_no like CONCAT('%',
+				#{merchantNo,jdbcType=VARCHAR}, '%')
+			</if>
+
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(1) FROM channel_data
+		<include refid="findWhere" />
+	</select>
+
+	<select id="findPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM channel_data
+		<include refid="findWhere" />
+		ORDER BY update_time
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SmsTemplate">
+
+    <resultMap id="SmsTemplate" type="com.ink.msgcenter.core.po.SmsTemplate">
+        <result property="id" column="id"/>
+        <result property="merctId" column="merct_id"/>
+        <result property="merctCode" column="merct_code"/>
+        <result property="tempName" column="temp_name"/>
+        <result property="tempContent" column="temp_content"/>
+        <result property="parseMethod" column="parse_method"/>
+        <result property="tempRemark" column="temp_remark"/>
+        <result property="tempParam" column="temp_param"/>
+        <result property="status" column="status"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorName" column="creator_name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,merct_id ,merct_code ,temp_name ,temp_content ,parse_method ,temp_remark ,temp_param ,status ,creator_id ,creator_name ,create_time 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO sms_template (
+	        id  ,
+	        merct_id  ,
+	        merct_code  ,
+	        temp_name  ,
+	        temp_content  ,
+	        parse_method  ,
+	        temp_remark  ,
+	        temp_param  ,
+	        status  ,
+	        creator_id  ,
+	        creator_name  ,
+	        create_time  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{merctId, jdbcType=BIGINT} ,
+        	#{merctCode, jdbcType=VARCHAR} ,
+        	#{tempName, jdbcType=VARCHAR} ,
+        	#{tempContent, jdbcType=VARCHAR} ,
+        	#{parseMethod, jdbcType=CHAR} ,
+        	#{tempRemark, jdbcType=VARCHAR} ,
+        	#{tempParam, jdbcType=VARCHAR} ,
+        	#{status, jdbcType=CHAR} ,
+        	#{creatorId, jdbcType=VARCHAR} ,
+        	#{creatorName, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO sms_template ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.merctId, jdbcType=BIGINT} ,
+        	#{item.merctCode, jdbcType=VARCHAR} ,
+        	#{item.tempName, jdbcType=VARCHAR} ,
+        	#{item.tempContent, jdbcType=VARCHAR} ,
+        	#{item.parseMethod, jdbcType=CHAR} ,
+        	#{item.tempRemark, jdbcType=VARCHAR} ,
+        	#{item.tempParam, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=CHAR} ,
+        	#{item.creatorId, jdbcType=VARCHAR} ,
+        	#{item.creatorName, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE sms_template SET
+	        merct_id = #{merctId, jdbcType=BIGINT} ,
+	        merct_code = #{merctCode, jdbcType=VARCHAR} ,
+	        temp_name = #{tempName, jdbcType=VARCHAR} ,
+	        temp_content = #{tempContent, jdbcType=VARCHAR} ,
+	        parse_method = #{parseMethod, jdbcType=CHAR} ,
+	        temp_remark = #{tempRemark, jdbcType=VARCHAR} ,
+	        temp_param = #{tempParam, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=CHAR} ,
+	        creator_id = #{creatorId, jdbcType=VARCHAR} ,
+	        creator_name = #{creatorName, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM sms_template WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="SmsTemplate">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM sms_template 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=merctCode and ''!=merctCode ">
+	   			 		AND merct_code = #{merctCode}
+	   			   	</if>
+			       	<if test="null!=tempName and ''!=tempName ">
+	   			 		AND temp_name = #{tempName}
+	   			   	</if>
+			       	<if test="null!=tempContent and ''!=tempContent ">
+	   			 		AND temp_content = #{tempContent}
+	   			   	</if>
+			       	<if test="null!=parseMethod and ''!=parseMethod ">
+	   			 		AND parse_method = #{parseMethod}
+	   			   	</if>
+			       	<if test="null!=tempRemark and ''!=tempRemark ">
+	   			 		AND temp_remark = #{tempRemark}
+	   			   	</if>
+			       	<if test="null!=tempParam and ''!=tempParam ">
+	   			 		AND temp_param = #{tempParam}
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		AND status = #{status}
+	   			   	</if>
+			       	<if test="null!=creatorId and ''!=creatorId ">
+	   			 		AND creator_id = #{creatorId}
+	   			   	</if>
+			       	<if test="null!=creatorName and ''!=creatorName ">
+	   			 		AND creator_name = #{creatorName}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=merctCode and ''!=merctCode">
+				    <!-- 	AND merct_code LIKE '%'||#{merctCode}||'%' oracle -->
+			   			AND merct_code LIKE concat('%',#{merctCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempName and ''!=tempName">
+				    <!-- 	AND temp_name LIKE '%'||#{tempName}||'%' oracle -->
+			   			AND temp_name LIKE concat('%',#{tempName},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempContent and ''!=tempContent">
+				    <!-- 	AND temp_content LIKE '%'||#{tempContent}||'%' oracle -->
+			   			AND temp_content LIKE concat('%',#{tempContent},'%')
+			   			
+			   		</if>
+				    <if test="null!=parseMethod and ''!=parseMethod">
+				    <!-- 	AND parse_method LIKE '%'||#{parseMethod}||'%' oracle -->
+			   			AND parse_method LIKE concat('%',#{parseMethod},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempRemark and ''!=tempRemark">
+				    <!-- 	AND temp_remark LIKE '%'||#{tempRemark}||'%' oracle -->
+			   			AND temp_remark LIKE concat('%',#{tempRemark},'%')
+			   			
+			   		</if>
+				    <if test="null!=tempParam and ''!=tempParam">
+				    <!-- 	AND temp_param LIKE '%'||#{tempParam}||'%' oracle -->
+			   			AND temp_param LIKE concat('%',#{tempParam},'%')
+			   			
+			   		</if>
+				    <if test="null!=status and ''!=status">
+				    <!-- 	AND status LIKE '%'||#{status}||'%' oracle -->
+			   			AND status LIKE concat('%',#{status},'%')
+			   			
+			   		</if>
+				    <if test="null!=creatorId and ''!=creatorId">
+				    <!-- 	AND creator_id LIKE '%'||#{creatorId}||'%' oracle -->
+			   			AND creator_id LIKE concat('%',#{creatorId},'%')
+			   			
+			   		</if>
+				    <if test="null!=creatorName and ''!=creatorName">
+				    <!-- 	AND creator_name LIKE '%'||#{creatorName}||'%' oracle -->
+			   			AND creator_name LIKE concat('%',#{creatorName},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=merctId and ''!=merctId">
+			    AND merct_id = #{merctId}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM sms_template <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="SmsTemplate">
+    	SELECT <include refid="columns"/> FROM sms_template 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="SmsTemplate">
+	    SELECT <include refid="columns"/> FROM sms_template 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

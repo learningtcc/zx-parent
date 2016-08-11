@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ink.platform.core.dao.SecUserDao">
+
+	<resultMap id="SecUser" type="com.ink.platform.api.model.SecUser">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_name" property="username" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+
+		<result column="title" property="title" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+
+		<result column="creator_id" property="creatorId" />
+		<result column="version" property="version" />
+
+		<result column="del_flag" property="delFlag" />
+		<result column="status" property="status" />
+		<result column="text" property="text" />
+		<result column="remark" property="remark" />
+		<result column="url" property="url" />
+		<result column="subject_type" property="subjectType" />
+		<result column="title_identify" property="titleIdentify" />
+	</resultMap>
+	<!-- 查询用户基本信息 -->
+	<select id="getUserText" parameterType="java.lang.String"
+		resultMap="SecUser">
+
+		select
+		*
+		from sec_user where id=#{id}
+	</select>
+	<!-- 查询用户基本信息：及上级机构信息 -->
+	<!-- 查询用户所属上级机构信息： -->
+	<select id="selectUserParentOrg" parameterType="java.util.Map"
+		resultType="com.ink.platform.api.model.SecUser">
+		SELECT
+		ou.id AS userOrgId,
+		u.id,
+		u.user_name AS username,
+		u.update_time as
+		updateTime,
+		u.url,
+		u.login_name AS loginName,
+		u. PASSWORD,
+		u.subject_type
+		as subjectType,
+		ou.create_time AS createTime,
+		ou.creator_id AS
+		creatorId,
+		ou.del_flag AS udelFlag,
+		ou. STATUS AS ustatus,
+		u.status as
+		status,
+		u.del_flag as delFlag,
+		u.remark AS remark,
+		o.id AS orgId,
+		o.org_name AS orgName,
+		u.title AS title,
+		ou.title_identify as
+		titleIdentify
+		FROM
+		sec_user_org_relation ou,
+		sec_org o,
+		sec_user u
+		WHERE
+		o.id = ou.org_id
+		AND u.id = ou.user_id
+		<if test="parentOrgId != null and parentOrgId != ''">
+			AND ou.org_id =#{parentOrgId}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND ou.user_id = #{userId}
+		</if>
+		<if test="status != null and status != ''">
+			AND ou.status = #{status}
+			and u.status = #{status}
+		</if>
+		<if test="delFlag != null">
+			and ou.del_flag =#{delFlag}
+		</if>
+		<!-- 按条件查询 -->
+		<if test="userName != null and userName != ''">
+			AND u.user_name = #{userName}
+		</if>
+		<if test="title != null and title != ''">
+			AND u.title = #{title}
+		</if>
+		<if
+			test="statusA != null and statusA != ''  and  statusB != null and statusB != ''">
+			AND u.status = #{statusA}
+			or u.status = #{statusB}
+		</if>
+		<if test="statusA != null and statusA != ''">
+			AND u.status = #{statusA}
+		</if>
+		<if test="statusB != null and statusB != ''">
+			and u.status = #{statusB}
+		</if>
+
+
+		<if test="pageVO!=null and pageVO!=''">
+			order by ou.create_time
+			LIMIT #{pageVO.start,
+			jdbcType=INTEGER},#{pageVO.pageSize,
+			jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- 按条件查询用户总数 -->
+	<select id="selectListCount" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		sec_user_org_relation ou,
+		sec_org o,
+		sec_user u
+		WHERE
+		o.id = ou.org_id
+		AND u.id = ou.user_id
+		<if test="parentOrgId != null and parentOrgId != ''">
+			AND ou.org_id =#{parentOrgId}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND ou.user_id = #{userId}
+		</if>
+		<if test="status != null and status != ''">
+			AND ou.status = #{status}
+			and u.status = #{status}
+		</if>
+		<if test="delFlag != null">
+			and ou.del_flag =#{delFlag}
+		</if>
+		<!-- 按条件查询 -->
+		<if test="userName != null and userName != ''">
+			AND u.user_name = #{userName}
+		</if>
+		<if test="title != null and title != ''">
+			AND u.title = #{title}
+		</if>
+		<if
+			test="statusA != null and statusA != ''  and  statusB != null and statusB != ''">
+			AND u.status = #{statusA}
+			or u.status = #{statusB}
+		</if>
+		<if test="statusA != null and statusA != ''">
+			AND u.status = #{statusA}
+		</if>
+		<if test="statusB != null and statusB != ''">
+			and u.status = #{statusB}
+		</if>
+
+	</select>
+	<!-- 按条件查询用户信息 queryUserByMsg -->
+	<select id="queryUserByMsg" parameterType="java.util.Map"
+		resultMap="SecUser">
+		SELECT
+		*
+		FROM
+		sec_user
+		WHERE
+		1 = 1
+		<if test="userName != null and userName != ''">
+			AND user_name = #{userName}
+		</if>
+		<if test="title != null and title != ''">
+			AND title = #{title}
+		</if>
+		<if test="statusA != null and statusA != ''">
+			AND status = #{statusA}
+		</if>
+		<if test="statusB != null and statusB != ''">
+			AND status = #{statusB}
+		</if>
+
+	</select>
+	<select id="selectUserParentOrgRole" parameterType="java.util.Map"
+		resultType="com.ink.platform.api.model.SecUser">
+		SELECT
+		ou.id AS userOrgId,
+		ur.id AS userRoleId,
+		r.role_name AS roleName,
+		r.id as roleId,
+		u.id,
+		u.user_name AS username,
+		u.url,
+		u.login_name AS loginName,
+		u. STATUS,
+		u. PASSWORD,
+		u.subject_type as subjectType,
+		u.create_time AS createTime,
+		u.update_time AS updateTime,
+		ou.creator_id AS creatorId,
+		ou.del_flag AS delFlag,
+		ou.remark AS remark,
+		o.id AS orgId,
+		o.org_name AS orgName,
+		u.title AS title,
+		ou.title_identify as titleIdentify
+		FROM
+		sec_role r,
+		sec_user_role_relation ur,
+		sec_user_org_relation ou,
+		sec_org o,
+		sec_user u
+		WHERE
+		ur.subject_id = u.id
+		AND ur.role_id = r.id
+		AND ur.subject_type = 2
+		AND o.id =
+		ou.org_id
+		AND u.id = ou.user_id
+		<if test="parentOrgId != null and parentOrgId != ''">
+			AND ou.org_id =#{parentOrgId}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND ou.user_id = #{userId}
+		</if>
+		<if test="roleId != null and roleId != ''">
+			AND r.id = #{roleId}
+		</if>
+	</select>
+	<!-- 创建人信息 -->
+	<select id="selectCreatorInfo" parameterType="com.ink.platform.api.model.SecUser"
+		resultType="com.ink.platform.api.model.SecUser">
+
+		SELECT
+		id,
+		user_name as username
+		FROM
+		sec_user
+		WHERE
+		id IN (
+		SELECT
+		creator_id
+		FROM
+		sec_user
+		WHERE
+		id = #{id}
+		)
+	</select>
+	<!-- 查询组织机构下：所有用户信息 -->
+	<select id="selectAllUserByOrgList" parameterType="java.lang.String"
+		resultType="SecUser">
+		SELECT
+		u.id,
+		u.user_name AS username,
+		u.creator_id AS creatorId,
+		u.create_time AS
+		createTime,
+		u.update_time AS updateTime,
+		u.remark AS remark,
+		u. STATUS AS
+		STATUS,
+		u.title AS title,
+		u.subject_type as subjectType,
+		ou.title_identify as titleIdentify,
+		o.org_name AS orgName
+
+		FROM
+		sec_org o ,
+		sec_user u,
+		sec_user_org_relation ou
+		WHERE
+		ou.user_id =u.id
+		and ou.org_id =o.id
+		and ou.status =o.status=u.status=1
+		and ou.del_flag=o.del_flag=u.del_flag=0
+		<if test="orgId != null and orgId != ''">
+			and ou.org_id =#{orgId}
+		</if>
+		<!-- <if test="pageVO.orderBy!=null and pageVO.orderBy!=''"> order by ${pageVO.orderBy} 
+			LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize, jdbcType=INTEGER} 
+			</if> -->
+
+	</select>
+	<select id="getUserList" resultType="java.util.Map">
+		select u.user_name,u.url
+		from sec_user u,sec_org o ,sec_user_org_relation ou
+		where o.id =ou.org_id and u.id =ou.user_id
+
+	</select>
+	<!-- 查询所有用户 -->
+	<select id="selectAllUser" resultMap="SecUser">
+		select u.* from sec_user u
+		where 1=1
+
+		<if test="statusA != null and statusA != ''">
+			AND u.status = #{statusA}
+		</if>
+		<if test="userName != null and userName != ''">
+			AND user_name = #{userName}
+		</if>
+		<if test="title != null and title != ''">
+			AND title = #{title}
+		</if>
+		<if test="statusA != null and statusA != ''  and  statusB != null and statusB != ''">
+			or u.status = #{statusB}
+		</if>
+	</select>
+
+	<!-- insert user -->
+	<insert id="insertUser" parameterType="com.ink.platform.api.model.SecUser">
+	<![CDATA[
+		insert into sec_user(
+		id,
+		user_name,	
+		login_name,
+		password,
+		create_time,
+		creator_id,
+		del_flag,
+		status,
+		remark,
+		title,
+		url
+	)values(
+	    #{id,jdbcType=BIGINT},
+		#{username,jdbcType=VARCHAR},
+		#{loginName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}	,
+		#{createTime,jdbcType=VARCHAR}	,
+		#{creatorId,jdbcType=BIGINT},		
+		#{delFlag,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR}
+		)
+	]]>
+	</insert>
+	<!-- queryUserByusername -->
+	<select id="queryUserByMap" resultMap="SecUser" parameterType="java.util.Map">
+		SELECT
+		*
+		FROM
+		sec_user
+		<where>
+			1 = 1
+			<if test="username != null and username != ''">
+				AND user_name = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null and password != ''">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+			<if test="loginName != null and loginName != ''">
+				AND login_name = #{loginName, jdbcType=VARCHAR}
+			</if>
+
+		</where>
+	</select>
+	<select id="queryUserByuser" resultMap="SecUser"
+		parameterType="com.ink.platform.api.model.SecUser">
+		SELECT
+		*
+		FROM sec_user
+		<where>
+			1 = 1
+			<if test="loginName != null and loginName != ''">
+				AND login_name = #{loginName, jdbcType=VARCHAR}
+			</if>
+			<if test="username != null and username != ''">
+				AND user_name = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null and password != ''">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+
+		</where>
+	</select>
+	<!-- 更新 -->
+	<update id="updateUserByUser" parameterType="com.ink.platform.api.model.SecUser">
+		update sec_user
+		<set>
+			<if test="username != null">
+				user_name =#{username, jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null and loginName != ''">
+				login_name = #{loginName, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime, jdbcType=VARCHAR},
+			</if>
+			<if test="creatorId != null">
+				creator_id =#{creatorId, jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				version =#{version, jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag =#{delFlag, jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status =#{status, jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark =#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title =#{title, jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+</mapper>

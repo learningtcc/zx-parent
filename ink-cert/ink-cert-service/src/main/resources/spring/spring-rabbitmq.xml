@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+	   xmlns:ykrabbit="http://www.yinker.com/schema/ykrabbit" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   			http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+       			http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+       http://www.yinker.com/schema/ykrabbit
+                http://www.yinker.com/schema/ykrabbit/yinker-rabbit-1.0.xsd">
+
+	<bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+		<property name="host" value="${rabbitmq.host}" />
+		<property name="port" value="${rabbitmq.port}" />
+	</bean>
+	
+	<rabbit:admin connection-factory="connectionFactory" />
+	<ykrabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+
+	<rabbit:topic-exchange name="server.download.cert.topic" auto-delete="false" durable="true" id="fanoutExchange">
+			<rabbit:bindings>
+				<rabbit:binding queue="server.download.cert.queue" pattern="server.download.cert.key" />
+			</rabbit:bindings>
+	</rabbit:topic-exchange>
+	<rabbit:queue name="server.download.cert.queue" durable="true" auto-delete="false" exclusive="false"/>
+
+	<bean id="serverDownLoadCertListener" class="com.ink.cert.core.mq.ServerDownLoadCertListener"/>
+
+    <ykrabbit:listener-container connection-factory="connectionFactory" concurrency="20">
+        <ykrabbit:listener queues="server.download.cert.queue" ref="serverDownLoadCertListener" method="downLoadFile"/>
+	</ykrabbit:listener-container>
+
+	<!-- 加减密日志记录-->
+	<rabbit:direct-exchange name="cert.log.exchange" durable="true" auto-delete="false" id="certLogChange">
+		<rabbit:bindings>
+			<rabbit:binding queue="cert.log.queue" key="cert.log.key"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<bean id="certSecretLogListener" class="com.ink.cert.service.mq.CertSecretLogListener"/>
+	<rabbit:queue name="cert.log.queue" durable="true" auto-delete="false" exclusive="false"/>
+
+	<ykrabbit:listener-container connection-factory="connectionFactory" concurrency="20">
+		<!--sms interface-->
+		<ykrabbit:listener queues="cert.log.queue" ref="certSecretLogListener" method="operateLog" />
+	</ykrabbit:listener-container>
+</beans>

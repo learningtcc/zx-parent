@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ink.platform.core.dao.SecOperationDao" >
+  <resultMap id="BaseResultMap" type="com.ink.platform.api.model.SecOperation" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="operation_name" property="operationName" jdbcType="VARCHAR" />
+    <result column="operation_code" property="operationCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="opCode" property="opcode" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operation_name,operation_code,create_time,
+    update_time,creator_id,version,del_flag,status,
+    remark,url
+  </sql>
+  <insert id="insertSelective" parameterType="com.ink.platform.api.model.SecOperation" >
+    insert into sec_operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operationName != null" >
+        operation_name,
+      </if>
+      <if test="operationCode != null" >
+        operation_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operationName != null" >
+        #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationCode != null" >
+        #{operationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sec_operation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sec_operation
+    where id = #{id}
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ink.platform.api.model.SecOperation" >
+    update sec_operation
+    <set >
+      <if test="operationName != null" >
+        operation_name = #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationCode != null" >
+        operation_code = #{operationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null"  >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+       	url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from sec_operation
+		<include refid="dynamicPageWhere" />
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+   <sql id="dynamicPageWhere">
+   where 1=1
+   <if test="queryEntity.operationName!= null and queryEntity.operationName!=''" >
+       and operation_name = #{queryEntity.operationName,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.operationCode != null  and queryEntity.operationCode!=''" >
+       and operation_code = #{queryEntity.operationCode,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.createTime != null  and queryEntity.createTime!=''" >
+           and DATE_FORMAT(create_time,'%Y-%m-%d 00:00:00') <![CDATA[>=]]> #{queryEntity.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.updateTime != null  and queryEntity.updateTime!=''" >
+          and DATE_FORMAT(create_time,'%Y-%m-%d 00:00:00') <![CDATA[<=]]> #{queryEntity.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.creatorId != null  and queryEntity.creatorId!=''" >
+       and creator_id = #{queryEntity.creatorId,jdbcType=BIGINT}
+      </if>
+      <if test="queryEntity.version != null  and queryEntity.version!=''" >
+       and version = #{queryEntity.version,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.delFlag != null  and queryEntity.delFlag!=''" >
+       and del_flag = #{queryEntity.delFlag,jdbcType=TINYINT}
+      </if>
+      <if test="queryEntity.status != null  and queryEntity.status!=''" >
+      and  status = #{queryEntity.status,jdbcType=TINYINT}
+      </if>
+      <if test="queryEntity.remark != null  and queryEntity.remark!=''" >
+       and remark = #{queryEntity.remark,jdbcType=VARCHAR}
+      </if>
+       order by create_time desc
+   </sql>
+
+	<!-- 分页查询记录总记录数 -->
+	<select id="selectListCount" resultType="int">
+		SELECT
+		count(1)
+		FROM sec_operation
+		<include refid="dynamicPageWhere" />
+	</select>
+  <select id="selectList" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM sec_operation
+				<include refid="dynamicPageWhere" />
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy}
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	<!--  以map条件查询操作项-->
+	  <select id="selectAllOperatin" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select * from sec_operation
+		where 1=1
+		 <if test="operationName!= null and operationName!=''" >
+	       and operation_name = #{operationName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="operationCode != null  and operationCode!=''" >
+	       or operation_code = #{operationCode,jdbcType=VARCHAR}
+	      </if>
+	</select>
+	  <select id="selectOperationsByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+			o.*,
+			orr.status  as ralationStatu
+		FROM
+			sec_operation_resource_relation orr,
+			sec_operation o,
+			sec_resource r
+		WHERE
+			1 = 1
+		AND orr.resource_id = r.id
+		and orr.operation_id = o.id
+		and orr.resource_id=#{resourceId}
+		 <if test="delFlag != null  and delFlag!=''" >
+       and orr.del_flag = #{delFlag,jdbcType=TINYINT}
+      </if>
+      <if test="status != null  and status!=''" >
+      and  orr.status = #{status,jdbcType=TINYINT}
+      </if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 金额相关常规检查 -->
+	<bean id="commonCheck" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="txnCodeCheckService" />
+				<ref bean="tnsTxnCheckService" />
+				<ref bean="tnsLogCheckService" />
+				<ref bean="accMchCheckService" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 金额无关常规检查 -->
+	<bean id="commonCheckNoAmt" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="txnCodeCheckService" />
+				<ref bean="tnsTxnCheckService" />
+				<ref bean="reqLogCheckService" />
+				<ref bean="accMchCheckService" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="org_amt_cust-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<!-- <ref bean="accOrgCheckService" /> -->
+				<ref bean="amtCheckService" />
+				<ref bean="accCustCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="amt-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="amtCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="card-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="accCardCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="oriTnsLog-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="oriTnsLogCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="cust-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="accCustCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="custExist-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="accCustExistCheckService" />
+			</list>
+		</property>
+	</bean>
+	<bean id="mchExist-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="accMchCheckService" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="tradeMac-checkGroup" class="com.ink.user.service.check.bean.CheckerGroup">
+		<property name="group">
+			<list>
+				<ref bean="tradeRequestCheckService" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="AR-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheck" />
+				<ref bean="org_amt_cust-checkGroup" />
+				<ref bean="card-checkGroup" />
+				<ref bean="tradeMac-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="AWA-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheck" />
+				<ref bean="oriTnsLog-checkGroup" />
+				<ref bean="org_amt_cust-checkGroup" />
+				<ref bean="tradeMac-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<!-- 30190,30320,38070,38080 -->
+	<bean id="AT-MAT-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheck" />
+				<ref bean="cust-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="OA-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheckNoAmt" />
+				<ref bean="custExist-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="AWC-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheck" />
+				<ref bean="oriTnsLog-checkGroup" />
+				<ref bean="cust-checkGroup" />
+				<ref bean="tradeMac-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="EGG-EGGB-EGR-AI-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheck" />
+				<ref bean="cust-checkGroup" />
+				<ref bean="amt-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="CC-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="mchExist-checkGroup" />
+				<ref bean="cust-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="QMAB-QMI-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="mchExist-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 金额无关 -->
+	<bean id="BC-UC-CBC-checkLink" class="com.ink.user.service.check.bean.CheckerGroupLink">
+		<property name="groups">
+			<list>
+				<ref bean="commonCheckNoAmt" />
+				<ref bean="cust-checkGroup" />
+			</list>
+		</property>
+	</bean>
+	<bean id="checkChainManageService" class="com.ink.user.service.check.impl.CheckChainManager">
+		<property name="checkerGroupLinkMap">
+			<map>
+				<entry key="AR" value-ref="AR-checkLink"></entry>
+				<entry key="AWF" value-ref="AR-checkLink"></entry>
+
+				<entry key="AWA" value-ref="AWA-checkLink"></entry>
+				
+				<entry key="EGGB" value-ref="EGG-EGGB-EGR-AI-checkLink"></entry>
+				<entry key="EGG" value-ref="EGG-EGGB-EGR-AI-checkLink"></entry>
+				<entry key="AI" value-ref="EGG-EGGB-EGR-AI-checkLink"></entry>
+				<entry key="EGR" value-ref="EGG-EGGB-EGR-AI-checkLink"></entry>
+				
+				<entry key="BC" value-ref="BC-UC-CBC-checkLink"></entry>
+				<entry key="UC" value-ref="BC-UC-CBC-checkLink"></entry>
+				<entry key="CBC" value-ref="BC-UC-CBC-checkLink"></entry>
+				
+				<entry key="AT" value-ref="AT-MAT-checkLink"></entry>
+				<entry key="MAT" value-ref="AT-MAT-checkLink"></entry>
+				
+				<entry key="OA" value-ref="OA-checkLink"></entry>
+
+				<entry key="AWC" value-ref="AWC-checkLink"></entry>
+
+				<entry key="CC" value-ref="CC-checkLink"></entry>
+				<entry key="QMI" value-ref="QMAB-QMI-checkLink"></entry>
+				<entry key="QMAB" value-ref="QMAB-QMI-checkLink"></entry>
+				
+				<entry key="MUII" value-ref="BC-UC-CBC-checkLink"></entry>
+				<entry key="MUBI" value-ref="BC-UC-CBC-checkLink"></entry>
+				<entry key="MUMI" value-ref="BC-UC-CBC-checkLink"></entry>
+				
+			</map>
+		</property>
+	</bean>
+
+</beans>

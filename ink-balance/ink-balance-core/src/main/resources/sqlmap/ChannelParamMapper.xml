@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelParam">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.ChannelParam">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="no" property="no" jdbcType="VARCHAR" />
+		<result column="channel_merchant_no" property="channelMerchantNo"
+			jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="cut_day_start" property="cutDayStart" jdbcType="TIME" />
+		<result column="cut_day_end" property="cutDayEnd" jdbcType="TIME" />
+		<result column="file_address" property="fileAddress" jdbcType="VARCHAR" />
+		<result column="file_get_model" property="fileGetModel"
+			jdbcType="INTEGER" />
+		<result column="reside_days" property="resideDays" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, no,channel_merchant_no, type, cut_day_start, cut_day_end,
+		file_address, file_get_model, reside_days,
+		remark, create_date, update_date, operator_id, del_flag, version
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from channel_param
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from channel_param
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.ChannelParam">
+		insert into channel_param (id, name, no, channel_merchant_no,
+		type, cut_day_start, cut_day_end,
+		file_address, file_get_model, reside_days,
+		remark, create_date, update_date,
+		operator_id, del_flag, version
+		)
+		values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{no,jdbcType=VARCHAR},#{channelMerchantNo,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER}, #{cutDayStart,jdbcType=TIME},
+		#{cutDayEnd,jdbcType=TIME},
+		#{fileAddress,jdbcType=VARCHAR}, #{fileGetModel,jdbcType=INTEGER}, #{resideDays,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{updateDate,jdbcType=TIMESTAMP},
+		#{operatorId,jdbcType=BIGINT}, #{delFlag,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ink.balance.core.po.ChannelParam">
+		insert into channel_param
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="no != null">
+				no,
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="cutDayStart != null">
+				cut_day_start,
+			</if>
+			<if test="cutDayEnd != null">
+				cut_day_end,
+			</if>
+			<if test="fileAddress != null">
+				file_address,
+			</if>
+			<if test="fileGetModel != null">
+				file_get_model,
+			</if>
+			<if test="resideDays != null">
+				reside_days,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="no != null">
+				#{no,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				#{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="cutDayStart != null">
+				#{cutDayStart,jdbcType=TIME},
+			</if>
+			<if test="cutDayEnd != null">
+				#{cutDayEnd,jdbcType=TIME},
+			</if>
+			<if test="fileAddress != null">
+				#{fileAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="fileGetModel != null">
+				#{fileGetModel,jdbcType=INTEGER},
+			</if>
+			<if test="resideDays != null">
+				#{resideDays,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.ink.balance.core.po.ChannelParam">
+		update channel_param
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="no != null">
+				no = #{no,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no = #{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="cutDayStart != null">
+				cut_day_start = #{cutDayStart,jdbcType=TIME},
+			</if>
+			<if test="cutDayEnd != null">
+				cut_day_end = #{cutDayEnd,jdbcType=TIME},
+			</if>
+			<if test="fileAddress != null">
+				file_address = #{fileAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="fileGetModel != null">
+				file_get_model = #{fileGetModel,jdbcType=INTEGER},
+			</if>
+			<if test="resideDays != null">
+				reside_days = #{resideDays,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.ChannelParam">
+		update channel_param
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="no != null">
+				no = #{no,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no = #{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="cutDayStart != null">
+				cut_day_start = #{cutDayStart,jdbcType=TIME},
+			</if>
+			<if test="cutDayEnd != null">
+				cut_day_end = #{cutDayEnd,jdbcType=TIME},
+			</if>
+			<if test="fileAddress != null">
+				file_address = #{fileAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="fileGetModel != null">
+				file_get_model = #{fileGetModel,jdbcType=INTEGER},
+			</if>
+			<if test="resideDays != null">
+				reside_days = #{resideDays,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.ChannelParam">
+		update channel_param
+		set name = #{name,jdbcType=VARCHAR},
+		no = #{no,jdbcType=VARCHAR},
+		channel_merchant_no = #{channelMerchantNo,jdbcType=VARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		cut_day_start = #{cutDayStart,jdbcType=TIME},
+		cut_day_end = #{cutDayEnd,jdbcType=TIME},
+		file_address = #{fileAddress,jdbcType=VARCHAR},
+		file_get_model = #{fileGetModel,jdbcType=INTEGER},
+		reside_days = #{resideDays,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		operator_id = #{operatorId,jdbcType=BIGINT},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 获取渠道参数信息 -->
+	<select id="getChannelParam" parameterType="com.ink.balance.core.query.ChannelParamQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_param
+		<where>
+			1=1
+			<if test="no !=null and  no!=''">
+				and no = #{no,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	<!-- 获取渠道集合 -->
+	<select id="getChannelParamList" parameterType="com.ink.balance.core.query.ChannelParamQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_param
+		<include refid="findWhere" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from channel_param
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="findPage" parameterType="com.ink.balance.core.query.ChannelParamQuery"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from channel_param
+		<include refid="findWhere" />
+		ORDER BY update_date
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+	</select>
+	<select id="findPageCount" resultType="long">
+		SELECT count(1) FROM channel_param
+		<include refid="findWhere" />
+	</select>
+	<sql id="findWhere">
+		<where>
+			1=1
+			<if test="type !=null">
+				and type like CONCAT('%', #{type,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="no !=null and  no!=''">
+				and no like CONCAT('%', #{no,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="channelMerchantNo !=null and channelMerchantNo!=''">
+				and channel_merchant_no like CONCAT('%',
+				#{channelMerchantNo,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="name !=null and  name!=''">
+				and name like CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+	</sql>
+</mapper>

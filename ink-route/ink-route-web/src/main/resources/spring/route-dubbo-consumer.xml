@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:noNamespaceSchemaLocation="classpath:xsd/dubbo.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://code.alibabatech.com/schema/dubbo 
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       	
+     <!-- consumer application name -->
+	<dubbo:application name="ink-route-web"/>
+    <!-- registry address, used for consumer to discover services -->
+	<!--<dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper.host}" port="2181" />-->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper.host}" port="${dubbo.zookeeper.port}"  client="zkclient"/>
+    <dubbo:consumer timeout="50000" filter="consumerLogMdcFilter"/>
+    <!-- registry address, used for consumer to discover services -->
+    <!-- which service to consume? -->  
+    <!-- 通道 -->
+    <dubbo:reference id="asileInfoService" interface="com.ink.route.api.service.platform.IAsileInfoService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankService" interface="com.ink.route.api.service.platform.IAsileBankService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankTempService" interface="com.ink.route.api.service.platform.IAsileBankTempService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankRuntimeService" interface="com.ink.route.api.service.platform.IAsileBankRuntimeService" timeout="500000" check="false" version="1.0.0"  />
+
+    <dubbo:reference id="asileBusinessService" interface="com.ink.route.api.service.platform.IAsileBusinessService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBusinessSupportService" interface="com.ink.route.api.service.platform.IAsileBusinessSupportService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="authChannelPriorityService" interface="com.ink.route.api.service.platform.IAuthChannelPriorityService" timeout="500000" check="false" version="1.0.0"  />
+    <!-- 基础 -->
+    <dubbo:reference id="bankcardBinService" interface="com.ink.route.api.service.platform.IBankcardBinService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="basicBankService" interface="com.ink.route.api.service.platform.IBasicBankService" timeout="500000" check="false" version="1.0.0"  />
+
+    
+</beans>

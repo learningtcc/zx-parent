@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--权限系统-->
+    <dubbo:reference id="userResourceService" interface="com.ink.platform.api.dubbo.IUserResourceService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <!--证书中心加解密服务-->
+    <dubbo:reference  id="dataSecretService" interface="com.ink.cert.api.dubbo.DataSecretService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <!--证书中心Service-->
+    <dubbo:reference id="certDubboBaseService" group="cert" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <!--监控中心Service-->
+    <dubbo:reference id="monitorDubboBaseService" group="monitor" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <!--消息中心-->
+    <dubbo:reference id="emailService" interface="com.ink.msgcenter.api.service.EmailService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <dubbo:reference  id="smsService" interface="com.ink.msgcenter.api.service.SmsService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <dubbo:reference id="msgcenterDubboBaseService" group="msgcenter" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+	<!--用户系统Service-->
+    <dubbo:reference id="userDubboBaseService" group="user" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <dubbo:reference id="userextDubboBaseService" group="userext" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+    <!--调度系统service-->
+    <dubbo:reference id="schedulerDubboBaseService" group="scheduler" interface="com.ink.base.service.DubboBaseService" check="false" version="1.0" timeout="60000" retries="0"/>
+	
+	<!-- 交易系统 begin -->
+	
+	<!-- which service to consume? -->  
+    <!-- 通道 -->
+    <dubbo:reference id="asileInfoService" interface="com.ink.trade.api.platform.asile.service.IAsileInfoService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankService" interface="com.ink.trade.api.platform.asile.service.IAsileBankService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankTempService" interface="com.ink.trade.api.platform.asile.service.IAsileBankTempService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBankRuntimeService" interface="com.ink.trade.api.platform.asile.service.IAsileBankRuntimeService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileResCodeService" interface="com.ink.trade.api.platform.asile.service.IAsileResCodeService" timeout="500000" check="false" version="1.0.0"  />
+    
+    <dubbo:reference id="asileBusinessService" interface="com.ink.trade.api.platform.asile.service.IAsileBusinessService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="asileBusinessSupportService" interface="com.ink.trade.api.platform.asile.service.IAsileBusinessSupportService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="authChannelPriorityService" interface="com.ink.trade.api.platform.asile.service.IAuthChannelPriorityService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="mchAuthService" interface="com.ink.trade.api.platform.asile.service.IMchAuthService" timeout="500000" check="false" version="1.0.0"  />
+    <!-- 基础 -->
+    <dubbo:reference id="bankcardBinService" interface="com.ink.trade.api.platform.basic.service.IBankcardBinService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="basicBankService" interface="com.ink.trade.api.platform.basic.service.IBasicBankService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="basicResCodeService" interface="com.ink.trade.api.platform.basic.service.IBasicResCodeService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="mchBankService" interface="com.ink.trade.api.platform.basic.service.IMchBankService" timeout="500000" check="false" version="1.0.0"  />
+    <!-- 交易信息查询 -->
+    <dubbo:reference id="authOrderService" interface="com.ink.trade.api.platform.trade.service.IAuthOrderService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="authService" interface="com.ink.trade.api.platform.trade.service.IAuthService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="tradeOrderService" interface="com.ink.trade.api.platform.trade.service.ITradeOrderService" timeout="500000" check="false" version="1.0.0"  />
+    <dubbo:reference id="payOrderService" interface="com.ink.trade.api.platform.trade.service.IPayOrderService" timeout="500000" check="false" version="1.0.0"  />
+	<!-- 交易系统 end -->
+	
+</beans>

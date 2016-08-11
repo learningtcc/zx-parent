@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReqLog">
+
+    <resultMap id="ReqLog" type="com.ink.user.core.po.ReqLog">
+        <result property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="mchId" column="mch_id"/>
+        <result property="ordId" column="ord_id"/>
+        <result property="ordDate" column="ord_date"/>
+        <result property="ordTime" column="ord_time"/>
+        <result property="txnCode" column="txn_code"/>
+        <result property="txnName" column="txn_name"/>
+        <result property="custId" column="cust_id"/>
+        <result property="oriOrdId" column="ori_ord_id"/>
+        <result property="oriOrdDate" column="ori_ord_date"/>
+        <result property="oriTxnCode" column="ori_txn_code"/>
+        <result property="retCode" column="ret_code"/>
+        <result property="retMsg" column="ret_msg"/>
+        <result property="memo" column="memo"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,create_time ,last_update_time ,mch_id ,ord_id ,ord_date ,ord_time ,txn_code ,txn_name ,cust_id ,ori_ord_id ,ori_ord_date ,ori_txn_code ,ret_code ,ret_msg ,memo ,del_flag ,version 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO req_log (
+	        id  ,
+	        create_time  ,
+	        last_update_time  ,
+	        mch_id  ,
+	        ord_id  ,
+	        ord_date  ,
+	        ord_time  ,
+	        txn_code  ,
+	        txn_name  ,
+	        cust_id  ,
+	        ori_ord_id  ,
+	        ori_ord_date  ,
+	        ori_txn_code  ,
+	        ret_code  ,
+	        ret_msg  ,
+	        memo  ,
+	        del_flag  ,
+	        version 
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{mchId, jdbcType=BIGINT} ,
+        	#{ordId, jdbcType=VARCHAR} ,
+        	#{ordDate, jdbcType=TIMESTAMP} ,
+        	#{ordTime, jdbcType=TIME} ,
+        	#{txnCode, jdbcType=VARCHAR} ,
+        	#{txnName, jdbcType=VARCHAR} ,
+        	#{custId, jdbcType=VARCHAR} ,
+        	#{oriOrdId, jdbcType=VARCHAR} ,
+        	#{oriOrdDate, jdbcType=DATE} ,
+        	#{oriTxnCode, jdbcType=VARCHAR} ,
+        	#{retCode, jdbcType=VARCHAR} ,
+        	#{retMsg, jdbcType=VARCHAR} ,
+        	#{memo, jdbcType=VARCHAR} ,
+        	#{delFlag, jdbcType=BIT} ,
+        	#{version, jdbcType=INTEGER}
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO req_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.mchId, jdbcType=BIGINT} ,
+        	#{item.ordId, jdbcType=VARCHAR} ,
+        	#{item.ordDate, jdbcType=TIMESTAMP} ,
+        	#{item.ordTime, jdbcType=TIME} ,
+        	#{item.txnCode, jdbcType=VARCHAR} ,
+        	#{item.txnName, jdbcType=VARCHAR} ,
+        	#{item.custId, jdbcType=VARCHAR} ,
+        	#{item.oriOrdId, jdbcType=VARCHAR} ,
+        	#{item.oriOrdDate, jdbcType=DATE} ,
+        	#{item.oriTxnCode, jdbcType=VARCHAR} ,
+        	#{item.retCode, jdbcType=VARCHAR} ,
+        	#{item.retMsg, jdbcType=VARCHAR} ,
+        	#{item.memo, jdbcType=VARCHAR} ,
+        	#{item.delFlag, jdbcType=BIT} ,
+        	#{item.version, jdbcType=INTEGER}
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE req_log SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        mch_id = #{mchId, jdbcType=BIGINT} ,
+	        ord_id = #{ordId, jdbcType=VARCHAR} ,
+	        ord_date = #{ordDate, jdbcType=TIMESTAMP} ,
+	        ord_time = #{ordTime, jdbcType=TIME} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        txn_name = #{txnName, jdbcType=VARCHAR} ,
+	        cust_id = #{custId, jdbcType=VARCHAR} ,
+	        ori_ord_id = #{oriOrdId, jdbcType=VARCHAR} ,
+	        ori_ord_date = #{oriOrdDate, jdbcType=DATE} ,
+	        ori_txn_code = #{oriTxnCode, jdbcType=VARCHAR} ,
+	        ret_code = #{retCode, jdbcType=VARCHAR} ,
+	        ret_msg = #{retMsg, jdbcType=VARCHAR} ,
+	        memo = #{memo, jdbcType=VARCHAR} ,
+	        del_flag = #{delFlag, jdbcType=BIT} ,
+	        version = #{version, jdbcType=INTEGER}
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM req_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="ReqLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM req_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=ordId and ''!=ordId ">
+	   			 		AND ord_id = #{ordId}
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=txnName and ''!=txnName ">
+	   			 		AND txn_name = #{txnName}
+	   			   	</if>
+			       	<if test="null!=custId and ''!=custId ">
+	   			 		AND cust_id = #{custId}
+	   			   	</if>
+			       	<if test="null!=oriOrdId and ''!=oriOrdId ">
+	   			 		AND ori_ord_id = #{oriOrdId}
+	   			   	</if>
+			       	<if test="null!=oriTxnCode and ''!=oriTxnCode ">
+	   			 		AND ori_txn_code = #{oriTxnCode}
+	   			   	</if>
+			       	<if test="null!=retCode and ''!=retCode ">
+	   			 		AND ret_code = #{retCode}
+	   			   	</if>
+			       	<if test="null!=retMsg and ''!=retMsg ">
+	   			 		AND ret_msg = #{retMsg}
+	   			   	</if>
+			       	<if test="null!=memo and ''!=memo ">
+	   			 		AND memo = #{memo}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=ordId and ''!=ordId">
+				    <!-- 	AND ord_id LIKE '%'||#{ordId}||'%' oracle -->
+			   			AND ord_id LIKE concat('%',#{ordId},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnName and ''!=txnName">
+				    <!-- 	AND txn_name LIKE '%'||#{txnName}||'%' oracle -->
+			   			AND txn_name LIKE concat('%',#{txnName},'%')
+			   			
+			   		</if>
+				    <if test="null!=custId and ''!=custId">
+				    <!-- 	AND cust_id LIKE '%'||#{custId}||'%' oracle -->
+			   			AND cust_id LIKE concat('%',#{custId},'%')
+			   			
+			   		</if>
+				    <if test="null!=oriOrdId and ''!=oriOrdId">
+				    <!-- 	AND ori_ord_id LIKE '%'||#{oriOrdId}||'%' oracle -->
+			   			AND ori_ord_id LIKE concat('%',#{oriOrdId},'%')
+			   			
+			   		</if>
+				    <if test="null!=oriTxnCode and ''!=oriTxnCode">
+				    <!-- 	AND ori_txn_code LIKE '%'||#{oriTxnCode}||'%' oracle -->
+			   			AND ori_txn_code LIKE concat('%',#{oriTxnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=retCode and ''!=retCode">
+				    <!-- 	AND ret_code LIKE '%'||#{retCode}||'%' oracle -->
+			   			AND ret_code LIKE concat('%',#{retCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=retMsg and ''!=retMsg">
+				    <!-- 	AND ret_msg LIKE '%'||#{retMsg}||'%' oracle -->
+			   			AND ret_msg LIKE concat('%',#{retMsg},'%')
+			   			
+			   		</if>
+				    <if test="null!=memo and ''!=memo">
+				    <!-- 	AND memo LIKE '%'||#{memo}||'%' oracle -->
+			   			AND memo LIKE concat('%',#{memo},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=ordDateBegin and ''!=ordDateBegin">
+		   		AND ord_date >= #{ordDateBegin}
+		   	</if>
+		   	<if test="null!=ordDateEnd and ''!=ordDateEnd">
+		   		AND ord_date &lt; #{ordDateEnd}
+		   	</if>
+		   	<if test="null!=ordTimeBegin and ''!=ordTimeBegin">
+		   		AND ord_time >= #{ordTimeBegin}
+		   	</if>
+		   	<if test="null!=ordTimeEnd and ''!=ordTimeEnd">
+		   		AND ord_time &lt; #{ordTimeEnd}
+		   	</if>
+		   	<if test="null!=oriOrdDateBegin and ''!=oriOrdDateBegin">
+		   		AND ori_ord_date >= #{oriOrdDateBegin}
+		   	</if>
+		   	<if test="null!=oriOrdDateEnd and ''!=oriOrdDateEnd">
+		   		AND ori_ord_date &lt; #{oriOrdDateEnd}
+		   	</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM req_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="ReqLog">
+    	SELECT <include refid="columns"/> FROM req_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="ReqLog">
+	    SELECT <include refid="columns"/> FROM req_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    
+    <select id="checkReqLog" resultMap="ReqLog">
+		SELECT
+		<include refid="columns" />
+		FROM req_log
+		WHERE ord_id = #{ordId,jdbcType=VARCHAR} AND del_flag = '0'
+		AND txn_code = #{txnCode,jdbcType=VARCHAR}
+		AND mch_id = #{mchId,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

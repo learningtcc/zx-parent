@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+	xmlns:ykrabbit="http://www.yinker.com/schema/ykrabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+				http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+       			http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/rabbit 
+				http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+		http://www.yinker.com/schema/ykrabbit
+				http://www.yinker.com/schema/ykrabbit/yinker-rabbit-1.0.xsd">
+   	<bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+		<property name="host" value="${rabbitmq.host}" />
+		<property name="port" value="${rabbitmq.port}" />
+
+	</bean>
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<!--spring amqp默认的是jackson的一个插件,目的将生产者生产的数据转换为json存入消息队列， 由于fastjson的速度快于jackson,这里替换为fastjson的一个实现 -->
+	<!-- <bean id="FastJsonMessageConverter" -->
+	<!-- class="com.ink.pats.atp.common.util.FastJsonMessageConverter" -->
+	<!-- name="FastJsonMessageConverter"></bean> -->
+	<!-- spring template声明 -->
+	<ykrabbit:template exchange="tnschange" id="amqpTemplate"
+		connection-factory="connectionFactory" /> 
+
+
+	<!-- exchange queue binging key 绑定-->
+	<rabbit:direct-exchange name="tnschange"
+		durable="true" auto-delete="false" id="tnschange">
+		<rabbit:bindings>
+			<rabbit:binding queue="tnsMsgLog.queue" key="tnsMsgLog.key" />
+			<rabbit:binding queue="accLog.queue" key="accLog.key" />
+			<rabbit:binding queue="tnsAceLog.queue" key="tnsAceLog.key" />
+			<rabbit:binding queue="AccInterest.queue" key="AccInterest.key"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+	<!-- 声明消息队列 -->
+	<rabbit:queue id="tnsMsgLogQueue" durable="true"
+		auto-delete="false" exclusive="false" name="tnsMsgLog.queue" />
+
+	<rabbit:queue id="accLogQueue" durable="true" auto-delete="false"
+		exclusive="false" name="accLog.queue" />
+
+	<rabbit:queue id="tnsAceLogQueue" durable="true"
+		auto-delete="false" exclusive="false" name="tnsAceLog.queue" />
+
+	<rabbit:queue id="AccInterestQueue" durable="true"
+		auto-delete="false" exclusive="false" name="AccInterest.queue" />
+</beans>

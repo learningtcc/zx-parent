@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ink.platform.core.dao.SecRoleDao" >
+  <resultMap id="BaseResultMap" type="com.ink.platform.api.model.SecRole" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="role_name" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, role_name,role_code,create_time,
+    update_time,operator_id,version,del_flag,status,
+    remark
+  </sql>
+  <!-- 验重 -->
+   <select id="selecRoleByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    *
+    from sec_role
+    where 1=1
+    <if test="roleName != null" >
+     and   role_name =#{roleName}
+      </if>
+      <if test="roleCode != null" >
+      or  role_code=#{roleCode}
+      </if>
+  </select>
+  <insert id="insertSelective" parameterType="com.ink.platform.api.model.SecRole" >
+    insert into sec_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="roleCode != null" >
+        role_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sec_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sec_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询角色详情 -->
+    <select id="selectRoleById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sec_role
+    where id = #{roleId}
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ink.platform.api.model.SecRole" >
+    update sec_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        role_code = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null"  >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from sec_role
+		<include refid="dynamicPageWhere" />
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+   <sql id="dynamicPageWhere">
+   where 1=1
+   <if test="queryEntity.roleName != null and queryEntity.roleName!=''" >
+       and role_name = #{queryEntity.roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.roleCode != null  and queryEntity.roleCode!=''" >
+       and role_code = #{queryEntity.roleCode,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.createTime != null  and queryEntity.createTime!=''" >
+       and DATE_FORMAT(create_time,'%Y-%m-%d 00:00:00')<![CDATA[>=]]> #{queryEntity.createTime,jdbcType=TIMESTAMP}    
+      </if>
+      <if test="queryEntity.updateTime != null  and queryEntity.updateTime!=''" >
+      and DATE_FORMAT(create_time,'%Y-%m-%d 00:00:00')<![CDATA[<=]]> #{queryEntity.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.operatorId != null  and queryEntity.operatorId!=''" >
+       and operator_id = #{queryEntity.operatorId,jdbcType=BIGINT}
+      </if>
+      <if test="queryEntity.version != null  and queryEntity.version!=''" >
+       and version = #{queryEntity.version,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.delFlag != null  and queryEntity.delFlag!=''" >
+       and del_flag = #{queryEntity.delFlag,jdbcType=TINYINT}
+      </if>
+      <if test="queryEntity.status!=null " >
+      and  status = #{queryEntity.status,jdbcType=TINYINT}
+      </if>
+      <if test="queryEntity.remark != null  and queryEntity.remark!=''" >
+       and remark = #{queryEntity.remark,jdbcType=VARCHAR}
+      </if>
+       order by create_time desc
+   </sql>
+
+	<!-- 分页查询记录总记录数 -->
+	<select id="selectListCount" resultType="int">
+		SELECT
+		count(1)
+		FROM sec_role
+		<include refid="dynamicPageWhere" />
+	</select>
+  <select id="selectList" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM sec_role
+				<include refid="dynamicPageWhere" />
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy} 
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	<!--查询用户所拥有的角色   -->
+	 <select id="selectUserRole" resultMap="BaseResultMap" parameterType="java.util.Map">
+	SELECT
+	r.*
+	FROM
+	sec_role r,
+	sec_user_role_relation urr
+	WHERE
+
+	urr.role_id = r.id
+
+	<if test="userId != null and userId != ''">
+		AND urr.subject_id = #{userId,jdbcType=VARCHAR}
+	</if>
+	<if test="status != null and status != ''">
+		AND urr.status = #{status}
+	</if>
+	<if test="delFlag != null">
+		and urr.del_Flag =#{delFlag}
+	</if>
+	<if test="titleCode != null">
+		and urr.title_code =#{titleCode}
+	</if>
+	</select>
+	<!--查询wei拥有的角色   -->
+	 <select id="selectNoOwnedRole" resultMap="BaseResultMap" parameterType="com.ink.platform.api.model.SecUserRoleRelation">
+		SELECT
+			r.*
+		FROM
+			sec_role r
+		WHERE
+		 r.id NOT IN (
+			SELECT
+				urr.role_id
+			FROM
+				sec_user_role_relation urr
+			WHERE
+				urr.subject_type = #{subjectType,jdbcType=INTEGER}
+			AND urr.subject_id =#{subjectId,jdbcType=BIGINT}
+		)	
+		AND r.del_flag = 0
+		AND r. STATUS = 1
+		
+	</select>
+	<select id="selectAllRole" resultMap="BaseResultMap">
+		SELECT
+	id, role_name as roleName,role_code,create_time,
+    update_time,operator_id,version,del_flag,status		
+		FROM
+			sec_role 
+	</select>
+	
+</mapper>

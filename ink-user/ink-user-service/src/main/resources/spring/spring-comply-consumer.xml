@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+	xmlns:ykrabbit="http://www.yinker.com/schema/ykrabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+				http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+       			http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/rabbit 
+				http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+		http://www.yinker.com/schema/ykrabbit
+				http://www.yinker.com/schema/ykrabbit/yinker-rabbit-1.0.xsd">
+       
+	<bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+		<property name="host" value="${rabbitmq.host}" />
+		<property name="port" value="${rabbitmq.port}" />
+	</bean>
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<ykrabbit:template id="amqpTemplate" connection-factory="connectionFactory" />
+
+	<!-- queue 队列声明 -->
+	<!-- 报文日志记录信息
+	<rabbit:queue id="tnsMsgLog.queue" durable="true"
+		auto-delete="false" exclusive="false" name="tnsMsgLog.queue" />
+	<bean name="tnsMsgLogConsumer"
+		class="com.ink.user.core.dao.mongo.impl.TnsMsgLogDaoImpl"
+		id="tnsMsgLogConsumer" /> -->
+	<!-- queue listener 观察监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="tnsMsgLog.queue" ref="tnsMsgLogConsumer"
+			method="saveTnsMsgLog" />
+	</ykrabbit:listener-container>-->
+
+
+	<!-- 更新资金账户信息失败日志信息 -->
+	<rabbit:queue id="accLog.queue" durable="true"
+		auto-delete="false" exclusive="false" name="accLog.queue" />
+	<bean name="accLogConsumer"
+		  class="com.ink.user.core.dao.mongo.impl.AccAccLogDaoImpl"
+		  id="accLogConsumer" />
+	<!-- queue listener 观察监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 -->
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="accLog.queue" ref="accLogConsumer"
+			method="saveAccAccLog" />
+	</ykrabbit:listener-container>
+
+	<!-- 会计分录生成失败日志信息
+	<rabbit:queue id="tnsAceLog.queue" durable="true"
+		auto-delete="false" exclusive="false" name="tnsAceLog.queue" />
+	<bean name="tnsAceLogConsumer"
+		class="com.ink.user.core.dao.mongo.impl.TnsAceLogDaoImpl"
+		id="tnsAceLogConsumer" /> -->
+	<!-- queue listener 观察监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="tnsAceLog.queue" ref="tnsAceLogConsumer"
+			method="saveTnsAceLog" />
+	</ykrabbit:listener-container>-->
+	
+	<!-- 个人账户银行卡绑定 -->
+	<rabbit:queue id="BindCard.queue" durable="true"
+		auto-delete="false" exclusive="false" name="BindCard.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="BindCard.queue" ref="BindCardConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+		<bean name="BindCardConsumer" class="com.ink.user.service.impl.BindCardServiceImpl"
+		id="BindCardConsumer" />
+	<!-- 个人账户银行卡解绑 -->
+	<rabbit:queue id="UnbundCard.queue" durable="true"
+		auto-delete="false" exclusive="false" name="UnbundCard.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="UnbundCard.queue" ref="UnbundCardConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+		<bean name="UnbundCardConsumer" class="com.ink.user.service.impl.UnbundCardServiceImpl"
+		id="UnbundCardConsumer" />
+	<!-- 充值 -->
+	<rabbit:queue id="AccRecharge.queue" durable="true"
+		auto-delete="false" exclusive="false" name="AccRecharge.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="AccRecharge.queue" ref="AccRechargeConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+	<bean name="AccRechargeConsumer" class="com.ink.user.service.impl.AccRechargeServiceImpl"
+		id="AAccRechargeConsumer" />
+	<!-- 冻结 -->
+	<rabbit:queue id="AccWithdrawFreeze.queue" durable="true"
+		auto-delete="false" exclusive="false" name="AccWithdrawFreeze.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="AccWithdrawFreeze.queue" ref="AccWithdrawFreezeConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+	<bean name="AccWithdrawFreezeConsumer" class="com.ink.user.service.impl.AccWithdrawFreezeServiceImpl"
+		id="AccWithdrawFreezeConsumer" />
+	<!-- 提现受理 -->
+	<rabbit:queue id="AccWithdrawAccept.queue" durable="true"
+		auto-delete="false" exclusive="false" name="AccWithdrawAccept.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="AccWithdrawAccept.queue" ref="AccWithdrawAcceptConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+	<bean name="AccWithdrawAcceptConsumer" class="com.ink.user.service.impl.AccWithdrawAcceptServiceImpl"
+		id="AccWithdrawAcceptConsumer" />
+	<!-- 提现撤回 -->
+	<rabbit:queue id="AccWithdrawCancel.queue" durable="true"
+		auto-delete="false" exclusive="false" name="AccWithdrawCancel.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="AccWithdrawCancel.queue" ref="AccWithdrawCancelConsumer"
+			method="onMessage" />
+	</ykrabbit:listener-container>
+	<bean name="AccWithdrawCancelConsumer" class="com.ink.user.service.impl.AccWithdrawCancelServiceImpl"
+		id="AccWithdrawCancelConsumer" />
+	<!-- 异步计息 -->
+	<rabbit:queue id="AccInterest.queue" durable="true"
+		auto-delete="false" exclusive="false" name="AccInterest.queue" />
+	<ykrabbit:listener-container
+		connection-factory="connectionFactory">
+		<ykrabbit:listener queues="AccInterest.queue" ref="interestBusinessHandle"
+			method="doInterest" />
+	</ykrabbit:listener-container>
+	<bean name="interestBusinessHandle" class="com.ink.user.service.handle.InterestBusinessHandle"
+		id="interestBusinessHandle" />
+</beans>

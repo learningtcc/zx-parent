@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccProof">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.AccProof">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+		<result column="pac_id" property="pacId" jdbcType="BIGINT" />
+		<result column="sac_id" property="sacId" jdbcType="BIGINT" />
+		<result column="sac_type" property="sacType" jdbcType="VARCHAR" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="before_bal" property="beforeBal" jdbcType="DECIMAL" />
+		<result column="cur_bal" property="curBal" jdbcType="DECIMAL" />
+		<result column="modify_bal" property="modifyBal" jdbcType="DECIMAL" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="txn_code" property="txnCode" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, 
+		create_time, last_update_time, uid,
+		pac_id, sac_id, sac_type,
+		cur, before_bal, cur_bal,
+		modify_bal, filler1,
+		filler2,
+		filler3, txn_code
+	</sql>
+	<!-- 基础方法Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into acc_proof (id,
+		create_time, last_update_time, uid,
+		pac_id, sac_id,
+		sac_type,
+		cur, before_bal, cur_bal,
+		modify_bal, filler1, filler2,
+		filler3, txn_code)
+		values (#{id,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastUpdateTime,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT},
+		#{pacId,jdbcType=BIGINT}, #{sacId,jdbcType=BIGINT},
+		#{sacType,jdbcType=VARCHAR},
+		#{cur,jdbcType=VARCHAR},
+		#{beforeBal,jdbcType=DECIMAL}, #{curBal,jdbcType=DECIMAL},
+		#{modifyBal,jdbcType=DECIMAL}, #{filler1,jdbcType=VARCHAR},
+		#{filler2,jdbcType=VARCHAR},
+		#{filler3,jdbcType=VARCHAR},
+		#{txnCode,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_proof ( <include refid="Base_Column_List"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.uid, jdbcType=BIGINT} ,
+        	#{item.pacId, jdbcType=BIGINT} ,
+        	#{item.sacId, jdbcType=BIGINT} ,
+        	#{item.sacType, jdbcType=VARCHAR} ,
+        	#{item.cur, jdbcType=VARCHAR} ,
+        	#{item.beforeBal, jdbcType=DECIMAL} ,
+        	#{item.curBal, jdbcType=DECIMAL} ,
+        	#{item.txnCode, jdbcType=VARCHAR} ,
+        	#{item.modifyBal, jdbcType=DECIMAL} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_proof SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        uid = #{uid, jdbcType=BIGINT} ,
+	        pac_id = #{pacId, jdbcType=BIGINT} ,
+	        sac_id = #{sacId, jdbcType=BIGINT} ,
+	        sac_type = #{sacType, jdbcType=VARCHAR} ,
+	        cur = #{cur, jdbcType=VARCHAR} ,
+	        before_bal = #{beforeBal, jdbcType=DECIMAL} ,
+	        cur_bal = #{curBal, jdbcType=DECIMAL} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        modify_bal = #{modifyBal, jdbcType=DECIMAL} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_proof WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM acc_proof 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=sacType and ''!=sacType ">
+	   			 		AND sac_type = #{sacType}
+	   			   	</if>
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=sacType and ''!=sacType">
+				    <!-- 	AND sac_type LIKE '%'||#{sacType}||'%' oracle -->
+			   			AND sac_type LIKE concat('%',#{sacType},'%')
+			   			
+			   		</if>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+				   
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=sacId and ''!=sacId">
+			    AND sac_id = #{sacId}
+			</if>
+		   	<if test="null!=beforeBal and ''!=beforeBal">
+			    AND before_bal = #{beforeBal}
+			</if>
+		   	<if test="null!=curBal and ''!=curBal">
+			    AND cur_bal = #{curBal}
+			</if>
+		   	<if test="null!=modifyBal and ''!=modifyBal">
+			    AND modify_bal = #{modifyBal}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_proof <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/> FROM acc_proof 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/> FROM acc_proof 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 基础方法End -->
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.AccProof">
+		insert into acc_proof
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="pacId != null">
+				pac_id,
+			</if>
+			<if test="sacId != null">
+				sac_id,
+			</if>
+			<if test="sacType != null">
+				sac_type,
+			</if>
+			<if test="cur != null">
+				cur,
+			</if>
+			<if test="beforeBal != null">
+				before_bal,
+			</if>
+			<if test="curBal != null">
+				cur_bal,
+			</if>
+			<if test="modifyBal != null">
+				modify_bal,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="txnCode != null">
+				txn_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="pacId != null">
+				#{pacId,jdbcType=BIGINT},
+			</if>
+			<if test="sacId != null">
+				#{sacId,jdbcType=BIGINT},
+			</if>
+			<if test="sacType != null">
+				#{sacType,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				#{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="beforeBal != null">
+				#{beforeBal,jdbcType=DECIMAL},
+			</if>
+			<if test="curBal != null">
+				#{curBal,jdbcType=DECIMAL},
+			</if>
+			<if test="modifyBal != null">
+				#{modifyBal,jdbcType=DECIMAL},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="txnCode != null">
+				#{txnCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

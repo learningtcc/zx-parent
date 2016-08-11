@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CheckBalance">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.CheckBalance">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="ref_id" property="refId" jdbcType="BIGINT" />
+		<result column="balance_source" property="balanceSource"
+			jdbcType="INTEGER" />
+		<result column="balance_direction" property="balanceDirection"
+			jdbcType="INTEGER" />
+		<result column="balance_amt" property="balanceAmt" jdbcType="DECIMAL" />
+		<result column="channel_no" property="channelNo" jdbcType="VARCHAR" />
+		<result column="platform_order_no" property="platformOrderNo"
+			jdbcType="VARCHAR" />
+		<result column="trans_no" property="transNo" jdbcType="VARCHAR" />
+		<result column="balance_status" property="balanceStatus"
+			jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="balance_note" property="balanceNote" jdbcType="VARCHAR" />
+		<result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, ref_id,
+		balance_source,balance_direction,balance_amt,channel_no,
+		platform_order_no, trans_no,
+		balance_status,
+		create_time,
+		update_time,
+		del_flag,
+		version, balance_note,batch_id,operator_id
+	</sql>
+
+	<sql id="columns">
+		id, ref_id,
+		balance_source,balance_direction,balance_amt,channel_no,
+		platform_order_no, trans_no,
+		balance_status,
+		create_time,
+		update_time,
+		del_flag,
+		version, balance_note,batch_id,operator_id
+	</sql>
+	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from check_balance
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="getBalanceDetails" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from check_balance
+		where platform_order_no = #{platformOrderNo,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from check_balance
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		check_balance
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.CheckBalance">
+		insert into check_balance (id,
+		ref_id, balance_source,balance_direction,balance_amt,channel_no,
+		platform_order_no, trans_no,
+		balance_status,
+		create_time,
+		update_time,
+		del_flag,
+		version, balance_note,batch_id,operator_id
+		)
+		values
+		(#{id,jdbcType=BIGINT},
+		#{refId,jdbcType=BIGINT},
+		#{balanceSource,jdbcType=INTEGER},
+		#{balanceDirection,jdbcType=INTEGER},
+		#{balanceAmt,jdbcType=DECIMAL},
+		#{channelNo,jdbcType=VARCHAR},
+		#{platformOrderNo,jdbcType=VARCHAR},
+		#{transNo,jdbcType=VARCHAR},
+		#{balanceStatus,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{delFlag,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+		#{balanceNote,jdbcType=VARCHAR},
+		#{batchId,jdbcType=VARCHAR},
+		#{operatorId,jdbcType=BIGINT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ink.balance.core.po.CheckBalance">
+		insert into check_balance
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="refId != null">
+				ref_id,
+			</if>
+			<if test="balanceSource != null">
+				balance_source,
+			</if>
+			<if test="balanceDirection != null">
+				balance_direction,
+			</if>
+			<if test="balanceAmt != null">
+				balance_amt,
+			</if>
+			<if test="channelNo != null">
+				channel_no,
+			</if>
+			<if test="platformOrderNo != null">
+				platform_order_no,
+			</if>
+			<if test="transNo != null">
+				trans_no,
+			</if>
+
+			<if test="balanceStatus != null">
+				balance_status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="balanceNote != null">
+				balance_note,
+			</if>
+			<if test="batchId != null">
+				batch_id,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=BIGINT},
+			</if>
+			<if test="balanceSource != null">
+				#{balanceSource,jdbcType=INTEGER},
+			</if>
+			<if test="balanceDirection != null">
+				#{balanceDirection,jdbcType=INTEGER},
+			</if>
+			<if test="balanceAmt != null">
+				#{balanceAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="channelNo != null">
+				#{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="platformOrderNo != null">
+				#{platformOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="transNo != null">
+				#{transNo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="balanceStatus != null">
+				#{balanceStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="balanceNote != null">
+				#{balanceNote,jdbcType=VARCHAR},
+			</if>
+			<if test="batchId != null">
+				#{batchId,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.CheckBalance">
+		update check_balance
+		<set>
+			<if test="refId != null">
+				ref_id=#{refId,jdbcType=BIGINT},
+			</if>
+			<if test="balanceSource != null">
+				balance_source= #{balanceSource,jdbcType=INTEGER},
+			</if>
+			<if test="balanceDirection != null">
+				balance_direction=#{balanceDirection,jdbcType=INTEGER},
+			</if>
+			<if test="balanceAmt != null">
+				balance_amt= #{balanceAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="channelNo != null">
+				channel_no=#{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="platformOrderNo != null">
+				platform_order_no= #{platformOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="transNo != null">
+				trans_no=#{transNo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="balanceStatus != null">
+				balance_status= #{balanceStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time= #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time= #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				del_flag=#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version=#{version,jdbcType=INTEGER},
+			</if>
+			<if test="balanceNote != null">
+				balance_note=#{balanceNote,jdbcType=VARCHAR},
+			</if>
+			<if test="batchId != null">
+				batch_id=#{batchId,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				operator_id=#{operatorId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.CheckBalance">
+		update
+		check_balance
+		set
+		ref_id=#{refId,jdbcType=BIGINT},
+		balance_source= #{balanceSource,jdbcType=INTEGER},
+		balance_direction=#{balanceDirection,jdbcType=INTEGER},
+		balance_amt= #{balanceAmt,jdbcType=DECIMAL},
+		channel_no=#{channelNo,jdbcType=VARCHAR},
+		platform_order_no= #{platformOrderNo,jdbcType=VARCHAR},
+		trans_no=#{transNo,jdbcType=VARCHAR},
+		balance_status= #{balanceStatus,jdbcType=INTEGER},
+		create_time= #{createTime,jdbcType=TIMESTAMP},
+		update_time= #{updateTime,jdbcType=TIMESTAMP},
+		del_flag=#{delFlag,jdbcType=INTEGER},
+		version=#{version,jdbcType=INTEGER},
+		balance_note=#{balanceNote,jdbcType=VARCHAR},
+		batch_id=#{batchId,jdbcType=VARCHAR},
+		operator_id=#{operatorId,jdbcType=BIGINT}
+		where id =
+		#{id,jdbcType=BIGINT}
+	</update>
+
+	<sql id="findWhere">
+		<where>
+			1=1
+			<if test="channelNo !=null and  channelNo!=''">
+				and channel_no = #{channelNo,jdbcType=VARCHAR}
+			</if>
+			<if test="refId != null and  refId!=''">
+				AND ref_id like CONCAT('%', #{refId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="platformOrderNo != null and  platformOrderNo!=''">
+				AND platform_order_no like CONCAT('%',
+				#{platformOrderNo,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="balanceSource != null and  balanceSource!=''">
+				and balance_source = #{balanceSource,jdbcType=INTEGER}
+			</if>
+			<if test="balanceDirection != null and  balanceDirection!=''">
+				and balance_direction = #{balanceDirection,jdbcType=INTEGER}
+			</if>
+			<if test="balanceStatus != null and  balanceStatus!=''">
+				and balance_status = #{balanceStatus,jdbcType=INTEGER}
+			</if>
+			<if test="null!=createBeginDate and ''!=createBeginDate">
+				AND create_time >= #{createBeginDate}
+			</if>
+			<if test="null!=createEndDate and ''!=createEndDate">
+				AND create_time &lt; #{createEndDate}
+			</if>
+			<!--<if test="checkStatus != -1"> AND check_status = #{checkStatus} </if> 
+				<if test="transStatus != null and transStatus!=''"> and trans_status = #{transStatus,jdbcType=INTEGER} 
+				</if> <if test="resideFlag != -1"> AND reside_flag = #{resideFlag} </if> 
+				<if test="transNo != null and transNo!=''"> AND trans_no = #{transNo,jdbcType=VARCHAR} 
+				</if> -->
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(1) FROM check_balance
+		<include refid="findWhere" />
+	</select>
+
+	<select id="findPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_balance
+		<include refid="findWhere" />
+		ORDER BY update_time
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+	</select>
+	<select id="find" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_balance
+		<include refid="findWhere" />
+		ORDER BY update_time
+	</select>
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:c="http://www.springframework.org/schema/c"
+	   xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- ZK配置中心开始 -->
+     	<util:properties id="configToolkitProp" location="classpath:conf/app.properties" />
+	
+	<bean id="channelCommonProfile" class="com.ink.config.service.zookeeper.ZookeeperConfigProfile">
+		    <constructor-arg name="connectStr" value="#{configToolkitProp['config.center.connectStr']}" />
+		    <constructor-arg name="rootNode" value="#{configToolkitProp['config.center.rootNode.common']}" />
+		    <constructor-arg name="version" value="#{configToolkitProp['config.center.version']}" />
+	</bean>
+	
+	<bean id="channelProfile" class="com.ink.config.service.zookeeper.ZookeeperConfigProfile">
+		    <constructor-arg name="connectStr" value="#{configToolkitProp['config.center.connectStr']}" />
+		    <constructor-arg name="rootNode" value="#{configToolkitProp['config.center.rootNode.channel']}" />
+		    <constructor-arg name="version" value="#{configToolkitProp['config.center.version']}" />
+	</bean>
+	
+	
+	<bean id="configGroupSources" class="com.ink.config.service.support.spring.ConfigGroupSourceFactory" factory-method="create">
+		    <constructor-arg name="configGroups">
+		        <list>
+		            <bean class="com.ink.config.service.zookeeper.ZookeeperConfigGroup" c:configProfile-ref="channelCommonProfile" c:node="dubbo,rabbitmq,redis" />
+		            <bean class="com.ink.config.service.zookeeper.ZookeeperConfigGroup" c:configProfile-ref="channelProfile" c:node="tfs,logback.mongo" />
+		        </list>
+		    </constructor-arg>
+		</bean>
+		
+	<bean id="customizedPropertyConfigurer" class="com.ink.config.service.support.spring.CustomizedPropertyConfigurer">
+	    <property name="order" value="1" />
+	    <property name="ignoreUnresolvablePlaceholders" value="true" />
+	    <property name="propertySources" ref="configGroupSources" />
+	</bean>
+	
+	
+	<bean id="ipMapConfig"
+		class="com.ink.config.service.zookeeper.ZookeeperConfigGroup">
+		<constructor-arg name="configProfile" ref="channelCommonProfile" />
+		<constructor-arg name="node" value="ipmaps" />
+	</bean>
+	<bean id="idCodeGenerator" class="com.ink.base.utils.IdCodeGenerator">
+		<property name="ipMapsConfig" ref="ipMapConfig"></property>
+	</bean>
+		
+	<bean id="certificateConfig"
+		class="com.ink.config.service.zookeeper.ZookeeperConfigGroup">
+		<constructor-arg name="configProfile" ref="channelProfile" />
+		<constructor-arg name="node" value="certificateMaps" />
+	</bean>
+	<bean id="certificateUtil" class="com.ink.base.utils.IdCodeGenerator">
+		<property name="ipMapsConfig" ref="certificateConfig"></property>
+	</bean>	
+	<bean id="channelRelConfig"
+		class="com.ink.config.service.zookeeper.ZookeeperConfigGroup">
+		<constructor-arg name="configProfile" ref="channelProfile" />
+		<constructor-arg name="node" value="channelConfigRel" />
+	</bean>
+	<bean id="channelRelUtil" class="com.ink.base.utils.IdCodeGenerator">
+		<property name="ipMapsConfig" ref="channelRelConfig"></property>
+	</bean>	
+		<!-- ZK配置中心结束 -->
+</beans>

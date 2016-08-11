@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+
+	<!-- </dubbo:service> -->
+	<dubbo:service interface="com.ink.trade.api.service.IPrepaidService"
+		ref="prepaidService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.service.IPrecollectionService"
+		ref="precollectionService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service
+		interface="com.ink.trade.api.service.ICertifiedPayDirectService"
+		ref="certifiedPayDirectService" version="1.0.0" retries="0"
+		loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.service.ITradeQuickAuthService"
+		ref="quickAuthService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.service.ITradeQuickPayService"
+		ref="quickPayService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.service.ITradeOrderQueryService"
+		ref="tradeOrderQueryService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<dubbo:service interface="com.ink.trade.api.service.ISignConfirmService"
+		ref="signConfirmService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<dubbo:service interface="com.ink.trade.api.service.ISignApplyService"
+		ref="signApplyService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<dubbo:service interface="com.ink.trade.api.service.IUnbindService"
+		ref="unbindService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<dubbo:service interface="com.ink.trade.api.service.IBindCardQueryService"
+		ref="bindCardQueryService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<!-- web平台提供dubbo开始 -->
+	<!-- 通道配置 -->
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileInfoService"
+		ref="asileInfoService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileBankRuntimeService"
+		ref="asileBankRuntimeService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileBankService"
+		ref="asileBankService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileBankTempService"
+		ref="asileBankTempService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileResCodeService"
+		ref="asileResCodeService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileBusinessService"
+		ref="asileBusinessService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAsileBusinessSupportService"
+		ref="asileBusinessSupportService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IAuthChannelPriorityService"
+		ref="authChannelPriorityService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.asile.service.IMchAuthService"
+		ref="mchAuthService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<!-- 基础配置 -->
+	<dubbo:service interface="com.ink.trade.api.platform.basic.service.IBankcardBinService"
+		ref="bankcardBinService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.basic.service.IBasicBankService"
+		ref="basicBankService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.basic.service.IBasicResCodeService"
+		ref="basicResCodeService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.basic.service.IMchBankService"
+		ref="mchBankService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	
+	<!-- 交易业务信息 -->
+	<dubbo:service interface="com.ink.trade.api.platform.trade.service.IAuthOrderService"
+		ref="authOrderService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.trade.service.IAuthService"
+		ref="authService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.trade.service.ITradeOrderService"
+		ref="tradeOrderService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<dubbo:service interface="com.ink.trade.api.platform.trade.service.IPayOrderService"
+		ref="payOrderService" version="1.0.0" retries="0" loadbalance="random">
+	</dubbo:service>
+	<!-- web平台提供dubbo结束 -->
+	
+	
+</beans>    

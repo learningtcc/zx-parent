@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OperationLog">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.OperationLog">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="table_name" property="tableName" jdbcType="VARCHAR" />
+		<result column="table_id" property="tableId" jdbcType="BIGINT" />
+		<result column="table_column" property="tableColumn" jdbcType="VARCHAR" />
+		<result column="old_content" property="oldContent" jdbcType="VARCHAR" />
+		<result column="new_content" property="newContent" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, type, table_name, table_id, table_column, old_content, new_content,
+		create_time,
+		update_time, operator, del_flag, version, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from operation_log
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from operation_log
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.OperationLog">
+		insert into operation_log (id, type, table_name,
+		table_id, table_column, old_content,
+		new_content, create_time, update_time,
+		operator, del_flag, version,
+		remark)
+		values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
+		#{tableName,jdbcType=VARCHAR},
+		#{tableId,jdbcType=BIGINT}, #{tableColumn,jdbcType=VARCHAR}, #{oldContent,jdbcType=VARCHAR},
+		#{newContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{operator,jdbcType=VARCHAR}, #{delFlag,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ink.balance.core.po.OperationLog">
+		insert into operation_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="tableName != null">
+				table_name,
+			</if>
+			<if test="tableId != null">
+				table_id,
+			</if>
+			<if test="tableColumn != null">
+				table_column,
+			</if>
+			<if test="oldContent != null">
+				old_content,
+			</if>
+			<if test="newContent != null">
+				new_content,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="tableName != null">
+				#{tableName,jdbcType=VARCHAR},
+			</if>
+			<if test="tableId != null">
+				#{tableId,jdbcType=BIGINT},
+			</if>
+			<if test="tableColumn != null">
+				#{tableColumn,jdbcType=VARCHAR},
+			</if>
+			<if test="oldContent != null">
+				#{oldContent,jdbcType=VARCHAR},
+			</if>
+			<if test="newContent != null">
+				#{newContent,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.OperationLog">
+		update operation_log
+		<set>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="tableName != null">
+				table_name = #{tableName,jdbcType=VARCHAR},
+			</if>
+			<if test="tableId != null">
+				table_id = #{tableId,jdbcType=BIGINT},
+			</if>
+			<if test="tableColumn != null">
+				table_column = #{tableColumn,jdbcType=VARCHAR},
+			</if>
+			<if test="oldContent != null">
+				old_content = #{oldContent,jdbcType=VARCHAR},
+			</if>
+			<if test="newContent != null">
+				new_content = #{newContent,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.OperationLog">
+		update operation_log
+		set type = #{type,jdbcType=INTEGER},
+		table_name = #{tableName,jdbcType=VARCHAR},
+		table_id = #{tableId,jdbcType=BIGINT},
+		table_column = #{tableColumn,jdbcType=VARCHAR},
+		old_content = #{oldContent,jdbcType=VARCHAR},
+		new_content = #{newContent,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		operator = #{operator,jdbcType=VARCHAR},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

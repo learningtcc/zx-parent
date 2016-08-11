@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Seq">
+	
+	 <resultMap type="java.util.HashMap" id="resultMap">
+       <result column="seqc" property="seqc" javaType="java.lang.String" jdbcType="VARCHAR"/>
+       <result column="seq_no" property="seqNo" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<select id="test" statementType="CALLABLE" parameterType="java.util.HashMap" resultType="java.lang.Integer">   
+	<![CDATA[  
+	    {call seq4 (#{seqc,mode=IN,jdbcType=VARCHAR},#{seq_no,mode=OUT,jdbcType=INTEGER})}  
+	]]>  
+	</select>  
+    
+	
+</mapper>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TradeLog">
+
+    <resultMap id="TradeLog" type="com.ink.trade.core.po.TradeLog">
+        <result property="id" column="id"/>
+        <result property="reqId" column="req_id"/>
+        <result property="mchId" column="mch_id"/>
+        <result property="ordId" column="ord_id"/>
+        <result property="txnCode" column="txn_code"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="amt" column="amt"/>
+        <result property="status" column="status"/>
+        <result property="operator" column="operator"/>
+        <result property="channelNo" column="channel_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="cid" column="cid"/>
+        <result property="phone" column="phone"/>
+        <result property="routeBusinessType" column="route_business_type"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,req_id ,mch_id ,ord_id ,txn_code ,order_date ,amt ,status ,operator ,channel_no ,user_id ,create_time ,card_no ,cid ,phone,route_business_type 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <![CDATA[
+        INSERT INTO trade_log (
+	        id  ,
+	        req_id  ,
+	        mch_id  ,
+	        ord_id  ,
+	        txn_code  ,
+	        order_date  ,
+	        amt  ,
+	        status  ,
+	        operator  ,
+	        channel_no  ,
+	        user_id  ,
+	        create_time  ,
+	        card_no  ,
+	        cid  ,
+	        phone,
+	        route_business_type
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{reqId, jdbcType=VARCHAR} ,
+        	#{mchId, jdbcType=VARCHAR} ,
+        	#{ordId, jdbcType=VARCHAR} ,
+        	#{txnCode, jdbcType=VARCHAR} ,
+        	#{orderDate, jdbcType=TIMESTAMP} ,
+        	#{amt, jdbcType=DECIMAL} ,
+        	#{status, jdbcType=INTEGER} ,
+        	#{operator, jdbcType=VARCHAR} ,
+        	#{channelNo, jdbcType=VARCHAR} ,
+        	#{userId, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{cardNo, jdbcType=VARCHAR} ,
+        	#{cid, jdbcType=BIGINT} ,
+        	#{phone, jdbcType=VARCHAR},
+        	#{routeBusinessType, jdbcType=VARCHAR}
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO trade_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.reqId, jdbcType=VARCHAR} ,
+        	#{item.mchId, jdbcType=VARCHAR} ,
+        	#{item.ordId, jdbcType=VARCHAR} ,
+        	#{item.txnCode, jdbcType=VARCHAR} ,
+        	#{item.orderDate, jdbcType=TIMESTAMP} ,
+        	#{item.amt, jdbcType=DECIMAL} ,
+        	#{item.status, jdbcType=INTEGER} ,
+        	#{item.operator, jdbcType=VARCHAR} ,
+        	#{item.channelNo, jdbcType=VARCHAR} ,
+        	#{item.userId, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.cardNo, jdbcType=VARCHAR} ,
+        	#{item.cid, jdbcType=BIGINT} ,
+        	#{item.phone, jdbcType=VARCHAR},
+        	#{item.routeBusinessType, jdbcType=VARCHAR}
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE trade_log SET
+	        req_id = #{reqId, jdbcType=VARCHAR} ,
+	        mch_id = #{mchId, jdbcType=VARCHAR} ,
+	        ord_id = #{ordId, jdbcType=VARCHAR} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        order_date = #{orderDate, jdbcType=TIMESTAMP} ,
+	        amt = #{amt, jdbcType=DECIMAL} ,
+	        status = #{status, jdbcType=INTEGER} ,
+	        operator = #{operator, jdbcType=VARCHAR} ,
+	        channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	        user_id = #{userId, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        card_no = #{cardNo, jdbcType=VARCHAR} ,
+	        cid = #{cid, jdbcType=BIGINT} ,
+	        phone = #{phone, jdbcType=VARCHAR},
+	         route_business_type = #{routeBusinessType, jdbcType=VARCHAR}
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+<update id="updateNotNull" >
+			UPDATE trade_log
+				<set>
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		req_id = #{reqId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=mchId and ''!=mchId ">
+	   			 		mch_id = #{mchId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=ordId and ''!=ordId ">
+	   			 		ord_id = #{ordId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=orderDate and ''!=orderDate ">
+	   			 		order_date = #{orderDate, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=amt and ''!=amt ">
+	   			 		amt = #{amt, jdbcType=DECIMAL} ,
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		status = #{status, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=operator and ''!=operator ">
+	   			 		operator = #{operator, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=userId and ''!=userId ">
+	   			 		user_id = #{userId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=cardNo and ''!=cardNo ">
+	   			 		card_no = #{cardNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=cid and ''!=cid ">
+	   			 		cid = #{cid, jdbcType=BIGINT} ,
+	   			   	</if>
+			       	<if test="null!=phone and ''!=phone ">
+	   			 		phone = #{phone, jdbcType=VARCHAR} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM trade_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="TradeLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM trade_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		AND status = #{status}
+	   			   	</if>
+			       	<if test="null!=operator and ''!=operator ">
+	   			 		AND operator = #{operator}
+	   			   	</if>
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		AND channel_no = #{channelNo}
+	   			   	</if>
+			       	<if test="null!=userId and ''!=userId ">
+	   			 		AND user_id = #{userId}
+	   			   	</if>
+			       	<if test="null!=cardNo and ''!=cardNo ">
+	   			 		AND card_no = #{cardNo}
+	   			   	</if>
+			       	<if test="null!=phone and ''!=phone ">
+	   			 		AND phone = #{phone}
+	   			   	</if>
+	   			   	<if test="null!=routeBusinessType and ''!=routeBusinessType ">
+	   			 		AND route_business_type = #{routeBusinessType}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=status and ''!=status">
+				    <!-- 	AND status LIKE '%'||#{status}||'%' oracle -->
+			   			AND status LIKE concat('%',#{status},'%')
+			   			
+			   		</if>
+				    <if test="null!=operator and ''!=operator">
+				    <!-- 	AND operator LIKE '%'||#{operator}||'%' oracle -->
+			   			AND operator LIKE concat('%',#{operator},'%')
+			   			
+			   		</if>
+				    <if test="null!=channelNo and ''!=channelNo">
+				    <!-- 	AND channel_no LIKE '%'||#{channelNo}||'%' oracle -->
+			   			AND channel_no LIKE concat('%',#{channelNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=userId and ''!=userId">
+				    <!-- 	AND user_id LIKE '%'||#{userId}||'%' oracle -->
+			   			AND user_id LIKE concat('%',#{userId},'%')
+			   			
+			   		</if>
+				    <if test="null!=cardNo and ''!=cardNo">
+				    <!-- 	AND card_no LIKE '%'||#{cardNo}||'%' oracle -->
+			   			AND card_no LIKE concat('%',#{cardNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=phone and ''!=phone">
+				    <!-- 	AND phone LIKE '%'||#{phone}||'%' oracle -->
+			   			AND phone LIKE concat('%',#{phone},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=reqId and ''!=reqId">
+			    AND req_id = #{reqId}
+			</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=ordId and ''!=ordId">
+			    AND ord_id = #{ordId}
+			</if>
+		   	<if test="null!=orderDateBegin and ''!=orderDateBegin">
+		   		AND order_date >= #{orderDateBegin}
+		   	</if>
+		   	<if test="null!=orderDateEnd and ''!=orderDateEnd">
+		   		AND order_date &lt; #{orderDateEnd}
+		   	</if>
+		   	<if test="null!=amt and ''!=amt">
+			    AND amt = #{amt}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=cid and ''!=cid">
+			    AND cid = #{cid}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM trade_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="TradeLog">
+    	SELECT <include refid="columns"/> FROM trade_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="TradeLog">
+	    SELECT <include refid="columns"/> FROM trade_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

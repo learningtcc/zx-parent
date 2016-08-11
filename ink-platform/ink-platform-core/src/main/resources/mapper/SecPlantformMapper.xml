@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ink.platform.core.dao.SecPlantformDao">
+
+<resultMap id="SecPlantform" type="com.ink.platform.api.model.SecPlantform" >
+		<result column="id" property="id" />
+		<result column="plantform_name" property="plantformName" />
+		<result column="plantform_code" property="plantformCode" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="creator_id" property="creatorId" />
+		<result column="version" property="version" />
+		<result column="del_flag" property="delFlag" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+		<result column="creator" property="creator" />
+		
+	</resultMap>
+	<!-- 验重 -->
+	 <select id="selectByMap" resultMap="SecPlantform" parameterType="java.util.Map" >
+    SELECT
+		p.*, u.user_name AS creator
+	FROM
+		sec_plantform p,
+		sec_user u
+	WHERE
+		p.creator_id = u.id
+       <if test="plantformName != null and  plantformName !=''" >
+        and p.plantform_name =#{plantformName}
+      </if>
+       <if test="plantformCode != null and  plantformCode !=''" >
+        or  p.plantform_code =#{plantformCode}
+      </if>
+      <if test="status != null  and  status !=''" >
+			and p.status =#{status}
+		</if>
+      <if test="createTime != null and createTime !=''">
+			and DATE_FORMAT(p.create_time,'%Y-%m-%d')<![CDATA[>=]]>
+			#{createTime}
+		</if>
+		<if test="updateTime != null and updateTime !=''">
+			and DATE_FORMAT(p.create_time,'%Y-%m-%d')<![CDATA[<=]]>
+			#{updateTime}
+		</if>
+		<if test="pageVO!=null and pageVO!=''">
+			order by p.create_time desc
+			LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+			jdbcType=INTEGER}
+		</if>
+  </select>
+  
+  	 <select id="selectTotal" resultType="int" parameterType="java.util.Map" >
+    SELECT
+		count(*)
+	FROM
+		sec_plantform p,
+		sec_user u
+	WHERE
+		p.creator_id = u.id
+       <if test="plantformName != null and  plantformName !=''" >
+        and p.plantform_name =#{plantformName}
+      </if>
+       <if test="plantformCode != null and  plantformCode !=''" >
+        or  p.plantform_code =#{plantformCode}
+      </if>
+      <if test="status != null  and  status !=''" >
+			and p.status =#{status}
+		</if>
+      <if test="createTime != null and createTime !=''">
+			and DATE_FORMAT(p.create_time,'%Y-%m-%d')<![CDATA[>=]]>
+			#{createTime}
+		</if>
+		<if test="updateTime != null and updateTime !=''">
+			and DATE_FORMAT(p.create_time,'%Y-%m-%d')<![CDATA[<=]]>
+			#{updateTime}
+		</if>
+  </select>
+	<!--平台详情  -->
+	 <select id="selectByPrimaryKey" resultMap="SecPlantform" parameterType="java.lang.Long" >
+ SELECT
+	p.*, 
+	u.user_name as creator
+FROM
+	sec_plantform p,
+	sec_user u
+WHERE
+	p.id =#{id,jdbcType=BIGINT}
+AND p.creator_id = u.id 
+  </select>
+  <!--根据id查询对象  -->
+   <select id="select" resultType="SecPlantform" parameterType="java.lang.Long" >
+       select 
+       id,
+       plantform_name as plantformName,
+       plantform_code as plantformCode,
+       create_time as createTime,
+       update_time as updateTime,creator_id as creatorId,version,del_flag as delFlag,status,remark
+       from sec_plantform
+      where id = #{id,jdbcType=BIGINT}
+  </select>
+ 
+<insert id="insertSelective" parameterType="com.ink.platform.api.model.SecPlantform" >
+    insert into sec_plantform
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="plantformName != null" >
+        plantform_name,
+      </if>
+      <if test="plantformCode != null" >
+        plantform_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="plantformName != null" >
+        #{plantformName,jdbcType=VARCHAR},
+      </if>
+      <if test="plantformCode != null" >
+        #{plantformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sec_plantform
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ink.platform.api.model.SecPlantform" >
+    update sec_plantform
+    <set >
+      <if test="plantformName != null" >
+        plantform_name = #{plantformName,jdbcType=VARCHAR},
+      </if>
+      <if test="plantformCode != null" >
+        plantform_code = #{plantformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null"  >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+	   xmlns:ykrabbit="http://www.yinker.com/schema/ykrabbit" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   			http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+       			http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+       http://www.yinker.com/schema/ykrabbit
+                http://www.yinker.com/schema/ykrabbit/yinker-rabbit-1.0.xsd">
+
+	<bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+		<property name="host" value="${rabbitmq.host}" />
+		<property name="port" value="${rabbitmq.port}" />
+	</bean>
+	
+	<rabbit:admin connection-factory="connectionFactory" />
+	<ykrabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+	
+	<rabbit:direct-exchange name="msg.email.exchange" durable="true" auto-delete="false" id="tnschange">
+		<rabbit:bindings>
+			<rabbit:binding queue="msg.email.send.queue" key="msg.email.send.key" />
+			<rabbit:binding queue="msg.email.store.queue" key="msg.email.store.key" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<!-- 短信MQ-->
+	<rabbit:direct-exchange name="msg.sms.exchange" durable="true" auto-delete="false" id="smschange">
+		<rabbit:bindings>
+			<rabbit:binding queue="msg.sms.queue.single" key="msg.sms.key.single"/>
+			<rabbit:binding queue="msg.sms.queue.mass" key="msg.sms.key.mass"/>
+			<rabbit:binding queue="msg.sms.store.queue" key="msg.sms.store.key"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+    <!-- 邮件队列 -->
+    <rabbit:queue name="msg.email.send.queue" durable="true" auto-delete="false" exclusive="false"/>
+    <rabbit:queue name="msg.email.store.queue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 短信队列-->
+	<rabbit:queue name="msg.sms.queue.single" durable="true" auto-delete="false" exclusive="false"/>
+	<rabbit:queue name="msg.sms.queue.mass" durable="true" auto-delete="false" exclusive="false"/>
+	<rabbit:queue name="msg.sms.store.queue" durable="true" auto-delete="false" exclusive="false"/>
+
+    <!-- 邮件监听器 -->
+    <bean id="emailProcessListener" class="com.ink.msgcenter.mq.listener.EmailListener"/>
+	<!-- 短信队列 -->
+	<bean id="smsProcessListener" class="com.ink.msgcenter.mq.listener.SmsListener"/>
+	<bean id="smsLogProcessListener" class="com.ink.msgcenter.mq.listener.SmsLogListener"/>
+
+    <ykrabbit:listener-container connection-factory="connectionFactory" concurrency="20">
+        <ykrabbit:listener queues="msg.email.send.queue" ref="emailProcessListener" method="sendEmail" response-exchange="msg.email.exchange" response-routing-key="msg.email.send.key"/>
+        <ykrabbit:listener queues="msg.email.store.queue" ref="emailProcessListener" method="storeEmail" response-exchange="msg.email.exchange" response-routing-key="msg.email.store.key"/>
+		<!--sms interface-->
+		<ykrabbit:listener queues="msg.sms.queue.single" ref="smsProcessListener" method="sendMessage" response-exchange="msg.sms.exchange" response-routing-key="msg.sms.key.single"/>
+		<ykrabbit:listener queues="msg.sms.queue.mass" ref="smsProcessListener" method="sendMessage" response-exchange="msg.sms.exchange" response-routing-key="msg.sms.key.mass"/>
+		<ykrabbit:listener queues="msg.sms.store.queue" ref="smsLogProcessListener" method="storeSmsLog" response-exchange="msg.sms.exchange" response-routing-key="msg.sms.store.key"/>
+	</ykrabbit:listener-container>
+</beans>

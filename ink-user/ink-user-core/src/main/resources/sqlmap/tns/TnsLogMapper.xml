@@ -1,0 +1,1534 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TnsLog">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.TnsLog">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="req_id" property="reqId" jdbcType="VARCHAR" />
+		<result column="mch_id" property="mchId" jdbcType="BIGINT" />
+		<result column="ord_id" property="ordId" jdbcType="VARCHAR" />
+		<result column="ord_date" property="ordDate" jdbcType="TIMESTAMP" />
+		<result column="ord_time" property="ordTime" jdbcType="TIME" />
+		<result column="txn_code" property="txnCode" jdbcType="VARCHAR" />
+		<result column="txn_name" property="txnName" jdbcType="VARCHAR" />
+		<result column="txn_nature" property="txnNature" jdbcType="INTEGER" />
+		<result column="run_lv" property="runLv" jdbcType="INTEGER" />
+		<result column="dir" property="dir" jdbcType="VARCHAR" />
+		<result column="cust_id" property="custId" jdbcType="VARCHAR" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="ord_amt" property="ordAmt" jdbcType="DECIMAL" />
+		<result column="acc_txn_id" property="accTxnId" jdbcType="BIGINT" />
+		<result column="acc_date" property="accDate" jdbcType="DATE" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="auth_id" property="authId" jdbcType="BIGINT" />
+		<result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+		<result column="pay_id" property="payId" jdbcType="VARCHAR" />
+		<result column="ori_ord_id" property="oriOrdId" jdbcType="VARCHAR" />
+		<result column="ori_ord_date" property="oriOrdDate" jdbcType="DATE" />
+		<result column="ori_txn_code" property="oriTxnCode" jdbcType="VARCHAR" />
+		<result column="open_close_flg" property="openCloseFlg"
+			jdbcType="VARCHAR" />
+		<result column="acc_type" property="accType" jdbcType="INTEGER" />
+		<result column="acc_id" property="accId" jdbcType="BIGINT" />
+		<result column="acc_name" property="accName" jdbcType="VARCHAR" />
+		<result column="acc_amt_id" property="accAmtId" jdbcType="BIGINT" />
+		<result column="acc_sub_type" property="accSubType" jdbcType="VARCHAR" />
+		<result column="acc_cur" property="accCur" jdbcType="VARCHAR" />
+		<result column="aga_type" property="agaType" jdbcType="INTEGER" />
+		<result column="aga_id" property="agaId" jdbcType="BIGINT" />
+		<result column="aga_name" property="agaName" jdbcType="VARCHAR" />
+		<result column="aga_amt_id" property="agaAmtId" jdbcType="BIGINT" />
+		<result column="aga_sub_type" property="agaSubType" jdbcType="VARCHAR" />
+		<result column="aga_cur" property="agaCur" jdbcType="VARCHAR" />
+		<result column="amt" property="amt" jdbcType="DECIMAL" />
+		<result column="cust_fee" property="custFee" jdbcType="DECIMAL" />
+		<result column="bal" property="bal" jdbcType="DECIMAL" />
+		<result column="rev_flg" property="revFlg" jdbcType="INTEGER" />
+		<result column="ret_code" property="retCode" jdbcType="VARCHAR" />
+		<result column="ret_msg" property="retMsg" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="BIT" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, last_update_time,
+		req_id, mch_id,
+		ord_id, ord_date,
+		ord_time, txn_code, txn_name,
+		txn_nature, run_lv, dir, cust_id,
+		org_id,
+		ord_amt, acc_txn_id, acc_date, channel, auth_id,
+		card_no,
+		pay_id, ori_ord_id, ori_ord_date, ori_txn_code,
+		open_close_flg,
+		acc_type,
+		acc_id, acc_name, acc_amt_id, acc_sub_type,
+		acc_cur,
+		aga_type, aga_id,
+		aga_name, aga_amt_id,
+		aga_sub_type, aga_cur, amt, cust_fee,
+		bal, rev_flg, ret_code, ret_msg, memo,
+		del_flag,
+		filler1, filler2, filler3, version, uid
+	</sql>
+	
+	<!-- 基础方法Start -->
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id"  >
+    <![CDATA[
+        INSERT INTO tns_log (
+	        id  ,
+	        create_time  ,
+	        last_update_time  ,
+	        req_id  ,
+	        mch_id  ,
+	        ord_id  ,
+	        ord_date  ,
+	        ord_time  ,
+	        txn_code  ,
+	        txn_name  ,
+	        txn_nature  ,
+	        run_lv  ,
+	        dir  ,
+	        cust_id  ,
+	        org_id  ,
+	        ord_amt  ,
+	        acc_txn_id  ,
+	        acc_date  ,
+	        channel  ,
+	        auth_id  ,
+	        card_no  ,
+	        pay_id  ,
+	        ori_ord_id  ,
+	        ori_ord_date  ,
+	        ori_txn_code  ,
+	        open_close_flg  ,
+	        acc_type  ,
+	        acc_id  ,
+	        acc_name  ,
+	        acc_amt_id  ,
+	        acc_sub_type  ,
+	        acc_cur  ,
+	        aga_type  ,
+	        aga_id  ,
+	        aga_name  ,
+	        aga_amt_id  ,
+	        aga_sub_type  ,
+	        aga_cur  ,
+	        amt  ,
+	        cust_fee  ,
+	        bal  ,
+	        rev_flg  ,
+	        ret_code  ,
+	        ret_msg  ,
+	        memo  ,
+	        del_flag  ,
+	        filler1  ,
+	        filler2  ,
+	        filler3  ,
+	        version  ,
+	        uid  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{reqId, jdbcType=VARCHAR} ,
+        	#{mchId, jdbcType=BIGINT} ,
+        	#{ordId, jdbcType=VARCHAR} ,
+        	#{ordDate, jdbcType=TIMESTAMP} ,
+        	#{ordTime, jdbcType=TIME} ,
+        	#{txnCode, jdbcType=VARCHAR} ,
+        	#{txnName, jdbcType=VARCHAR} ,
+        	#{txnNature, jdbcType=TINYINT} ,
+        	#{runLv, jdbcType=BIT} ,
+        	#{dir, jdbcType=VARCHAR} ,
+        	#{custId, jdbcType=VARCHAR} ,
+        	#{orgId, jdbcType=BIGINT} ,
+        	#{ordAmt, jdbcType=DECIMAL} ,
+        	#{accTxnId, jdbcType=BIGINT} ,
+        	#{accDate, jdbcType=DATE} ,
+        	#{channel, jdbcType=VARCHAR} ,
+        	#{authId, jdbcType=BIGINT} ,
+        	#{cardNo, jdbcType=VARCHAR} ,
+        	#{payId, jdbcType=VARCHAR} ,
+        	#{oriOrdId, jdbcType=VARCHAR} ,
+        	#{oriOrdDate, jdbcType=DATE} ,
+        	#{oriTxnCode, jdbcType=VARCHAR} ,
+        	#{openCloseFlg, jdbcType=VARCHAR} ,
+        	#{accType, jdbcType=BIT} ,
+        	#{accId, jdbcType=BIGINT} ,
+        	#{accName, jdbcType=VARCHAR} ,
+        	#{accAmtId, jdbcType=BIGINT} ,
+        	#{accSubType, jdbcType=VARCHAR} ,
+        	#{accCur, jdbcType=VARCHAR} ,
+        	#{agaType, jdbcType=INTEGER} ,
+        	#{agaId, jdbcType=BIGINT} ,
+        	#{agaName, jdbcType=VARCHAR} ,
+        	#{agaAmtId, jdbcType=BIGINT} ,
+        	#{agaSubType, jdbcType=VARCHAR} ,
+        	#{agaCur, jdbcType=VARCHAR} ,
+        	#{amt, jdbcType=DECIMAL} ,
+        	#{custFee, jdbcType=DECIMAL} ,
+        	#{bal, jdbcType=DECIMAL} ,
+        	#{revFlg, jdbcType=BIT} ,
+        	#{retCode, jdbcType=VARCHAR} ,
+        	#{retMsg, jdbcType=VARCHAR} ,
+        	#{memo, jdbcType=VARCHAR} ,
+        	#{delFlag, jdbcType=BIT} ,
+        	#{filler1, jdbcType=VARCHAR} ,
+        	#{filler2, jdbcType=VARCHAR} ,
+        	#{filler3, jdbcType=VARCHAR} ,
+        	#{version, jdbcType=INTEGER} ,
+        	#{uid, jdbcType=BIGINT} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO tns_log ( <include refid="Base_Column_List"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.reqId, jdbcType=VARCHAR} ,
+        	#{item.mchId, jdbcType=BIGINT} ,
+        	#{item.ordId, jdbcType=VARCHAR} ,
+        	#{item.ordDate, jdbcType=TIMESTAMP} ,
+        	#{item.ordTime, jdbcType=TIME} ,
+        	#{item.txnCode, jdbcType=VARCHAR} ,
+        	#{item.txnName, jdbcType=VARCHAR} ,
+        	#{item.txnNature, jdbcType=TINYINT} ,
+        	#{item.runLv, jdbcType=BIT} ,
+        	#{item.dir, jdbcType=VARCHAR} ,
+        	#{item.custId, jdbcType=VARCHAR} ,
+        	#{item.orgId, jdbcType=BIGINT} ,
+        	#{item.ordAmt, jdbcType=DECIMAL} ,
+        	#{item.accTxnId, jdbcType=BIGINT} ,
+        	#{item.accDate, jdbcType=DATE} ,
+        	#{item.channel, jdbcType=VARCHAR} ,
+        	#{item.authId, jdbcType=BIGINT} ,
+        	#{item.cardNo, jdbcType=VARCHAR} ,
+        	#{item.payId, jdbcType=VARCHAR} ,
+        	#{item.oriOrdId, jdbcType=VARCHAR} ,
+        	#{item.oriOrdDate, jdbcType=DATE} ,
+        	#{item.oriTxnCode, jdbcType=VARCHAR} ,
+        	#{item.openCloseFlg, jdbcType=VARCHAR} ,
+        	#{item.accType, jdbcType=BIT} ,
+        	#{item.accId, jdbcType=BIGINT} ,
+        	#{item.accName, jdbcType=VARCHAR} ,
+        	#{item.accAmtId, jdbcType=BIGINT} ,
+        	#{item.accSubType, jdbcType=VARCHAR} ,
+        	#{item.accCur, jdbcType=VARCHAR} ,
+        	#{item.agaType, jdbcType=INTEGER} ,
+        	#{item.agaId, jdbcType=BIGINT} ,
+        	#{item.agaName, jdbcType=VARCHAR} ,
+        	#{item.agaAmtId, jdbcType=BIGINT} ,
+        	#{item.agaSubType, jdbcType=VARCHAR} ,
+        	#{item.agaCur, jdbcType=VARCHAR} ,
+        	#{item.amt, jdbcType=DECIMAL} ,
+        	#{item.custFee, jdbcType=DECIMAL} ,
+        	#{item.bal, jdbcType=DECIMAL} ,
+        	#{item.revFlg, jdbcType=BIT} ,
+        	#{item.retCode, jdbcType=VARCHAR} ,
+        	#{item.retMsg, jdbcType=VARCHAR} ,
+        	#{item.memo, jdbcType=VARCHAR} ,
+        	#{item.delFlag, jdbcType=BIT} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.uid, jdbcType=BIGINT} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE tns_log SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        req_id = #{reqId, jdbcType=VARCHAR} ,
+	        mch_id = #{mchId, jdbcType=BIGINT} ,
+	        ord_id = #{ordId, jdbcType=VARCHAR} ,
+	        ord_date = #{ordDate, jdbcType=TIMESTAMP} ,
+	        ord_time = #{ordTime, jdbcType=TIME} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        txn_name = #{txnName, jdbcType=VARCHAR} ,
+	        txn_nature = #{txnNature, jdbcType=TINYINT} ,
+	        run_lv = #{runLv, jdbcType=BIT} ,
+	        dir = #{dir, jdbcType=VARCHAR} ,
+	        cust_id = #{custId, jdbcType=VARCHAR} ,
+	        org_id = #{orgId, jdbcType=BIGINT} ,
+	        ord_amt = #{ordAmt, jdbcType=DECIMAL} ,
+	        acc_txn_id = #{accTxnId, jdbcType=BIGINT} ,
+	        acc_date = #{accDate, jdbcType=DATE} ,
+	        channel = #{channel, jdbcType=VARCHAR} ,
+	        auth_id = #{authId, jdbcType=BIGINT} ,
+	        card_no = #{cardNo, jdbcType=VARCHAR} ,
+	        pay_id = #{payId, jdbcType=VARCHAR} ,
+	        ori_ord_id = #{oriOrdId, jdbcType=VARCHAR} ,
+	        ori_ord_date = #{oriOrdDate, jdbcType=DATE} ,
+	        ori_txn_code = #{oriTxnCode, jdbcType=VARCHAR} ,
+	        open_close_flg = #{openCloseFlg, jdbcType=VARCHAR} ,
+	        acc_type = #{accType, jdbcType=BIT} ,
+	        acc_id = #{accId, jdbcType=BIGINT} ,
+	        acc_name = #{accName, jdbcType=VARCHAR} ,
+	        acc_amt_id = #{accAmtId, jdbcType=BIGINT} ,
+	        acc_sub_type = #{accSubType, jdbcType=VARCHAR} ,
+	        acc_cur = #{accCur, jdbcType=VARCHAR} ,
+	        aga_type = #{agaType, jdbcType=INTEGER} ,
+	        aga_id = #{agaId, jdbcType=BIGINT} ,
+	        aga_name = #{agaName, jdbcType=VARCHAR} ,
+	        aga_amt_id = #{agaAmtId, jdbcType=BIGINT} ,
+	        aga_sub_type = #{agaSubType, jdbcType=VARCHAR} ,
+	        aga_cur = #{agaCur, jdbcType=VARCHAR} ,
+	        amt = #{amt, jdbcType=DECIMAL} ,
+	        cust_fee = #{custFee, jdbcType=DECIMAL} ,
+	        bal = #{bal, jdbcType=DECIMAL} ,
+	        rev_flg = #{revFlg, jdbcType=BIT} ,
+	        ret_code = #{retCode, jdbcType=VARCHAR} ,
+	        ret_msg = #{retMsg, jdbcType=VARCHAR} ,
+	        memo = #{memo, jdbcType=VARCHAR} ,
+	        del_flag = #{delFlag, jdbcType=BIT} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER} ,
+	        uid = #{uid, jdbcType=BIGINT} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM tns_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM tns_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		AND req_id = #{reqId}
+	   			   	</if>
+			       	<if test="null!=ordId and ''!=ordId ">
+	   			 		AND ord_id = #{ordId}
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=txnName and ''!=txnName ">
+	   			 		AND txn_name = #{txnName}
+	   			   	</if>
+			       	<if test="null!=dir and ''!=dir ">
+	   			 		AND dir = #{dir}
+	   			   	</if>
+			       	<if test="null!=custId and ''!=custId ">
+	   			 		AND cust_id = #{custId}
+	   			   	</if>
+			       	<if test="null!=channel and ''!=channel ">
+	   			 		AND channel = #{channel}
+	   			   	</if>
+			       	<if test="null!=cardNo and ''!=cardNo ">
+	   			 		AND card_no = #{cardNo}
+	   			   	</if>
+			       	<if test="null!=payId and ''!=payId ">
+	   			 		AND pay_id = #{payId}
+	   			   	</if>
+			       	<if test="null!=oriOrdId and ''!=oriOrdId ">
+	   			 		AND ori_ord_id = #{oriOrdId}
+	   			   	</if>
+			       	<if test="null!=oriTxnCode and ''!=oriTxnCode ">
+	   			 		AND ori_txn_code = #{oriTxnCode}
+	   			   	</if>
+			       	<if test="null!=openCloseFlg and ''!=openCloseFlg ">
+	   			 		AND open_close_flg = #{openCloseFlg}
+	   			   	</if>
+			       	<if test="null!=accName and ''!=accName ">
+	   			 		AND acc_name = #{accName}
+	   			   	</if>
+			       	<if test="null!=accSubType and ''!=accSubType ">
+	   			 		AND acc_sub_type = #{accSubType}
+	   			   	</if>
+			       	<if test="null!=accCur and ''!=accCur ">
+	   			 		AND acc_cur = #{accCur}
+	   			   	</if>
+			       	<if test="null!=agaName and ''!=agaName ">
+	   			 		AND aga_name = #{agaName}
+	   			   	</if>
+			       	<if test="null!=agaSubType and ''!=agaSubType ">
+	   			 		AND aga_sub_type = #{agaSubType}
+	   			   	</if>
+			       	<if test="null!=agaCur and ''!=agaCur ">
+	   			 		AND aga_cur = #{agaCur}
+	   			   	</if>
+			       	<if test="null!=retCode and ''!=retCode ">
+	   			 		AND ret_code = #{retCode}
+	   			   	</if>
+			       	<if test="null!=retMsg and ''!=retMsg ">
+	   			 		AND ret_msg = #{retMsg}
+	   			   	</if>
+			       	<if test="null!=memo and ''!=memo ">
+	   			 		AND memo = #{memo}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=reqId and ''!=reqId">
+				    <!-- 	AND req_id LIKE '%'||#{reqId}||'%' oracle -->
+			   			AND req_id LIKE concat('%',#{reqId},'%')
+			   			
+			   		</if>
+				    <if test="null!=ordId and ''!=ordId">
+				    <!-- 	AND ord_id LIKE '%'||#{ordId}||'%' oracle -->
+			   			AND ord_id LIKE concat('%',#{ordId},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnName and ''!=txnName">
+				    <!-- 	AND txn_name LIKE '%'||#{txnName}||'%' oracle -->
+			   			AND txn_name LIKE concat('%',#{txnName},'%')
+			   			
+			   		</if>
+				    <if test="null!=dir and ''!=dir">
+				    <!-- 	AND dir LIKE '%'||#{dir}||'%' oracle -->
+			   			AND dir LIKE concat('%',#{dir},'%')
+			   			
+			   		</if>
+				    <if test="null!=custId and ''!=custId">
+				    <!-- 	AND cust_id LIKE '%'||#{custId}||'%' oracle -->
+			   			AND cust_id LIKE concat('%',#{custId},'%')
+			   			
+			   		</if>
+				    <if test="null!=channel and ''!=channel">
+				    <!-- 	AND channel LIKE '%'||#{channel}||'%' oracle -->
+			   			AND channel LIKE concat('%',#{channel},'%')
+			   			
+			   		</if>
+				    <if test="null!=cardNo and ''!=cardNo">
+				    <!-- 	AND card_no LIKE '%'||#{cardNo}||'%' oracle -->
+			   			AND card_no LIKE concat('%',#{cardNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=payId and ''!=payId">
+				    <!-- 	AND pay_id LIKE '%'||#{payId}||'%' oracle -->
+			   			AND pay_id LIKE concat('%',#{payId},'%')
+			   			
+			   		</if>
+				    <if test="null!=oriOrdId and ''!=oriOrdId">
+				    <!-- 	AND ori_ord_id LIKE '%'||#{oriOrdId}||'%' oracle -->
+			   			AND ori_ord_id LIKE concat('%',#{oriOrdId},'%')
+			   			
+			   		</if>
+				    <if test="null!=oriTxnCode and ''!=oriTxnCode">
+				    <!-- 	AND ori_txn_code LIKE '%'||#{oriTxnCode}||'%' oracle -->
+			   			AND ori_txn_code LIKE concat('%',#{oriTxnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=openCloseFlg and ''!=openCloseFlg">
+				    <!-- 	AND open_close_flg LIKE '%'||#{openCloseFlg}||'%' oracle -->
+			   			AND open_close_flg LIKE concat('%',#{openCloseFlg},'%')
+			   			
+			   		</if>
+				    <if test="null!=accName and ''!=accName">
+				    <!-- 	AND acc_name LIKE '%'||#{accName}||'%' oracle -->
+			   			AND acc_name LIKE concat('%',#{accName},'%')
+			   			
+			   		</if>
+				    <if test="null!=accSubType and ''!=accSubType">
+				    <!-- 	AND acc_sub_type LIKE '%'||#{accSubType}||'%' oracle -->
+			   			AND acc_sub_type LIKE concat('%',#{accSubType},'%')
+			   			
+			   		</if>
+				    <if test="null!=accCur and ''!=accCur">
+				    <!-- 	AND acc_cur LIKE '%'||#{accCur}||'%' oracle -->
+			   			AND acc_cur LIKE concat('%',#{accCur},'%')
+			   			
+			   		</if>
+				    <if test="null!=agaName and ''!=agaName">
+				    <!-- 	AND aga_name LIKE '%'||#{agaName}||'%' oracle -->
+			   			AND aga_name LIKE concat('%',#{agaName},'%')
+			   			
+			   		</if>
+				    <if test="null!=agaSubType and ''!=agaSubType">
+				    <!-- 	AND aga_sub_type LIKE '%'||#{agaSubType}||'%' oracle -->
+			   			AND aga_sub_type LIKE concat('%',#{agaSubType},'%')
+			   			
+			   		</if>
+				    <if test="null!=agaCur and ''!=agaCur">
+				    <!-- 	AND aga_cur LIKE '%'||#{agaCur}||'%' oracle -->
+			   			AND aga_cur LIKE concat('%',#{agaCur},'%')
+			   			
+			   		</if>
+				    <if test="null!=retCode and ''!=retCode">
+				    <!-- 	AND ret_code LIKE '%'||#{retCode}||'%' oracle -->
+			   			AND ret_code LIKE concat('%',#{retCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=retMsg and ''!=retMsg">
+				    <!-- 	AND ret_msg LIKE '%'||#{retMsg}||'%' oracle -->
+			   			AND ret_msg LIKE concat('%',#{retMsg},'%')
+			   			
+			   		</if>
+				    <if test="null!=memo and ''!=memo">
+				    <!-- 	AND memo LIKE '%'||#{memo}||'%' oracle -->
+			   			AND memo LIKE concat('%',#{memo},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=ordDateBegin and ''!=ordDateBegin">
+		   		AND ord_date >= #{ordDateBegin}
+		   	</if>
+		   	<if test="null!=ordDateEnd and ''!=ordDateEnd">
+		   		AND ord_date &lt; #{ordDateEnd}
+		   	</if>
+		   	<if test="null!=ordTimeBegin and ''!=ordTimeBegin">
+		   		AND ord_time >= #{ordTimeBegin}
+		   	</if>
+		   	<if test="null!=ordTimeEnd and ''!=ordTimeEnd">
+		   		AND ord_time &lt; #{ordTimeEnd}
+		   	</if>
+		   	<if test="null!=txnNature and ''!=txnNature">
+			    AND txn_nature = #{txnNature}
+			</if>
+		   	<if test="null!=runLv and ''!=runLv">
+			    AND run_lv = #{runLv}
+			</if>
+		   	<if test="null!=orgId and ''!=orgId">
+			    AND org_id = #{orgId}
+			</if>
+		   	<if test="null!=ordAmt and ''!=ordAmt">
+			    AND ord_amt = #{ordAmt}
+			</if>
+		   	<if test="null!=accTxnId and ''!=accTxnId">
+			    AND acc_txn_id = #{accTxnId}
+			</if>
+		   	<if test="null!=accDateBegin and ''!=accDateBegin">
+		   		AND acc_date >= #{accDateBegin}
+		   	</if>
+		   	<if test="null!=accDateEnd and ''!=accDateEnd">
+		   		AND acc_date &lt; #{accDateEnd}
+		   	</if>
+		   	<if test="null!=authId and ''!=authId">
+			    AND auth_id = #{authId}
+			</if>
+		   	<if test="null!=oriOrdDateBegin and ''!=oriOrdDateBegin">
+		   		AND ori_ord_date >= #{oriOrdDateBegin}
+		   	</if>
+		   	<if test="null!=oriOrdDateEnd and ''!=oriOrdDateEnd">
+		   		AND ori_ord_date &lt; #{oriOrdDateEnd}
+		   	</if>
+		   	<if test="null!=accType and ''!=accType">
+			    AND acc_type = #{accType}
+			</if>
+		   	<if test="null!=accId and ''!=accId">
+			    AND acc_id = #{accId}
+			</if>
+		   	<if test="null!=accAmtId and ''!=accAmtId">
+			    AND acc_amt_id = #{accAmtId}
+			</if>
+		   	<if test="null!=agaType and ''!=agaType">
+			    AND aga_type = #{agaType}
+			</if>
+		   	<if test="null!=agaId and ''!=agaId">
+			    AND aga_id = #{agaId}
+			</if>
+		   	<if test="null!=agaAmtId and ''!=agaAmtId">
+			    AND aga_amt_id = #{agaAmtId}
+			</if>
+		   	<if test="null!=amt and ''!=amt">
+			    AND amt = #{amt}
+			</if>
+		   	<if test="null!=custFee and ''!=custFee">
+			    AND cust_fee = #{custFee}
+			</if>
+		   	<if test="null!=bal and ''!=bal">
+			    AND bal = #{bal}
+			</if>
+		   	<if test="null!=revFlg and ''!=revFlg">
+			    AND rev_flg = #{revFlg}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM tns_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/> FROM tns_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/> FROM tns_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 基础方法End -->
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tns_log
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		tns_log
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.TnsLog">
+		insert into tns_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="reqId != null">
+				req_id,
+			</if>
+			<if test="mchId != null">
+				mch_id,
+			</if>
+			<if test="ordId != null">
+				ord_id,
+			</if>
+			<if test="ordDate != null">
+				ord_date,
+			</if>
+			<if test="ordTime != null">
+				ord_time,
+			</if>
+			<if test="txnCode != null">
+				txn_code,
+			</if>
+			<if test="txnName != null">
+				txn_name,
+			</if>
+			<if test="txnNature != null">
+				txn_nature,
+			</if>
+			<if test="runLv != null">
+				run_lv,
+			</if>
+			<if test="dir != null">
+				dir,
+			</if>
+			<if test="custId != null">
+				cust_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="ordAmt != null">
+				ord_amt,
+			</if>
+			<if test="accTxnId != null">
+				acc_txn_id,
+			</if>
+			<if test="accDate != null">
+				acc_date,
+			</if>
+			<if test="channel != null">
+				channel,
+			</if>
+			<if test="authId != null">
+				auth_id,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="payId != null">
+				pay_id,
+			</if>
+			<if test="oriOrdId != null">
+				ori_ord_id,
+			</if>
+			<if test="oriOrdDate != null">
+				ori_ord_date,
+			</if>
+			<if test="oriTxnCode != null">
+				ori_txn_code,
+			</if>
+			<if test="openCloseFlg != null">
+				open_close_flg,
+			</if>
+			<if test="accType != null">
+				acc_type,
+			</if>
+			<if test="accId != null">
+				acc_id,
+			</if>
+			<if test="accName != null">
+				acc_name,
+			</if>
+			<if test="accAmtId != null">
+				acc_amt_id,
+			</if>
+			<if test="accSubType != null">
+				acc_sub_type,
+			</if>
+			<if test="accCur != null">
+				acc_cur,
+			</if>
+			<if test="agaType != null">
+				aga_type,
+			</if>
+			<if test="agaId != null">
+				aga_id,
+			</if>
+			<if test="agaName != null">
+				aga_name,
+			</if>
+			<if test="agaAmtId != null">
+				aga_amt_id,
+			</if>
+			<if test="agaSubType != null">
+				aga_sub_type,
+			</if>
+			<if test="agaCur != null">
+				aga_cur,
+			</if>
+			<if test="amt != null">
+				amt,
+			</if>
+			<if test="custFee != null">
+				cust_fee,
+			</if>
+			<if test="bal != null">
+				bal,
+			</if>
+			<if test="revFlg != null">
+				rev_flg,
+			</if>
+			<if test="retCode != null">
+				ret_code,
+			</if>
+			<if test="retMsg != null">
+				ret_msg,
+			</if>
+			<if test="memo != null">
+				memo,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reqId != null">
+				#{reqId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				#{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordId != null">
+				#{ordId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordDate != null">
+				#{ordDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ordTime != null">
+				#{ordTime,jdbcType=TIME},
+			</if>
+			<if test="txnCode != null">
+				#{txnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="txnName != null">
+				#{txnName,jdbcType=VARCHAR},
+			</if>
+			<if test="txnNature != null">
+				#{txnNature,jdbcType=INTEGER},
+			</if>
+			<if test="runLv != null">
+				#{runLv,jdbcType=INTEGER},
+			</if>
+			<if test="dir != null">
+				#{dir,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordAmt != null">
+				#{ordAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="accTxnId != null">
+				#{accTxnId,jdbcType=BIGINT},
+			</if>
+			<if test="accDate != null">
+				#{accDate,jdbcType=DATE},
+			</if>
+			<if test="channel != null">
+				#{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="authId != null">
+				#{authId,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payId != null">
+				#{payId,jdbcType=VARCHAR},
+			</if>
+			<if test="oriOrdId != null">
+				#{oriOrdId,jdbcType=VARCHAR},
+			</if>
+			<if test="oriOrdDate != null">
+				#{oriOrdDate,jdbcType=DATE},
+			</if>
+			<if test="oriTxnCode != null">
+				#{oriTxnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="openCloseFlg != null">
+				#{openCloseFlg,jdbcType=VARCHAR},
+			</if>
+			<if test="accType != null">
+				#{accType,jdbcType=INTEGER},
+			</if>
+			<if test="accId != null">
+				#{accId,jdbcType=VARCHAR},
+			</if>
+			<if test="accName != null">
+				#{accName,jdbcType=VARCHAR},
+			</if>
+			<if test="accAmtId != null">
+				#{accAmtId,jdbcType=VARCHAR},
+			</if>
+			<if test="accSubType != null">
+				#{accSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="accCur != null">
+				#{accCur,jdbcType=VARCHAR},
+			</if>
+			<if test="agaType != null">
+				#{agaType,jdbcType=INTEGER},
+			</if>
+			<if test="agaId != null">
+				#{agaId,jdbcType=VARCHAR},
+			</if>
+			<if test="agaName != null">
+				#{agaName,jdbcType=VARCHAR},
+			</if>
+			<if test="agaAmtId != null">
+				#{agaAmtId,jdbcType=VARCHAR},
+			</if>
+			<if test="agaSubType != null">
+				#{agaSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="agaCur != null">
+				#{agaCur,jdbcType=VARCHAR},
+			</if>
+			<if test="amt != null">
+				#{amt,jdbcType=DECIMAL},
+			</if>
+			<if test="custFee != null">
+				#{custFee,jdbcType=DECIMAL},
+			</if>
+			<if test="bal != null">
+				#{bal,jdbcType=DECIMAL},
+			</if>
+			<if test="revFlg != null">
+				#{revFlg,jdbcType=INTEGER},
+			</if>
+			<if test="retCode != null">
+				#{retCode,jdbcType=VARCHAR},
+			</if>
+			<if test="retMsg != null">
+				#{retMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="memo != null">
+				#{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.TnsLog">
+		update tns_log
+		<set>
+			<if test="reqId != null">
+				req_id = #{reqId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				mch_id = #{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordId != null">
+				ord_id = #{ordId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordDate != null">
+				ord_date = #{ordDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ordTime != null">
+				ord_time = #{ordTime,jdbcType=TIME},
+			</if>
+			<if test="txnCode != null">
+				txn_code = #{txnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="txnName != null">
+				txn_name = #{txnName,jdbcType=VARCHAR},
+			</if>
+			<if test="txnNature != null">
+				txn_nature = #{txnNature,jdbcType=INTEGER},
+			</if>
+			<if test="runLv != null">
+				run_lv = #{runLv,jdbcType=INTEGER},
+			</if>
+			<if test="dir != null">
+				dir = #{dir,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="ordAmt != null">
+				ord_amt = #{ordAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="accTxnId != null">
+				acc_txn_id = #{accTxnId,jdbcType=BIGINT},
+			</if>
+			<if test="accDate != null">
+				acc_date = #{accDate,jdbcType=DATE},
+			</if>
+			<if test="channel != null">
+				channel = #{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="authId != null">
+				auth_id = #{authId,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNo != null">
+				card_no = #{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payId != null">
+				pay_id = #{payId,jdbcType=VARCHAR},
+			</if>
+			<if test="oriOrdId != null">
+				ori_ord_id = #{oriOrdId,jdbcType=VARCHAR},
+			</if>
+			<if test="oriOrdDate != null">
+				ori_ord_date = #{oriOrdDate,jdbcType=DATE},
+			</if>
+			<if test="oriTxnCode != null">
+				ori_txn_code = #{oriTxnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="openCloseFlg != null">
+				open_close_flg = #{openCloseFlg,jdbcType=VARCHAR},
+			</if>
+			<if test="accType != null">
+				acc_type = #{accType,jdbcType=INTEGER},
+			</if>
+			<if test="accId != null">
+				acc_id = #{accId,jdbcType=VARCHAR},
+			</if>
+			<if test="accName != null">
+				acc_name = #{accName,jdbcType=VARCHAR},
+			</if>
+			<if test="accAmtId != null">
+				acc_amt_id = #{accAmtId,jdbcType=VARCHAR},
+			</if>
+			<if test="accSubType != null">
+				acc_sub_type = #{accSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="accCur != null">
+				acc_cur = #{accCur,jdbcType=VARCHAR},
+			</if>
+			<if test="agaType != null">
+				aga_type = #{agaType,jdbcType=INTEGER},
+			</if>
+			<if test="agaId != null">
+				aga_id = #{agaId,jdbcType=VARCHAR},
+			</if>
+			<if test="agaName != null">
+				aga_name = #{agaName,jdbcType=VARCHAR},
+			</if>
+			<if test="agaAmtId != null">
+				aga_amt_id = #{agaAmtId,jdbcType=VARCHAR},
+			</if>
+			<if test="agaSubType != null">
+				aga_sub_type = #{agaSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="agaCur != null">
+				aga_cur = #{agaCur,jdbcType=VARCHAR},
+			</if>
+			<if test="amt != null">
+				amt = #{amt,jdbcType=DECIMAL},
+			</if>
+			<if test="custFee != null">
+				cust_fee = #{custFee,jdbcType=DECIMAL},
+			</if>
+			<if test="bal != null">
+				bal = #{bal,jdbcType=DECIMAL},
+			</if>
+			<if test="revFlg != null">
+				rev_flg = #{revFlg,jdbcType=INTEGER},
+			</if>
+			<if test="retCode != null">
+				ret_code = #{retCode,jdbcType=VARCHAR},
+			</if>
+			<if test="retMsg != null">
+				ret_msg = #{retMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="memo != null">
+				memo = #{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+			<choose>
+				<when test="lastUpdateTime != null and lastUpdateTime !=''">
+					last_update_time =
+					#{lastUpdateTime,jdbcType=TIMESTAMP}
+				</when>
+				<otherwise>
+					last_update_time = NOW()
+				</otherwise>
+			</choose>
+		</set>
+		where id = #{id,jdbcType=BIGINT} and version =
+		#{version,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.TnsLog">
+		update tns_log
+		set
+		req_id =
+		#{reqId,jdbcType=VARCHAR},
+		mch_id = #{mchId,jdbcType=VARCHAR},
+		ord_id =
+		#{ordId,jdbcType=VARCHAR},
+		ord_date = #{ordDate,jdbcType=TIMESTAMP},
+		ord_time =
+		#{ordTime,jdbcType=TIME},
+		txn_code =
+		#{txnCode,jdbcType=VARCHAR},
+		txn_name = #{txnName,jdbcType=VARCHAR},
+		txn_nature =
+		#{txnNature,jdbcType=INTEGER},
+		run_lv =
+		#{runLv,jdbcType=INTEGER},
+		dir =
+		#{dir,jdbcType=VARCHAR},
+		cust_id =
+		#{custId,jdbcType=VARCHAR},
+		org_id = #{orgId,jdbcType=VARCHAR},
+		ord_amt =
+		#{ordAmt,jdbcType=DECIMAL},
+		acc_txn_id = #{accTxnId,jdbcType=BIGINT},
+		acc_date = #{accDate,jdbcType=DATE},
+		channel =
+		#{channel,jdbcType=VARCHAR},
+		auth_id = #{authId,jdbcType=VARCHAR},
+		card_no = #{cardNo,jdbcType=VARCHAR},
+		pay_id =
+		#{payId,jdbcType=VARCHAR},
+		ori_ord_id = #{oriOrdId,jdbcType=VARCHAR},
+		ori_ord_date = #{oriOrdDate,jdbcType=DATE},
+		ori_txn_code =
+		#{oriTxnCode,jdbcType=VARCHAR},
+		open_close_flg =
+		#{openCloseFlg,jdbcType=VARCHAR},
+		acc_type =
+		#{accType,jdbcType=INTEGER},
+		acc_id = #{accId,jdbcType=VARCHAR},
+		acc_name = #{accName,jdbcType=VARCHAR},
+		acc_amt_id =
+		#{accAmtId,jdbcType=VARCHAR},
+		acc_sub_type =
+		#{accSubType,jdbcType=VARCHAR},
+		acc_cur = #{accCur,jdbcType=VARCHAR},
+		aga_type =
+		#{agaType,jdbcType=INTEGER},
+		aga_id = #{agaId,jdbcType=VARCHAR},
+		aga_name = #{agaName,jdbcType=VARCHAR},
+		aga_amt_id =
+		#{agaAmtId,jdbcType=VARCHAR},
+		aga_sub_type =
+		#{agaSubType,jdbcType=VARCHAR},
+		aga_cur = #{agaCur,jdbcType=VARCHAR},
+		amt =
+		#{amt,jdbcType=DECIMAL},
+		cust_fee = #{custFee,jdbcType=DECIMAL},
+		mch_fee = #{mchFee,jdbcType=DECIMAL},
+		pft_fee =
+		#{pftFee,jdbcType=DECIMAL},
+		clt_fee = #{cltFee,jdbcType=DECIMAL},
+		bal =
+		#{bal,jdbcType=DECIMAL},
+		rev_flg =
+		#{revFlg,jdbcType=INTEGER},
+		ret_code = #{retCode,jdbcType=VARCHAR},
+		ret_msg = #{retMsg,jdbcType=VARCHAR},
+		memo = #{memo,jdbcType=VARCHAR},
+		del_flag = #{delFlag,jdbcType=BIT},
+		filler1 =
+		#{filler1,jdbcType=VARCHAR},
+		filler2 = #{filler2,jdbcType=VARCHAR},
+		filler3 = #{filler3,jdbcType=VARCHAR},
+		uid = #{uid,jdbcType=BIGINT},
+		version
+		=
+		#{version,jdbcType=INTEGER} + 1,
+		<choose>
+			<when test="lastUpdateTime != null and lastUpdateTime !=''">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP}
+			</when>
+			<otherwise>
+				last_update_time = NOW()
+			</otherwise>
+		</choose>
+		where id = #{id,jdbcType=BIGINT} and
+		version =
+		#{version,jdbcType=INTEGER}
+	</update>
+
+	<!-- 根据原订单号、商户号、原日期查询订单信息 -->
+	<select id="findTnsLogbyOriOrdId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log WHERE mch_id=#{mchId,jdbcType=VARCHAR}
+		AND
+		ori_ord_id=#{oriOrdId,jdbcType=VARCHAR}
+		AND
+		ori_ord_date=#{oriOrdDate,jdbcType=DATE}
+		AND ori_txn_code =
+		#{oriTxnCode,jdbcType=VARCHAR} AND del_flag = '0'
+	</select>
+
+	<select id="selectTnsLog" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log WHERE 1=1
+		<if test="mchId != null and mchId != ''">
+			AND mch_id=#{mchId,jdbcType=VARCHAR}
+		</if>
+		<if test="ordId != null and ordId != ''">
+			AND ord_id=#{ordId,jdbcType=VARCHAR}
+		</if>
+		<if test="ordDate != null and ordDate != ''">
+			AND DATE_FORMAT(ord_date,'%Y-%m-%d')=#{ordDate,jdbcType=DATE}
+		</if>
+		<if test="id != null and id != ''">
+			AND id=#{id,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<!-- 根据订单号、商户号、日期查询订单信息 -->
+	<select id="findTnsLogbyOrdId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log
+		<where>
+			1=1
+			<if test="mchId != null and mchId != ''">
+				AND mch_id=#{mchId,jdbcType=VARCHAR}
+			</if>
+			AND ord_id=#{ordId,jdbcType=VARCHAR}
+			<if test="ord_date != null and ord_date != ''">
+				AND DATE_FORMAT(ord_date,'%Y-%m-%d %T:%H:%i') = DATE_FORMAT(#{ordDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T:%H:%i')
+			</if>
+			AND txn_code = #{txnCode,jdbcType=VARCHAR}
+			AND del_flag = '0'
+		</where>
+	</select>
+	
+	<!-- 根据订单号、商户号、日期查询订单信息 -->
+	<select id="getTnsLogbyId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log
+		<where>
+			1=1
+			AND id=#{id,jdbcType=VARCHAR}
+			AND del_flag = '0'
+		</where>
+	</select>
+
+	<!-- 查询流水信息（有分页查询） -->
+	<select id="findListPage" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM tns_log
+				<include refid="dynamicPageWhere" />
+				<include refid="liqDateWhere" />
+				<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+					order by create_time desc
+				</if>
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy}
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+
+	<sql id="dynamicPageWhere">
+		<where>
+			1=1
+			<if test="tnsLogVO.id != null and tnsLogVO.id != ''">
+				AND id = #{tnsLogVO.id,jdbcType=BIGINT}
+			</if>
+			<if test="tnsLogVO.createTime != null and tnsLogVO.createTime != ''">
+				AND create_time =
+				#{tnsLogVO.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="tnsLogVO.lastUpdateTime != null and tnsLogVO.lastUpdateTime != ''">
+				AND last_update_time =
+				#{tnsLogVO.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="tnsLogVO.reqId != null and tnsLogVO.reqId != ''">
+				AND req_id = #{tnsLogVO.reqId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.mchId != null and tnsLogVO.mchId != ''">
+				AND mch_id = #{tnsLogVO.mchId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.ordId != null and tnsLogVO.ordId != ''">
+				AND ord_id = #{tnsLogVO.ordId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.ordDate != null and tnsLogVO.ordDate != ''">
+				AND ord_date = #{tnsLogVO.ordDate,jdbcType=DATE}
+			</if>
+			<if test="tnsLogVO.ordTime != null and tnsLogVO.ordTime != ''">
+				AND ord_time = #{tnsLogVO.ordTime,jdbcType=TIME}
+			</if>
+			<if test="tnsLogVO.txnCode != null and tnsLogVO.txnCode != ''">
+				AND txn_code = #{tnsLogVO.txnCode,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.txnName != null and tnsLogVO.txnName != ''">
+				AND txn_name = #{tnsLogVO.txnName,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.txnNature != null and tnsLogVO.txnNature != ''">
+				AND txn_nature = #{tnsLogVO.txnNature,jdbcType=INTEGER}
+			</if>
+			<if test="tnsLogVO.runLv != null and tnsLogVO.runLv != ''">
+				AND run_lv = #{tnsLogVO.runLv,jdbcType=INTEGER}
+			</if>
+			<if test="tnsLogVO.dir != null and tnsLogVO.dir != ''">
+				AND dir = #{tnsLogVO.dir,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.custId != null and tnsLogVO.custId != ''">
+				AND cust_id = #{tnsLogVO.custId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.orgId != null and tnsLogVO.orgId != ''">
+				AND org_id = #{tnsLogVO.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.ordAmt != null and tnsLogVO.ordAmt != ''">
+				AND ord_amt = #{tnsLogVO.ordAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="tnsLogVO.accTxnId != null and tnsLogVO.accTxnId != ''">
+				AND acc_txn_id = #{tnsLogVO.accTxnId,jdbcType=BIGINT}
+			</if>
+			<if test="tnsLogVO.accDate != null and tnsLogVO.accDate != ''">
+				AND acc_date = #{tnsLogVO.accDate,jdbcType=DATE}
+			</if>
+			<if test="tnsLogVO.channel != null and tnsLogVO.channel != ''">
+				AND channel = #{tnsLogVO.channel,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.authId != null and tnsLogVO.authId != ''">
+				AND auth_id = #{tnsLogVO.authId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.cardNo != null and tnsLogVO.cardNo != ''">
+				AND card_no = #{tnsLogVO.cardNo,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.payId != null and tnsLogVO.payId != ''">
+				AND pay_id = #{tnsLogVO.payId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.oriOrdId != null and tnsLogVO.oriOrdId != ''">
+				AND ori_ord_id = #{tnsLogVO.oriOrdId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.oriOrdDate != null and tnsLogVO.oriOrdDate != ''">
+				AND ori_ord_date = #{tnsLogVO.oriOrdDate,jdbcType=DATE}
+			</if>
+			<if test="tnsLogVO.oriTxnCode != null and tnsLogVO.oriTxnCode != ''">
+				AND ori_txn_code =
+				#{tnsLogVO.oriTxnCode,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.openCloseFlg != null and tnsLogVO.openCloseFlg != ''">
+				AND open_close_flg =
+				#{tnsLogVO.openCloseFlg,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.accType != null and tnsLogVO.accType != ''">
+				AND acc_type = #{tnsLogVO.accType,jdbcType=INTEGER}
+			</if>
+			<if test="tnsLogVO.accId != null and tnsLogVO.accId != ''">
+				AND acc_id = #{tnsLogVO.accId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.accName != null and tnsLogVO.accName != ''">
+				AND acc_name = #{tnsLogVO.accName,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.accAmtId != null and tnsLogVO.accAmtId != ''">
+				AND acc_amt_id = #{tnsLogVO.accAmtId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.accSubType != null and tnsLogVO.accSubType != ''">
+				AND acc_sub_type =
+				#{tnsLogVO.accSubType,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.accCur != null and tnsLogVO.accCur != ''">
+				AND acc_cur = #{tnsLogVO.accCur,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.agaType != null and tnsLogVO.agaType != ''">
+				AND aga_type = #{tnsLogVO.agaType,jdbcType=INTEGER}
+			</if>
+			<if test="tnsLogVO.agaId != null and tnsLogVO.agaId != ''">
+				AND aga_id = #{tnsLogVO.agaId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.agaName != null and tnsLogVO.agaName != ''">
+				AND aga_name = #{tnsLogVO.agaName,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.agaAmtId != null and tnsLogVO.agaAmtId != ''">
+				AND aga_amt_id = #{tnsLogVO.agaAmtId,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.agaSubType != null and tnsLogVO.agaSubType != ''">
+				AND aga_sub_type =
+				#{tnsLogVO.agaSubType,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.agaCur != null and tnsLogVO.agaCur != ''">
+				AND aga_cur = #{tnsLogVO.agaCur,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.amt != null and tnsLogVO.amt != ''">
+				AND amt = #{tnsLogVO.amt,jdbcType=DECIMAL}
+			</if>
+			<if test="tnsLogVO.custFee != null and tnsLogVO.custFee != ''">
+				AND cust_fee = #{tnsLogVO.custFee,jdbcType=DECIMAL}
+			</if>
+			<if test="tnsLogVO.bal != null and tnsLogVO.bal != ''">
+				AND bal = #{tnsLogVO.bal,jdbcType=DECIMAL}
+			</if>
+			<if test="tnsLogVO.revFlg != null and tnsLogVO.revFlg != ''">
+				AND rev_flg = #{tnsLogVO.revFlg,jdbcType=INTEGER}
+			</if>
+			<if test="tnsLogVO.retCode != null and tnsLogVO.retCode != ''">
+				AND ret_code = #{tnsLogVO.retCode,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.retMsg != null and tnsLogVO.retMsg != ''">
+				AND ret_msg = #{tnsLogVO.retMsg,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.memo != null and tnsLogVO.memo != ''">
+				AND memo = #{tnsLogVO.memo,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.delFlag != null and tnsLogVO.delFlag != ''">
+				AND del_flag = #{tnsLogVO.delFlag,jdbcType=BIT}
+			</if>
+			<if test="tnsLogVO.filler1 != null and tnsLogVO.filler1 != ''">
+				AND filler1 = #{tnsLogVO.filler1,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.filler2 != null and tnsLogVO.filler2 != ''">
+				AND filler2 = #{tnsLogVO.filler2,jdbcType=VARCHAR}
+			</if>
+			<if test="tnsLogVO.filler3 != null and tnsLogVO.filler3 != ''">
+				AND filler3 = #{tnsLogVO.filler3,jdbcType=VARCHAR}
+			</if>
+			<!-- 暂定不写 -->
+			<!-- <if test="tnsLogVO.statuses !=null "> <![CDATA[ and STATUS in ]]> 
+				<foreach collection="tnsLogVO.statuses" index="index" item="item" open="(" 
+				separator="," close=")"> #{item} </foreach> </if> -->
+		</where>
+	</sql>
+
+	<!-- 交易时间查询 -->
+	<sql id="liqDateWhere">
+		<if test="tnsLogVO.begLiqDate !=null and tnsLogVO.begLiqDate !=''">
+			<![CDATA[ and create_time >= #{tnsLogVO.begLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+		<if test="tnsLogVO.endLiqDate !=null and tnsLogVO.endLiqDate !=''">
+			<![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{tnsLogVO.endLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+	</sql>
+
+	<sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from tns_log
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+		<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+			order by create_time desc
+		</if>
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+
+
+	<!-- 分页查询记录总记录数 -->
+	<select id="findListPageCount" resultType="int">
+		SELECT
+		count(1)
+		FROM tns_log
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+	</select>
+	
+	<select id="selectTnsLogByOrdId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log
+		WHERE ord_id = #{ordId,jdbcType=VARCHAR} AND del_flag = '0'
+		AND txn_code = #{txnCode,jdbcType=VARCHAR}
+		AND mch_id = #{mchId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findTnsLogByAccUnfrozen" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tns_log
+		WHERE ord_id = #{ordId,jdbcType=VARCHAR} AND del_flag = '0'
+		<if test="ordDate != null">
+			AND ord_date = #{ordDate,jdbcType=DATE}
+		</if>
+		AND amt = #{amt,jdbcType=DECIMAL}
+		AND cust_fee = #{custFee,jdbcType=DECIMAL}
+	</select>
+
+</mapper>

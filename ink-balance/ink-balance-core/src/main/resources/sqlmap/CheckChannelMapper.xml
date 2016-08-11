@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CheckChannel">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.CheckChannel">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="check_date" property="checkDate" jdbcType="TIMESTAMP" />
+		<result column="trade_date" property="tradeDate" jdbcType="TIMESTAMP" />
+		<result column="channel_no" property="channelNo" jdbcType="VARCHAR" />
+		<result column="channel_merchant_no" property="channelMerchantNo"
+			jdbcType="VARCHAR" />
+		<result column="channel_amount" property="channelAmount"
+			jdbcType="DECIMAL" />
+		<result column="channel_count" property="channelCount"
+			jdbcType="INTEGER" />
+		<result column="platform_amount" property="platformAmount"
+			jdbcType="DECIMAL" />
+		<result column="platform_count" property="platformCount"
+			jdbcType="INTEGER" />
+		<result column="platform_side_count" property="platformSideCount"
+			jdbcType="INTEGER" />
+		<result column="channel_side_count" property="channelSideCount"
+			jdbcType="INTEGER" />
+		<result column="match_amount" property="matchAmount" jdbcType="DECIMAL" />
+		<result column="match_count" property="matchCount" jdbcType="INTEGER" />
+		<result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+		<result column="difference_count" property="differenceCount"
+			jdbcType="INTEGER" />
+		<result column="channel_check_file" property="channelCheckFile"
+			jdbcType="VARCHAR" />
+		<result column="file_source" property="fileSource" jdbcType="VARCHAR" />
+		<result column="adjust_status" property="adjustStatus"
+			jdbcType="INTEGER" />
+		<result column="unhandle_count" property="unhandleCount"
+			jdbcType="INTEGER" />
+		<result column="handle_notes" property="handleNotes" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="columns">
+		id, check_date, trade_date, channel_no,
+		channel_merchant_no,
+		channel_amount, channel_count,
+		platform_amount,
+		platform_count, platform_side_count,
+		channel_side_count,match_amount,match_count,
+		check_status,
+		difference_count, channel_check_file, file_source,
+		adjust_status,
+		unhandle_count, handle_notes, remark, create_date,
+		update_date,
+		operator_id,
+		del_flag, version,batch_id
+	</sql>
+	<sql id="Base_Column_List">
+		id, check_date, trade_date, channel_no,
+		channel_merchant_no,
+		channel_amount, channel_count,
+		platform_amount,
+		platform_count, platform_side_count,
+		channel_side_count,match_amount,match_count,
+		check_status,
+		difference_count, channel_check_file, file_source,
+		adjust_status,
+		unhandle_count, handle_notes, remark, create_date,
+		update_date,
+		operator_id,
+		del_flag, version,batch_id
+	</sql>
+	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="columns" />
+		from check_channel
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="columns" />
+		from check_channel
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		check_channel
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.CheckChannel">
+		insert into check_channel (id,
+		check_date, trade_date,
+		channel_no, channel_merchant_no,
+		channel_amount,
+		channel_count, platform_amount, platform_count,
+		platform_side_count, channel_side_count,match_amount,match_count,
+		check_status, difference_count,
+		channel_check_file, file_source,
+		adjust_status,
+		unhandle_count, handle_notes, remark,
+		create_date,
+		update_date, operator_id,
+		del_flag, version,batch_id)
+		values
+		(#{id,jdbcType=BIGINT}, #{checkDate,jdbcType=TIMESTAMP},
+		#{tradeDate,jdbcType=TIMESTAMP},
+		#{channelNo,jdbcType=VARCHAR},
+		#{channelMerchantNo,jdbcType=VARCHAR},
+		#{channelAmount,jdbcType=DECIMAL},
+		#{channelCount,jdbcType=INTEGER},
+		#{platformAmount,jdbcType=DECIMAL},
+		#{platformCount,jdbcType=INTEGER},
+		#{platformSideCount,jdbcType=INTEGER},
+		#{channelSideCount,jdbcType=INTEGER},
+		#{matchAmount,jdbcType=DECIMAL},
+		#{matchCount,jdbcType=INTEGER},
+		#{checkStatus,jdbcType=VARCHAR},
+		#{differenceCount,jdbcType=INTEGER},
+		#{channelCheckFile,jdbcType=VARCHAR}, #{fileSource,jdbcType=VARCHAR},
+		#{adjustStatus,jdbcType=INTEGER},
+		#{unhandleCount,jdbcType=INTEGER},
+		#{handleNotes,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP},
+		#{operatorId,jdbcType=BIGINT},
+		#{delFlag,jdbcType=INTEGER},
+		#{version,jdbcType=INTEGER}, #{batchId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" keyProperty="id" useGeneratedKeys="true"
+		parameterType="com.ink.balance.core.po.CheckChannel">
+		insert into check_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="checkDate != null">
+				check_date,
+			</if>
+			<if test="tradeDate != null">
+				trade_date,
+			</if>
+			<if test="channelNo != null">
+				channel_no,
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no,
+			</if>
+			<if test="channelAmount != null">
+				channel_amount,
+			</if>
+			<if test="channelCount != null">
+				channel_count,
+			</if>
+			<if test="platformAmount != null">
+				platform_amount,
+			</if>
+			<if test="platformCount != null">
+				platform_count,
+			</if>
+			<if test="platformSideCount != null">
+				platform_side_count,
+			</if>
+			<if test="channelSideCount != null">
+				channel_side_count,
+			</if>
+			<if test="matchAmount != null">
+				match_amount,
+			</if>
+			<if test="matchCount != null">
+				match_count,
+			</if>
+			<if test="checkStatus != null">
+				check_status,
+			</if>
+			<if test="differenceCount != null">
+				difference_count,
+			</if>
+			<if test="channelCheckFile != null">
+				channel_check_file,
+			</if>
+			<if test="fileSource != null">
+				file_source,
+			</if>
+			<if test="adjustStatus != null">
+				adjust_status,
+			</if>
+			<if test="unhandleCount != null">
+				unhandle_count,
+			</if>
+			<if test="handleNotes != null">
+				handle_notes,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="batchId != null">
+				batch_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="checkDate != null">
+				#{checkDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tradeDate != null">
+				#{tradeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="channelNo != null">
+				#{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				#{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelAmount != null">
+				#{channelAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="channelCount != null">
+				#{channelCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformAmount != null">
+				#{platformAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="platformCount != null">
+				#{platformCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformSideCount != null">
+				#{platformSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelSideCount != null">
+				#{channelSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="matchAmount != null">
+				#{matchAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="matchCount != null">
+				#{matchCount,jdbcType=INTEGER},
+			</if>
+			<if test="checkStatus != null">
+				#{checkStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="differenceCount != null">
+				#{differenceCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelCheckFile != null">
+				#{channelCheckFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSource != null">
+				#{fileSource,jdbcType=VARCHAR},
+			</if>
+			<if test="adjustStatus != null">
+				#{adjustStatus,jdbcType=INTEGER},
+			</if>
+			<if test="unhandleCount != null">
+				#{unhandleCount,jdbcType=INTEGER},
+			</if>
+			<if test="handleNotes != null">
+				#{handleNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="batchId != null">
+				#{batchId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.ink.balance.core.po.CheckChannel">
+		update check_channel
+		<set>
+			<if test="checkDate != null">
+				check_date = #{checkDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tradeDate != null">
+				trade_date = #{tradeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="channelNo != null">
+				channel_no = #{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no =
+				#{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelAmount != null">
+				channel_amount = #{channelAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="channelCount != null">
+				channel_count = #{channelCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformAmount != null">
+				platform_amount = #{platformAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="platformCount != null">
+				platform_count = #{platformCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformSideCount != null">
+				platform_side_count =
+				#{platformSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelSideCount != null">
+				channel_side_count =
+				#{channelSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="matchAmount != null">
+				match_amount = #{matchAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="matchCount != null">
+				match_count = #{matchCount,jdbcType=INTEGER},
+			</if>
+			<if test="checkStatus != null">
+				check_status = #{checkStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="differenceCount != null">
+				difference_count = #{differenceCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelCheckFile != null">
+				channel_check_file =
+				#{channelCheckFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSource != null">
+				file_source = #{fileSource,jdbcType=VARCHAR},
+			</if>
+			<if test="adjustStatus != null">
+				adjust_status = #{adjustStatus,jdbcType=INTEGER},
+			</if>
+			<if test="unhandleCount != null">
+				unhandle_count = #{unhandleCount,jdbcType=INTEGER},
+			</if>
+			<if test="handleNotes != null">
+				handle_notes = #{handleNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="batchId != null">
+				batch_id = #{batchId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.CheckChannel">
+		update check_channel
+		<set>
+			<if test="checkDate != null">
+				check_date = #{checkDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tradeDate != null">
+				trade_date = #{tradeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="channelNo != null">
+				channel_no = #{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no =
+				#{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelAmount != null">
+				channel_amount = #{channelAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="channelCount != null">
+				channel_count = #{channelCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformAmount != null">
+				platform_amount = #{platformAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="platformCount != null">
+				platform_count = #{platformCount,jdbcType=INTEGER},
+			</if>
+			<if test="platformSideCount != null">
+				platform_side_count =
+				#{platformSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelSideCount != null">
+				channel_side_count =
+				#{channelSideCount,jdbcType=INTEGER},
+			</if>
+			<if test="matchAmount != null">
+				match_amount = #{matchAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="matchCount != null">
+				match_count = #{matchCount,jdbcType=INTEGER},
+			</if>
+			<if test="checkStatus != null">
+				check_status = #{checkStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="differenceCount != null">
+				difference_count = #{differenceCount,jdbcType=INTEGER},
+			</if>
+			<if test="channelCheckFile != null">
+				channel_check_file =
+				#{channelCheckFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSource != null">
+				file_source = #{fileSource,jdbcType=VARCHAR},
+			</if>
+			<if test="adjustStatus != null">
+				adjust_status = #{adjustStatus,jdbcType=INTEGER},
+			</if>
+			<if test="unhandleCount != null">
+				unhandle_count = #{unhandleCount,jdbcType=INTEGER},
+			</if>
+			<if test="handleNotes != null">
+				handle_notes = #{handleNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="batchId != null">
+				batch_id = #{batchId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.CheckChannel">
+		update
+		check_channel
+		set check_date = #{checkDate,jdbcType=TIMESTAMP},
+		trade_date = #{tradeDate,jdbcType=TIMESTAMP},
+		channel_no =
+		#{channelNo,jdbcType=VARCHAR},
+		channel_merchant_no =
+		#{channelMerchantNo,jdbcType=VARCHAR},
+		channel_amount =
+		#{channelAmount,jdbcType=DECIMAL},
+		channel_count =
+		#{channelCount,jdbcType=INTEGER},
+		platform_amount =
+		#{platformAmount,jdbcType=DECIMAL},
+		platform_count =
+		#{platformCount,jdbcType=INTEGER},
+		platform_side_count =
+		#{platformSideCount,jdbcType=INTEGER},
+		channel_side_count =
+		#{channelSideCount,jdbcType=INTEGER},
+		match_amount =
+		#{matchAmount,jdbcType=DECIMAL},
+		match_count =
+		#{matchCount,jdbcType=INTEGER},
+		check_status =
+		#{checkStatus,jdbcType=VARCHAR},
+		difference_count =
+		#{differenceCount,jdbcType=INTEGER},
+		channel_check_file =
+		#{channelCheckFile,jdbcType=VARCHAR},
+		file_source =
+		#{fileSource,jdbcType=VARCHAR},
+		adjust_status =
+		#{adjustStatus,jdbcType=INTEGER},
+		unhandle_count =
+		#{unhandleCount,jdbcType=INTEGER},
+		handle_notes =
+		#{handleNotes,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_date =
+		#{updateDate,jdbcType=TIMESTAMP},
+		operator_id =
+		#{operatorId,jdbcType=BIGINT},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER},
+		batch_id =
+		#{batchId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<sql id="findWhere">
+		<where>
+			<if test="null!=id">
+				AND id like CONCAT('%', #{id}, '%')
+			</if>
+			<if test="null!=channelNo and ''!=channelNo ">
+				AND channel_no = #{channelNo}
+			</if>
+			<if test="-1!=checkStatus ">
+				AND check_status = #{checkStatus}
+			</if>
+			<if test="-1!=adjustStatus">
+				AND adjust_status = #{adjustStatus}
+			</if>
+			<if test="null!=tradeBeginTime and ''!=tradeBeginTime">
+				AND trade_date >= #{tradeBeginTime}
+			</if>
+			<if test="null!=tradeEndTime and ''!=tradeEndTime">
+				AND trade_date &lt; #{tradeEndTime}
+			</if>
+			<if test="null!=checkBeginTime and ''!=checkBeginTime">
+				AND check_date >= #{checkBeginTime}
+			</if>
+			<if test="null!=checkEndTime and ''!=checkEndTime">
+				AND check_date &lt; #{checkEndTime}
+			</if>
+			<if test="null!= channelMerchantNo and ''!= channelMerchantNo">
+				AND channel_merchant_no like CONCAT('%', #{channelMerchantNo}, '%')
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(1) FROM check_channel
+		<include refid="findWhere" />
+	</select>
+
+	<select id="findPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_channel
+		<include refid="findWhere" />
+		ORDER BY id desc
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+	</select>
+	<select id="find" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_channel
+		<include refid="findWhere" />
+		ORDER BY id desc
+	</select>
+</mapper>

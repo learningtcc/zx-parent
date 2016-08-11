@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MonitorInfoRule">
+
+    <resultMap id="MonitorInfoRule" type="com.ink.monitor.core.po.MonitorInfoRule">
+        <result property="id" column="id"/>
+        <result property="sysCode" column="sysCode"/>
+        <result property="moduleCode" column="moduleCode"/>
+        <result property="infoCode" column="infoCode"/>
+        <result property="warnInterval" column="warnInterval"/>
+        <result property="warnThreshold" column="warnThreshold"/>
+        <result property="warnFrequency" column="warnFrequency"/>
+        <result property="currentWarnCount" column="currentWarnCount"/>
+		<result property="status" column="status"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,sysCode ,moduleCode ,infoCode ,warnInterval ,warnThreshold ,warnFrequency ,currentWarnCount ,status,createTime ,updateTime
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO monitor_info_rule (
+	        id  ,
+	        sysCode  ,
+	        moduleCode  ,
+	        infoCode  ,
+	        warnInterval  ,
+	        warnThreshold  ,
+	        warnFrequency  ,
+	        currentWarnCount  ,
+	        status,
+	        createTime  ,
+	        updateTime  
+        ) VALUES (
+        	#{id, jdbcType=INTEGER} ,
+        	#{sysCode, jdbcType=VARCHAR} ,
+        	#{moduleCode, jdbcType=VARCHAR} ,
+        	#{infoCode, jdbcType=VARCHAR} ,
+        	#{warnInterval, jdbcType=INTEGER} ,
+        	#{warnThreshold, jdbcType=INTEGER} ,
+        	#{warnFrequency, jdbcType=INTEGER} ,
+        	#{currentWarnCount, jdbcType=INTEGER} ,
+        	#{status, jdbcType=VARCHAR} ,
+        	now() ,
+        	now()
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO monitor_info_rule ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=INTEGER} ,
+        	#{item.sysCode, jdbcType=VARCHAR} ,
+        	#{item.moduleCode, jdbcType=VARCHAR} ,
+        	#{item.infoCode, jdbcType=VARCHAR} ,
+        	#{item.warnInterval, jdbcType=INTEGER} ,
+        	#{item.warnThreshold, jdbcType=INTEGER} ,
+        	#{item.warnFrequency, jdbcType=INTEGER} ,
+        	#{item.currentWarnCount, jdbcType=INTEGER} ,
+			#{status, jdbcType=VARCHAR} ,
+			now() ,
+			now()
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE monitor_info_rule SET
+	        sysCode = #{sysCode, jdbcType=VARCHAR} ,
+	        moduleCode = #{moduleCode, jdbcType=VARCHAR} ,
+	        infoCode = #{infoCode, jdbcType=VARCHAR} ,
+	        warnInterval = #{warnInterval, jdbcType=INTEGER} ,
+	        warnThreshold = #{warnThreshold, jdbcType=INTEGER} ,
+	        warnFrequency = #{warnFrequency, jdbcType=INTEGER} ,
+	        currentWarnCount = #{currentWarnCount, jdbcType=INTEGER} ,
+	        status = #{status, jdbcType=VARCHAR} ,
+	        updateTime = now()
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+	<update id="updateStatus" >
+        UPDATE monitor_info_rule SET
+	        status = #{status, jdbcType=VARCHAR} ,
+	        updateTime = now()
+        <where >
+			<if test="null!=sysCode and ''!=sysCode ">
+				AND sysCode = #{sysCode}
+			</if>
+			<if test="null!=moduleCode and ''!=moduleCode ">
+				AND moduleCode = #{moduleCode}
+			</if>
+			<if test="null!=infoCode and ''!=infoCode ">
+				AND infoCode = #{infoCode}
+			</if>
+        </where >
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM monitor_info_rule WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="MonitorInfoRule">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM monitor_info_rule 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=sysCode and ''!=sysCode ">
+	   			 		AND sysCode = #{sysCode}
+	   			   	</if>
+			       	<if test="null!=moduleCode and ''!=moduleCode ">
+	   			 		AND moduleCode = #{moduleCode}
+	   			   	</if>
+			       	<if test="null!=infoCode and ''!=infoCode ">
+	   			 		AND infoCode = #{infoCode}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=sysCode and ''!=sysCode">
+				    <!-- 	AND sysCode LIKE '%'||#{sysCode}||'%' oracle -->
+			   			AND sysCode LIKE concat('%',#{sysCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=moduleCode and ''!=moduleCode">
+				    <!-- 	AND moduleCode LIKE '%'||#{moduleCode}||'%' oracle -->
+			   			AND moduleCode LIKE concat('%',#{moduleCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=infoCode and ''!=infoCode">
+				    <!-- 	AND infoCode LIKE '%'||#{infoCode}||'%' oracle -->
+			   			AND infoCode LIKE concat('%',#{infoCode},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=warnInterval and ''!=warnInterval">
+			    AND warnInterval = #{warnInterval}
+			</if>
+		   	<if test="null!=warnThreshold and ''!=warnThreshold">
+			    AND warnThreshold = #{warnThreshold}
+			</if>
+		   	<if test="null!=warnFrequency and ''!=warnFrequency">
+			    AND warnFrequency = #{warnFrequency}
+			</if>
+		   	<if test="null!=currentWarnCount and ''!=currentWarnCount">
+			    AND currentWarnCount = #{currentWarnCount}
+			</if>
+			<if test="null!=status and ''!=status">
+				AND status = #{status}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND createTime >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND createTime &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND updateTime >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND updateTime &lt; #{updateTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM monitor_info_rule <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="MonitorInfoRule">
+    	SELECT <include refid="columns"/> FROM monitor_info_rule 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="MonitorInfoRule">
+	    SELECT <include refid="columns"/> FROM monitor_info_rule 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	<select id="queryMonitorInfo" resultType="hashmap">
+		SELECT id ,sysCode ,moduleCode ,infoCode ,warnInterval ,warnThreshold ,warnFrequency ,currentWarnCount ,status,createTime ,updateTime,
+			(select t1.name from systerm_source t1 where t1.code=t.sysCode) sysName,
+			(select t2.name from systerm_module t2 where t2.code=t.modulecode) moduleName,
+			(select t3.name from systerm_info t3 where t3.code=t.infocode) infoName
+		FROM monitor_info_rule t
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+	
+</mapper>

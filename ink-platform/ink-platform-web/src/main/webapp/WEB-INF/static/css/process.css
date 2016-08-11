@@ -1,0 +1,153 @@
+@charset "utf-8";
+/* CSS Document */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0;
+}
+body {
+  color: #333;
+  background: #fff;
+  font-family: Tahoma, "\5b8b\4f53", Arial, Helvetica;
+  font-size: 12px;
+  line-height: 20px;
+}
+ul, ol {
+  list-style: none;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+a {
+  color: #0077b3;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #FF9933;
+}
+.muted {
+  color: #999999;
+}
+.wrap {
+  width: 990px;
+  margin:0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+table th,
+table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.process{
+  padding:40px 0 80px;
+  width: 800px;
+  margin:0 auto;
+}
+.process dl{}
+.process dl .icon-img{
+  background-image: url(../images/bg_state.jpg);
+  background-repeat: no-repeat;
+}
+.process dl dt{
+  width: 13px;
+  float: left;
+  position: relative;
+}
+.process dl dt .step-info{
+  position: absolute;
+  width: 80px;
+  left: 50%;
+  margin-left: -40px;
+  text-align: center;
+  line-height: 1.5em;
+}
+.process dl dt .step-info span{
+  margin-bottom: 5px;
+}
+.process dl dt i.icon-img{
+  display: block;
+  width: 13px;
+  height: 13px;
+  background-position: -150px -40px;
+}
+.process dl dt.status-processing i.icon-img,
+.process dl dt.status-end i.icon-img{
+  background-position: -150px 0;
+}
+.process dl dt.status-warning i.icon-img{
+  background-position: -150px -60px;
+}
+.process dl dd{
+  width: 150px;
+  height: 13px;
+  float: left;
+  background-position: 0 -40px;
+  margin: 0 5px;
+}
+.process dl dd.status-processing{
+  background-position: 0 -20px;
+}
+.process dl dd.status-end{
+  background-position: 0 0;
+}
+
+
+.task-detail{
+  border:1px #ccc solid;
+  padding-bottom: 30px;
+}
+.task-detail .task-title{
+  margin-bottom: 10px;
+  border-bottom: 1px #ccc solid;
+  font-size: 14px;
+  height: 30px;
+  background-color: #f0f0f0;
+}
+.task-detail .task-title strong{
+  float: left;
+  padding:0 20px;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px #fff solid;
+  position: relative;
+  background-color: #fff;
+  border-right: 1px #ccc solid;
+}
+.task-detail table{
+  width: 950px;
+  margin:0 auto;
+}
+.task-detail table th{
+  border-bottom: 1px #ccc solid;
+}
+.task-detail table td{
+  border-bottom: 1px #f0f0f0 solid;
+}
+.task-detail table tbody tr:hover{
+  background-color: #f9f9f9;
+}
+
+
+
+
+
+
+
+

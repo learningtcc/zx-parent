@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:noNamespaceSchemaLocation="classpath:xsd/dubbo.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="yinker-user-ext" owner="yangchen" />
+	<!-- 使用multicast广播注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper.host}"
+		port="${dubbo.zookeeper.port}" />
+
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.protol.port}" /><!-- host="10.0.0.143" -->
+	<dubbo:consumer check="false" filter="consumerLogMdcFilter"/>
+</beans>

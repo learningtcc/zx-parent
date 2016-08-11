@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CheckDifference">
+	<resultMap id="BaseResultMap" type="com.ink.balance.core.po.CheckDifference">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="channel_no" property="channelNo" jdbcType="VARCHAR" />
+		<result column="channel_merchant_no" property="channelMerchantNo"
+			jdbcType="VARCHAR" />
+		<result column="difference_type" property="differenceType"
+			jdbcType="INTEGER" />
+		<result column="difference_source" property="differenceSource"
+			jdbcType="INTEGER" />
+		<result column="ref_mainrecord_id" property="refMainrecordId"
+			jdbcType="BIGINT" />
+		<result column="seq_no" property="seqNo" jdbcType="VARCHAR" />
+		<result column="platform_order_no" property="platformOrderNo"
+			jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="TIMESTAMP" />
+		<result column="handle_status" property="handleStatus"
+			jdbcType="INTEGER" />
+		<result column="handle_notes" property="handleNotes" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="batch_id" property="batchId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,channel_no,channel_merchant_no, difference_type, difference_source, ref_mainrecord_id, seq_no,
+		platform_order_no,
+		amount, status, date, handle_status, handle_notes, create_date, update_date,
+		operator_id,
+		del_flag, version, remark,batch_id
+	</sql>
+	<sql id="columns">
+		id,channel_no,channel_merchant_no, difference_type, difference_source, ref_mainrecord_id, seq_no,
+		platform_order_no,
+		amount, status, date, handle_status, handle_notes, create_date, update_date,
+		operator_id,
+		del_flag, version, remark,batch_id
+	</sql>
+	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from check_difference
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPlatformOrderNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from check_difference
+		where platform_order_no = #{platformOrderNo,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from check_difference
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from check_difference
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.ink.balance.core.po.CheckDifference">
+		insert into check_difference (id,channel_no,channel_merchant_no,
+		difference_type, difference_source,
+		ref_mainrecord_id, seq_no, platform_order_no,
+		amount, status, date,
+		handle_status, handle_notes, create_date,
+		update_date, operator_id, del_flag,
+		version, remark,batch_id)
+		values
+		(#{id,jdbcType=BIGINT},#{channelNo,jdbcType=VARCHAR},#{channelMerchantNo,jdbcType=VARCHAR},
+		#{differenceType,jdbcType=INTEGER},
+		#{differenceSource,jdbcType=INTEGER},
+		#{refMainrecordId,jdbcType=BIGINT}, #{seqNo,jdbcType=VARCHAR},
+		#{platformOrderNo,jdbcType=VARCHAR},
+		#{amount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP},
+		#{handleStatus,jdbcType=INTEGER}, #{handleNotes,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateDate,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, #{delFlag,jdbcType=INTEGER},
+		#{version,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+		#{batchId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ink.balance.core.po.CheckDifference">
+		insert into check_difference
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="channelNo != null">
+				channel_no,
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no,
+			</if>
+			<if test="differenceType != null">
+				difference_type,
+			</if>
+			<if test="differenceSource != null">
+				difference_source,
+			</if>
+			<if test="refMainrecordId != null">
+				ref_mainrecord_id,
+			</if>
+			<if test="seqNo != null">
+				seq_no,
+			</if>
+			<if test="platformOrderNo != null">
+				platform_order_no,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="handleStatus != null">
+				handle_status,
+			</if>
+			<if test="handleNotes != null">
+				handle_notes,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="batchId != null">
+				batch_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="channelNo != null">
+				#{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				#{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="differenceType != null">
+				#{differenceType,jdbcType=INTEGER},
+			</if>
+			<if test="differenceSource != null">
+				#{differenceSource,jdbcType=INTEGER},
+			</if>
+			<if test="refMainrecordId != null">
+				#{refMainrecordId,jdbcType=BIGINT},
+			</if>
+			<if test="seqNo != null">
+				#{seqNo,jdbcType=VARCHAR},
+			</if>
+			<if test="platformOrderNo != null">
+				#{platformOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="handleStatus != null">
+				#{handleStatus,jdbcType=INTEGER},
+			</if>
+			<if test="handleNotes != null">
+				#{handleNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="batchId != null">
+				#{batchId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.balance.core.po.CheckDifference">
+		update check_difference
+		<set>
+			<if test="channelNo != null">
+				channel_no = #{channelNo,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMerchantNo != null">
+				channel_merchant_no = #{channelMerchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="differenceType != null">
+				difference_type = #{differenceType,jdbcType=INTEGER},
+			</if>
+			<if test="differenceSource != null">
+				difference_source = #{differenceSource,jdbcType=INTEGER},
+			</if>
+			<if test="refMainrecordId != null">
+				ref_mainrecord_id = #{refMainrecordId,jdbcType=BIGINT},
+			</if>
+			<if test="seqNo != null">
+				seq_no = #{seqNo,jdbcType=VARCHAR},
+			</if>
+			<if test="platformOrderNo != null">
+				platform_order_no = #{platformOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="date != null">
+				date = #{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="handleStatus != null">
+				handle_status = #{handleStatus,jdbcType=INTEGER},
+			</if>
+			<if test="handleNotes != null">
+				handle_notes = #{handleNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="batchId != null">
+				batch_id = #{batchId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.balance.core.po.CheckDifference">
+		update check_difference
+		set channel_no = #{channelNo,jdbcType=VARCHAR},
+		channel_merchant_no = #{channelMerchantNo,jdbcType=VARCHAR},
+		difference_type = #{differenceType,jdbcType=INTEGER},
+		difference_source = #{differenceSource,jdbcType=INTEGER},
+		ref_mainrecord_id = #{refMainrecordId,jdbcType=BIGINT},
+		seq_no = #{seqNo,jdbcType=VARCHAR},
+		platform_order_no = #{platformOrderNo,jdbcType=VARCHAR},
+		amount = #{amount,jdbcType=DECIMAL},
+		status = #{status,jdbcType=INTEGER},
+		date = #{date,jdbcType=TIMESTAMP},
+		handle_status = #{handleStatus,jdbcType=INTEGER},
+		handle_notes = #{handleNotes,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		operator_id = #{operatorId,jdbcType=BIGINT},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		batch_id = #{batchId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<sql id="findWhere">
+		<where>
+			1=1
+			<if test="null!=refMainrecordId">
+				AND ref_mainrecord_id like CONCAT('%', #{refMainrecordId}, '%')
+			</if>
+			<if test="null!=channelNo and ''!=channelNo ">
+				AND channel_no = #{channelNo}
+			</if>
+			<if test="null!= platformOrderNo and ''!= platformOrderNo">
+				AND platform_order_no LIKE concat('%',#{platformOrderNo},'%')
+			</if>
+			<if test="-1!=differenceType">
+				AND difference_type = #{differenceType}
+			</if>
+			<if test="-1!= differenceSource">
+				AND difference_source = #{differenceSource}
+			</if>
+			<if test="-1!=handleStatus">
+				AND handle_status = #{handleStatus}
+			</if>
+			<if test="null!= createBeginDate and ''!= createBeginDate">
+				AND create_date >= #{createBeginDate}
+			</if>
+			<if test="null!= createEndDate and ''!= createEndDate">
+				AND create_date &lt; #{createEndDate}
+			</if>
+			<if test="null!= channelMerchantNo and ''!= channelMerchantNo">
+				AND channel_merchant_no like CONCAT('%', #{channelMerchantNo}, '%')
+			</if>
+		</where>
+	</sql>
+	<sql id="findNewWhere">
+		<where>
+			<if test="null!=channelNo and ''!=channelNo ">
+				AND channel_no = #{channelNo}
+			</if>
+			<if test="null!= platformOrderNo and ''!= platformOrderNo">
+				AND platform_order_no LIKE concat('%',#{platformOrderNo},'%')
+			</if>
+			<if test="null!= channelMerchantNo and ''!= channelMerchantNo">
+				AND channel_merchant_no like CONCAT('%', #{channelMerchantNo}, '%')
+			</if>
+			<if test="-1!=handleStatus">
+				AND handle_status = #{handleStatus}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(1) FROM check_difference
+		<include refid="findWhere" />
+	</select>
+
+	<select id="findPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_difference
+		<include refid="findWhere" />
+		ORDER BY platform_order_no asc,update_date desc
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+	</select>
+
+	<select id="find" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns" />
+		FROM check_difference
+		<include refid="findNewWhere" />
+	</select>
+
+</mapper>

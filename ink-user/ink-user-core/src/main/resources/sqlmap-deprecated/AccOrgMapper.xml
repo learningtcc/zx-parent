@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccOrg">
+	<resultMap id="BaseResultMap" type="com.yinker.user.core.po.AccOrg">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="owner_group" property="ownerGroup" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="org_id" property="orgId" jdbcType="BIGINT" />
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+		<result column="org_sname" property="orgSname" jdbcType="VARCHAR" />
+		<result column="org_type" property="orgType" jdbcType="INTEGER" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="mbl_no" property="mblNo" jdbcType="VARCHAR" />
+		<result column="tel_no" property="telNo" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="BIT" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, owner, owner_group, create_time, last_update_time, org_id, org_name,
+		org_sname,
+		org_type, contact, mbl_no, tel_no, email, status, del_flag, filler1, filler2,
+		filler3,
+		version
+	</sql>
+	<!-- 基础方法Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into acc_org (id, owner, owner_group,
+		create_time, last_update_time, org_id,
+		org_name, org_sname, org_type,
+		contact, mbl_no, tel_no,
+		email, status, del_flag,
+		filler1, filler2, filler3,
+		version)
+		values (#{id,jdbcType=BIGINT}, #{owner,jdbcType=VARCHAR},
+		#{ownerGroup,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{orgId,jdbcType=VARCHAR},
+		#{orgName,jdbcType=VARCHAR}, #{orgSname,jdbcType=VARCHAR},
+		#{orgType,jdbcType=INTEGER},
+		#{contact,jdbcType=VARCHAR}, #{mblNo,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{delFlag,jdbcType=BIT},
+		#{filler1,jdbcType=VARCHAR}, #{filler2,jdbcType=VARCHAR}, #{filler3,jdbcType=VARCHAR},
+		#{version,jdbcType=INTEGER})
+	</insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_org ( <include refid="Base_Column_List"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.owner, jdbcType=VARCHAR} ,
+        	#{item.ownerGroup, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.orgId, jdbcType=BIGINT} ,
+        	#{item.orgName, jdbcType=VARCHAR} ,
+        	#{item.orgSname, jdbcType=VARCHAR} ,
+        	#{item.orgType, jdbcType=BIT} ,
+        	#{item.contact, jdbcType=VARCHAR} ,
+        	#{item.mblNo, jdbcType=VARCHAR} ,
+        	#{item.telNo, jdbcType=VARCHAR} ,
+        	#{item.email, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=BIT} ,
+        	#{item.delFlag, jdbcType=BIT} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_org SET
+	        owner = #{owner, jdbcType=VARCHAR} ,
+	        owner_group = #{ownerGroup, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        org_id = #{orgId, jdbcType=BIGINT} ,
+	        org_name = #{orgName, jdbcType=VARCHAR} ,
+	        org_sname = #{orgSname, jdbcType=VARCHAR} ,
+	        org_type = #{orgType, jdbcType=BIT} ,
+	        contact = #{contact, jdbcType=VARCHAR} ,
+	        mbl_no = #{mblNo, jdbcType=VARCHAR} ,
+	        tel_no = #{telNo, jdbcType=VARCHAR} ,
+	        email = #{email, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=BIT} ,
+	        del_flag = #{delFlag, jdbcType=BIT} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_org WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM acc_org 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=owner and ''!=owner ">
+	   			 		AND owner = #{owner}
+	   			   	</if>
+			       	<if test="null!=ownerGroup and ''!=ownerGroup ">
+	   			 		AND owner_group = #{ownerGroup}
+	   			   	</if>
+			       	<if test="null!=orgName and ''!=orgName ">
+	   			 		AND org_name = #{orgName}
+	   			   	</if>
+			       	<if test="null!=orgSname and ''!=orgSname ">
+	   			 		AND org_sname = #{orgSname}
+	   			   	</if>
+			       	<if test="null!=contact and ''!=contact ">
+	   			 		AND contact = #{contact}
+	   			   	</if>
+			       	<if test="null!=mblNo and ''!=mblNo ">
+	   			 		AND mbl_no = #{mblNo}
+	   			   	</if>
+			       	<if test="null!=telNo and ''!=telNo ">
+	   			 		AND tel_no = #{telNo}
+	   			   	</if>
+			       	<if test="null!=email and ''!=email ">
+	   			 		AND email = #{email}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=owner and ''!=owner">
+				    <!-- 	AND owner LIKE '%'||#{owner}||'%' oracle -->
+			   			AND owner LIKE concat('%',#{owner},'%')
+			   			
+			   		</if>
+				    <if test="null!=ownerGroup and ''!=ownerGroup">
+				    <!-- 	AND owner_group LIKE '%'||#{ownerGroup}||'%' oracle -->
+			   			AND owner_group LIKE concat('%',#{ownerGroup},'%')
+			   			
+			   		</if>
+				    <if test="null!=orgName and ''!=orgName">
+				    <!-- 	AND org_name LIKE '%'||#{orgName}||'%' oracle -->
+			   			AND org_name LIKE concat('%',#{orgName},'%')
+			   			
+			   		</if>
+				    <if test="null!=orgSname and ''!=orgSname">
+				    <!-- 	AND org_sname LIKE '%'||#{orgSname}||'%' oracle -->
+			   			AND org_sname LIKE concat('%',#{orgSname},'%')
+			   			
+			   		</if>
+				    <if test="null!=contact and ''!=contact">
+				    <!-- 	AND contact LIKE '%'||#{contact}||'%' oracle -->
+			   			AND contact LIKE concat('%',#{contact},'%')
+			   			
+			   		</if>
+				    <if test="null!=mblNo and ''!=mblNo">
+				    <!-- 	AND mbl_no LIKE '%'||#{mblNo}||'%' oracle -->
+			   			AND mbl_no LIKE concat('%',#{mblNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=telNo and ''!=telNo">
+				    <!-- 	AND tel_no LIKE '%'||#{telNo}||'%' oracle -->
+			   			AND tel_no LIKE concat('%',#{telNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=email and ''!=email">
+				    <!-- 	AND email LIKE '%'||#{email}||'%' oracle -->
+			   			AND email LIKE concat('%',#{email},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=orgId and ''!=orgId">
+			    AND org_id = #{orgId}
+			</if>
+		   	<if test="null!=orgType and ''!=orgType">
+			    AND org_type = #{orgType}
+			</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_org <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/> FROM acc_org 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+    <select id="getByOrgId" resultMap="BaseResultMap" >
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM acc_org WHERE org_id = #orgId#
+	    ]]>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/> FROM acc_org 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 基础方法End -->
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from acc_org
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from acc_org
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.yinker.user.core.po.AccOrg">
+		insert into acc_org
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="owner != null">
+				owner,
+			</if>
+			<if test="ownerGroup != null">
+				owner_group,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="orgName != null">
+				org_name,
+			</if>
+			<if test="orgSname != null">
+				org_sname,
+			</if>
+			<if test="orgType != null">
+				org_type,
+			</if>
+			<if test="contact != null">
+				contact,
+			</if>
+			<if test="mblNo != null">
+				mbl_no,
+			</if>
+			<if test="telNo != null">
+				tel_no,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="owner != null">
+				#{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				#{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgName != null">
+				#{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgSname != null">
+				#{orgSname,jdbcType=VARCHAR},
+			</if>
+			<if test="orgType != null">
+				#{orgType,jdbcType=INTEGER},
+			</if>
+			<if test="contact != null">
+				#{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="mblNo != null">
+				#{mblNo,jdbcType=VARCHAR},
+			</if>
+			<if test="telNo != null">
+				#{telNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yinker.user.core.po.AccOrg">
+		update acc_org
+		<set>
+			<if test="owner != null">
+				owner = #{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				owner_group = #{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgName != null">
+				org_name = #{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgSname != null">
+				org_sname = #{orgSname,jdbcType=VARCHAR},
+			</if>
+			<if test="orgType != null">
+				org_type = #{orgType,jdbcType=INTEGER},
+			</if>
+			<if test="contact != null">
+				contact = #{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="mblNo != null">
+				mbl_no = #{mblNo,jdbcType=VARCHAR},
+			</if>
+			<if test="telNo != null">
+				tel_no = #{telNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.yinker.user.core.po.AccOrg">
+		update acc_org
+		set owner = #{owner,jdbcType=VARCHAR},
+		owner_group = #{ownerGroup,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+		org_id = #{orgId,jdbcType=VARCHAR},
+		org_name = #{orgName,jdbcType=VARCHAR},
+		org_sname = #{orgSname,jdbcType=VARCHAR},
+		org_type = #{orgType,jdbcType=INTEGER},
+		contact = #{contact,jdbcType=VARCHAR},
+		mbl_no = #{mblNo,jdbcType=VARCHAR},
+		tel_no = #{telNo,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		del_flag = #{delFlag,jdbcType=BIT},
+		filler1 = #{filler1,jdbcType=VARCHAR},
+		filler2 = #{filler2,jdbcType=VARCHAR},
+		filler3 = #{filler3,jdbcType=VARCHAR},
+		version = #{version,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 根据orgid查询机构信息 -->
+	<select id="findByOrgId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM acc_org
+		WHERE org_id = #{orgId,jdbcType=VARCHAR} and del_flag = '0' and status = 1
+	</select>
+	
+	<update id="updateByOrgId" parameterType="com.yinker.user.core.po.AccOrg">
+		update acc_org
+		<set>
+			<if test="owner != null and owner != ''">
+				owner = #{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null and ownerGroup != ''">
+				owner_group = #{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null and lastUpdateTime != ''">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orgName != null and orgName != ''">
+				org_name = #{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="orgSname != null and orgSname != ''">
+				org_sname = #{orgSname,jdbcType=VARCHAR},
+			</if>
+			<if test="orgType != null and orgType != ''">
+				org_type = #{orgType,jdbcType=INTEGER},
+			</if>
+			<if test="contact != null and contact != ''">
+				contact = #{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="mblNo != null and mblNo != ''">
+				mbl_no = #{mblNo,jdbcType=VARCHAR},
+			</if>
+			<if test="telNo != null and telNo != ''">
+				tel_no = #{telNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="filler1 != null and filler1 != ''">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null and filler2 != ''">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null and filler3 != ''">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null and version != ''">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+		</set>
+		where org_id = #{orgId,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
+				and del_flag = '0'
+	</update>
+	<!-- 交易时间查询 -->
+	<sql id="liqDateWhere">
+		<if test="accOrgVO.begLiqDate !=null and accOrgVO.begLiqDate !=''">
+			<![CDATA[ and create_time >= #{accOrgVO.begLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+		<if test="accOrgVO.endLiqDate !=null and accOrgVO.endLiqDate !=''">
+			<![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{accOrgVO.endLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+	</sql>
+	
+	<sql id="dynamicPageWhere">
+		<where>
+			1=1
+			<if test="accOrgVO.id != null and accOrgVO.id != ''">
+				AND id = #{accOrgVO.id,jdbcType=BIGINT}
+			</if>
+			<if test="accOrgVO.orgId != null and accOrgVO.orgId != ''">
+				AND org_id = #{accOrgVO.orgId,jdbcType=BIGINT}
+			</if>
+			<if test="accOrgVO.owner != null and accOrgVO.owner != ''">
+				AND owner = #{accOrgVO.owner,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.ownerGroup != null and accOrgVO.ownerGroup != ''">
+				AND owner_group = #{accOrgVO.ownerGroup,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.createTime != null and accOrgVO.createTime != ''">
+				AND create_time = #{accOrgVO.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="accOrgVO.lastUpdateTime != null and accOrgVO.lastUpdateTime != ''">
+				AND last_update_time = #{accOrgVO.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="accOrgVO.orgName != null and accOrgVO.orgName != ''">
+				AND org_name = #{accOrgVO.orgName,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.orgSname != null and accOrgVO.orgSname != ''">
+				AND org_sname = #{accOrgVO.orgSname,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.orgType != null and accOrgVO.orgType != ''">
+				AND org_type = #{accOrgVO.orgType,jdbcType=INTEGER}
+			</if>
+			<if test="accOrgVO.contact != null and accOrgVO.contact != ''">
+				AND contact = #{accOrgVO.contact,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.mblNo != null and accOrgVO.mblNo != ''">
+				AND mbl_no = #{accOrgVO.mblNo,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.telNo != null and accOrgVO.telNo != ''">
+				AND tel_no = #{accOrgVO.telNo,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.email != null and accOrgVO.email != ''">
+				AND email = #{accOrgVO.email,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.status != null and accOrgVO.status != ''">
+				AND status = #{accOrgVO.status,jdbcType=INTEGER}
+			</if>
+			<if test="accOrgVO.filler1 != null and accOrgVO.filler1 != ''">
+				AND filler1 = #{accOrgVO.filler1,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.filler2 != null and accOrgVO.filler2 != ''">
+				AND filler2 = #{accOrgVO.filler2,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.filler3 != null and accOrgVO.filler3 != ''">
+				AND filler3 = #{accOrgVO.filler3,jdbcType=VARCHAR}
+			</if>
+			<if test="accOrgVO.version != null and accOrgVO.version != ''">
+				AND version = #{accOrgVO.version,jdbcType=INTEGER} + 1
+			</if>
+			<!-- 暂定不写 -->
+			<!-- <if test="tnsLogVO.statuses !=null "> <![CDATA[ and STATUS 
+				in ]]> <foreach collection="tnsLogVO.statuses" index="index" item="item" 
+				open="(" separator="," close=")"> #{item} </foreach> </if> -->
+		</where>
+	</sql>
+	
+	<sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from acc_org
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+		<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+			order by create_time desc
+		</if>
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+<!-- 	渠道分页查询 -->
+	<select id="findListPage" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM acc_org
+				<include refid="dynamicPageWhere" />
+				<include refid="liqDateWhere" />
+				<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+                order by create_time desc
+              </if>
+              <if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+               order by ${pageVO.orderBy}
+             </if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize, jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	<!-- 分页查询记录总记录数 -->
+	<select id="findListPageCount" resultType="int">
+		SELECT
+		count(1)
+		FROM acc_org
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+	</select>
+</mapper>

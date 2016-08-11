@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AsileBankTemp">
+
+	<resultMap id="AsileBankTemp" type="com.ink.route.api.model.po.AsileBankTemp">
+		<result property="id" column="id"/>
+		<result property="asileName" column="asile_name"/>
+		<result property="asileCode" column="asile_code"/>
+		<result property="bankName" column="bank_name"/>
+		<result property="bankCode" column="bank_code"/>
+		<result property="asilePayType" column="asile_pay_type"/>
+		<result property="asileAmtStart" column="asile_amt_start"/>
+		<result property="asileAmtEnd" column="asile_amt_end"/>
+		<result property="remark" column="remark"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createrId" column="creater_id"/>
+		<result property="createrName" column="creater_name"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updaterId" column="updater_id"/>
+		<result property="updaterName" column="updater_name"/>
+		<result property="asileServiceBeginTime" column="asile_service_begin_time"/>
+		<result property="asileServiceEndTime" column="asile_service_end_time"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		<![CDATA[
+        id ,asile_name ,asile_code ,bank_name ,bank_code ,asile_pay_type ,asile_amt_start ,asile_amt_end ,remark ,create_time ,creater_id ,creater_name ,update_time ,updater_id ,updater_name ,asile_service_begin_time ,asile_service_end_time
+	    ]]>
+	</sql>
+	<!-- 查询所有数据 -->
+	<select id="getAll" resultMap="AsileBankTemp">
+		select
+		<include refid="columns" />
+		from asile_bank_temp
+	</select>
+
+	<insert id="insert" >
+		<![CDATA[
+        INSERT INTO asile_bank_temp (
+	        id  ,
+	        asile_name  ,
+	        asile_code  ,
+	        bank_name  ,
+	        bank_code  ,
+	        asile_pay_type  ,
+	        asile_amt_start  ,
+	        asile_amt_end  ,
+	        remark  ,
+	        create_time  ,
+	        creater_id  ,
+	        creater_name  ,
+	        update_time  ,
+	        updater_id  ,
+	        updater_name  ,
+	        asile_service_begin_time  ,
+	        asile_service_end_time
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{asileName, jdbcType=VARCHAR} ,
+        	#{asileCode, jdbcType=VARCHAR} ,
+        	#{bankName, jdbcType=VARCHAR} ,
+        	#{bankCode, jdbcType=VARCHAR} ,
+        	#{asilePayType, jdbcType=VARCHAR} ,
+        	#{asileAmtStart, jdbcType=DECIMAL} ,
+        	#{asileAmtEnd, jdbcType=DECIMAL} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{createrId, jdbcType=BIGINT} ,
+        	#{createrName, jdbcType=VARCHAR} ,
+        	#{updateTime, jdbcType=TIMESTAMP} ,
+        	#{updaterId, jdbcType=BIGINT} ,
+        	#{updaterName, jdbcType=VARCHAR} ,
+        	#{asileServiceBeginTime, jdbcType=TIMESTAMP} ,
+        	#{asileServiceEndTime, jdbcType=TIMESTAMP}
+        )
+    ]]>
+	</insert>
+	<insert id="insertBatch"   parameterType="java.util.List">
+		INSERT INTO asile_bank_temp ( <include refid="columns"/>) values
+		<foreach collection="list" item="item" separator="," >
+			(
+			#{item.id, jdbcType=BIGINT} ,
+			#{item.asileName, jdbcType=VARCHAR} ,
+			#{item.asileCode, jdbcType=VARCHAR} ,
+			#{item.bankName, jdbcType=VARCHAR} ,
+			#{item.bankCode, jdbcType=VARCHAR} ,
+			#{item.asilePayType, jdbcType=VARCHAR} ,
+			#{item.asileAmtStart, jdbcType=DECIMAL} ,
+			#{item.asileAmtEnd, jdbcType=DECIMAL} ,
+			#{item.remark, jdbcType=VARCHAR} ,
+			#{item.createTime, jdbcType=TIMESTAMP} ,
+			#{item.createrId, jdbcType=BIGINT} ,
+			#{item.createrName, jdbcType=VARCHAR} ,
+			#{item.updateTime, jdbcType=TIMESTAMP} ,
+			#{item.updaterId, jdbcType=BIGINT} ,
+			#{item.updaterName, jdbcType=VARCHAR} ,
+			#{item.asileServiceBeginTime, jdbcType=TIMESTAMP} ,
+			#{item.asileServiceEndTime, jdbcType=TIMESTAMP}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" >
+		<![CDATA[
+        UPDATE asile_bank_temp SET
+	        asile_name = #{asileName, jdbcType=VARCHAR} ,
+	        asile_code = #{asileCode, jdbcType=VARCHAR} ,
+	        bank_name = #{bankName, jdbcType=VARCHAR} ,
+	        bank_code = #{bankCode, jdbcType=VARCHAR} ,
+	        asile_pay_type = #{asilePayType, jdbcType=VARCHAR} ,
+	        asile_amt_start = #{asileAmtStart, jdbcType=DECIMAL} ,
+	        asile_amt_end = #{asileAmtEnd, jdbcType=DECIMAL} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        creater_id = #{createrId, jdbcType=BIGINT} ,
+	        creater_name = #{createrName, jdbcType=VARCHAR} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	        updater_id = #{updaterId, jdbcType=BIGINT} ,
+	        updater_name = #{updaterName, jdbcType=VARCHAR} ,
+	        asile_service_begin_time = #{asileServiceBeginTime, jdbcType=TIMESTAMP} ,
+	        asile_service_end_time = #{asileServiceEndTime, jdbcType=TIMESTAMP}
+        WHERE
+	        id = #{id}
+    ]]>
+	</update>
+	<update id="updateNotNull" >
+			UPDATE asile_bank_temp
+				<set>
+			       	<if test="null!=asileName and ''!=asileName ">
+	   			 		asile_name = #{asileName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileCode and ''!=asileCode ">
+	   			 		asile_code = #{asileCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=bankName and ''!=bankName ">
+	   			 		bank_name = #{bankName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=bankCode and ''!=bankCode ">
+	   			 		bank_code = #{bankCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asilePayType and ''!=asilePayType ">
+	   			 		asile_pay_type = #{asilePayType, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileAmtStart and ''!=asileAmtStart ">
+	   			 		asile_amt_start = #{asileAmtStart, jdbcType=DECIMAL} ,
+	   			   	</if>
+			       	<if test="null!=asileAmtEnd and ''!=asileAmtEnd ">
+	   			 		asile_amt_end = #{asileAmtEnd, jdbcType=DECIMAL} ,
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		remark = #{remark, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=createrId and ''!=createrId ">
+	   			 		creater_id = #{createrId, jdbcType=BIGINT} ,
+	   			   	</if>
+			       	<if test="null!=createrName and ''!=createrName ">
+	   			 		creater_name = #{createrName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=updateTime and ''!=updateTime ">
+	   			 		update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=updaterId and ''!=updaterId ">
+	   			 		updater_id = #{updaterId, jdbcType=BIGINT} ,
+	   			   	</if>
+			       	<if test="null!=updaterName and ''!=updaterName ">
+	   			 		updater_name = #{updaterName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileServiceBeginTime and ''!=asileServiceBeginTime ">
+	   			 		asile_service_begin_time = #{asileServiceBeginTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=asileServiceEndTime and ''!=asileServiceEndTime ">
+	   			 		asile_service_end_time = #{asileServiceEndTime, jdbcType=TIMESTAMP} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+	<delete id="delete">
+		<![CDATA[
+        DELETE FROM asile_bank_temp WHERE
+        id = #{id}
+    ]]>
+	</delete>
+
+	<select id="getById" resultMap="AsileBankTemp">
+		SELECT <include refid="columns"/>
+		<![CDATA[
+	        FROM asile_bank_temp
+	        WHERE
+		        id = #{id}
+	    ]]>
+	</select>
+
+	<sql id="findWhere">
+		<where>
+			<choose>
+				<when test="queryType==0">
+					<if test="null!=asileName and ''!=asileName ">
+						AND asile_name = #{asileName}
+					</if>
+					<if test="null!=asileCode and ''!=asileCode ">
+						AND asile_code = #{asileCode}
+					</if>
+					<if test="null!=bankName and ''!=bankName ">
+						AND bank_name = #{bankName}
+					</if>
+					<if test="null!=bankCode and ''!=bankCode ">
+						AND bank_code = #{bankCode}
+					</if>
+					<if test="null!=asilePayType and ''!=asilePayType ">
+						AND asile_pay_type = #{asilePayType}
+					</if>
+					<if test="null!=remark and ''!=remark ">
+						AND remark = #{remark}
+					</if>
+					<if test="null!=createrName and ''!=createrName ">
+						AND creater_name = #{createrName}
+					</if>
+					<if test="null!=updaterName and ''!=updaterName ">
+						AND updater_name = #{updaterName}
+					</if>
+				</when>
+				<otherwise>
+					<if test="null!=asileName and ''!=asileName">
+						<!-- 	AND asile_name LIKE '%'||#{asileName}||'%' oracle -->
+						AND asile_name LIKE concat('%',#{asileName},'%')
+
+					</if>
+					<if test="null!=asileCode and ''!=asileCode">
+						<!-- 	AND asile_code LIKE '%'||#{asileCode}||'%' oracle -->
+						AND asile_code LIKE concat('%',#{asileCode},'%')
+
+					</if>
+					<if test="null!=bankName and ''!=bankName">
+						<!-- 	AND bank_name LIKE '%'||#{bankName}||'%' oracle -->
+						AND bank_name LIKE concat('%',#{bankName},'%')
+
+					</if>
+					<if test="null!=bankCode and ''!=bankCode">
+						<!-- 	AND bank_code LIKE '%'||#{bankCode}||'%' oracle -->
+						AND bank_code LIKE concat('%',#{bankCode},'%')
+
+					</if>
+					<if test="null!=asilePayType and ''!=asilePayType">
+						<!-- 	AND asile_pay_type LIKE '%'||#{asilePayType}||'%' oracle -->
+						AND asile_pay_type LIKE concat('%',#{asilePayType},'%')
+
+					</if>
+					<if test="null!=remark and ''!=remark">
+						<!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+						AND remark LIKE concat('%',#{remark},'%')
+
+					</if>
+					<if test="null!=createrName and ''!=createrName">
+						<!-- 	AND creater_name LIKE '%'||#{createrName}||'%' oracle -->
+						AND creater_name LIKE concat('%',#{createrName},'%')
+
+					</if>
+					<if test="null!=updaterName and ''!=updaterName">
+						<!-- 	AND updater_name LIKE '%'||#{updaterName}||'%' oracle -->
+						AND updater_name LIKE concat('%',#{updaterName},'%')
+
+					</if>
+				</otherwise>
+			</choose>
+			<if test="null!=id and ''!=id">
+				AND id = #{id}
+			</if>
+			<if test="null!=asileAmtStart and ''!=asileAmtStart">
+				AND asile_amt_start = #{asileAmtStart}
+			</if>
+			<if test="null!=asileAmtEnd and ''!=asileAmtEnd">
+				AND asile_amt_end = #{asileAmtEnd}
+			</if>
+			<if test="null!=createTimeBegin and ''!=createTimeBegin">
+				AND create_time >= #{createTimeBegin}
+			</if>
+			<if test="null!=createTimeEnd and ''!=createTimeEnd">
+				AND create_time &lt; #{createTimeEnd}
+			</if>
+			<if test="null!=createrId and ''!=createrId">
+				AND creater_id = #{createrId}
+			</if>
+			<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+				AND update_time >= #{updateTimeBegin}
+			</if>
+			<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+				AND update_time &lt; #{updateTimeEnd}
+			</if>
+			<if test="null!=updaterId and ''!=updaterId">
+				AND updater_id = #{updaterId}
+			</if>
+			<if test="null!=asileServiceBeginTimeBegin and ''!=asileServiceBeginTimeBegin">
+				AND asile_service_begin_time >= #{asileServiceBeginTimeBegin}
+			</if>
+			<if test="null!=asileServiceBeginTimeEnd and ''!=asileServiceBeginTimeEnd">
+				AND asile_service_begin_time &lt; #{asileServiceBeginTimeEnd}
+			</if>
+			<if test="null!=asileServiceEndTimeBegin and ''!=asileServiceEndTimeBegin">
+				AND asile_service_end_time >= #{asileServiceEndTimeBegin}
+			</if>
+			<if test="null!=asileServiceEndTimeEnd and ''!=asileServiceEndTimeEnd">
+				AND asile_service_end_time &lt; #{asileServiceEndTimeEnd}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(*) FROM asile_bank_temp <include refid="findWhere"/>
+	</select>
+
+	<!--
+        分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+        因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+	<select id="findPage" resultMap="AsileBankTemp">
+		SELECT <include refid="columns"/> FROM asile_bank_temp
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+
+	<select id="find" resultMap="AsileBankTemp">
+		SELECT <include refid="columns"/> FROM asile_bank_temp
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+</mapper>

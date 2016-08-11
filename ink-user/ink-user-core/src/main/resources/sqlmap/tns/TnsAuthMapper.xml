@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TnsAuth">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.TnsAuth">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="tns_log_id" property="tnsLogId" jdbcType="BIGINT" />
+		<result column="txn_code" property="txnCode" jdbcType="VARCHAR" />
+		<result column="txn_name" property="txnName" jdbcType="VARCHAR" />
+		<result column="acc_date" property="accDate" jdbcType="DATE" />
+		<result column="cust_id" property="custId" jdbcType="VARCHAR" />
+		<result column="cust_name" property="custName" jdbcType="VARCHAR" />
+		<result column="cust_type" property="custType" jdbcType="INTEGER" />
+		<result column="sac_id" property="sacId" jdbcType="VARCHAR" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="auth_amt" property="authAmt" jdbcType="DECIMAL" />
+		<result column="auth_bal" property="authBal" jdbcType="DECIMAL" />
+		<result column="auth_status" property="authStatus" jdbcType="INTEGER" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="BIT" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="rev_flg" property="revFlg" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, last_update_time, tns_log_id,
+		txn_code, txn_name,
+		acc_date, cust_id, cust_name, cust_type, sac_id, cur, auth_amt, auth_bal,
+		auth_status,
+		memo, del_flag, filler1, filler2, filler3, version, rev_flg
+	</sql>
+	
+	<!-- 基础方法Start -->
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id"  >
+    <![CDATA[
+        INSERT INTO tns_auth (
+	        id  ,
+	        create_time  ,
+	        last_update_time  ,
+	        tns_log_id  ,
+	        txn_code  ,
+	        txn_name  ,
+	        acc_date  ,
+	        cust_id  ,
+	        cust_name  ,
+	        cust_type  ,
+	        sac_id  ,
+	        cur  ,
+	        auth_amt  ,
+	        auth_bal  ,
+	        auth_status  ,
+	        memo  ,
+	        del_flag  ,
+	        filler1  ,
+	        filler2  ,
+	        filler3  ,
+	        version  ,
+	        rev_flg  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{tnsLogId, jdbcType=BIGINT} ,
+        	#{txnCode, jdbcType=VARCHAR} ,
+        	#{txnName, jdbcType=VARCHAR} ,
+        	#{accDate, jdbcType=DATE} ,
+        	#{custId, jdbcType=VARCHAR} ,
+        	#{custName, jdbcType=VARCHAR} ,
+        	#{custType, jdbcType=BIT} ,
+        	#{sacId, jdbcType=VARCHAR} ,
+        	#{cur, jdbcType=VARCHAR} ,
+        	#{authAmt, jdbcType=DECIMAL} ,
+        	#{authBal, jdbcType=DECIMAL} ,
+        	#{authStatus, jdbcType=BIT} ,
+        	#{memo, jdbcType=VARCHAR} ,
+        	#{delFlag, jdbcType=BIT} ,
+        	#{filler1, jdbcType=VARCHAR} ,
+        	#{filler2, jdbcType=VARCHAR} ,
+        	#{filler3, jdbcType=VARCHAR} ,
+        	#{version, jdbcType=INTEGER} ,
+        	#{revFlg, jdbcType=CHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO tns_auth ( <include refid="Base_Column_List"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.tnsLogId, jdbcType=BIGINT} ,
+        	#{item.txnCode, jdbcType=VARCHAR} ,
+        	#{item.txnName, jdbcType=VARCHAR} ,
+        	#{item.accDate, jdbcType=DATE} ,
+        	#{item.custId, jdbcType=VARCHAR} ,
+        	#{item.custName, jdbcType=VARCHAR} ,
+        	#{item.custType, jdbcType=BIT} ,
+        	#{item.sacId, jdbcType=VARCHAR} ,
+        	#{item.cur, jdbcType=VARCHAR} ,
+        	#{item.authAmt, jdbcType=DECIMAL} ,
+        	#{item.authBal, jdbcType=DECIMAL} ,
+        	#{item.authStatus, jdbcType=BIT} ,
+        	#{item.memo, jdbcType=VARCHAR} ,
+        	#{item.delFlag, jdbcType=BIT} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.revFlg, jdbcType=CHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE tns_auth SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        tns_log_id = #{tnsLogId, jdbcType=BIGINT} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        txn_name = #{txnName, jdbcType=VARCHAR} ,
+	        acc_date = #{accDate, jdbcType=DATE} ,
+	        cust_id = #{custId, jdbcType=VARCHAR} ,
+	        cust_name = #{custName, jdbcType=VARCHAR} ,
+	        cust_type = #{custType, jdbcType=BIT} ,
+	        sac_id = #{sacId, jdbcType=VARCHAR} ,
+	        cur = #{cur, jdbcType=VARCHAR} ,
+	        auth_amt = #{authAmt, jdbcType=DECIMAL} ,
+	        auth_bal = #{authBal, jdbcType=DECIMAL} ,
+	        auth_status = #{authStatus, jdbcType=BIT} ,
+	        memo = #{memo, jdbcType=VARCHAR} ,
+	        del_flag = #{delFlag, jdbcType=BIT} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER} ,
+	        rev_flg = #{revFlg, jdbcType=CHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM tns_auth WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM tns_auth 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=txnName and ''!=txnName ">
+	   			 		AND txn_name = #{txnName}
+	   			   	</if>
+			       	<if test="null!=custId and ''!=custId ">
+	   			 		AND cust_id = #{custId}
+	   			   	</if>
+			       	<if test="null!=custName and ''!=custName ">
+	   			 		AND cust_name = #{custName}
+	   			   	</if>
+			       	<if test="null!=sacId and ''!=sacId ">
+	   			 		AND sac_id = #{sacId}
+	   			   	</if>
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=memo and ''!=memo ">
+	   			 		AND memo = #{memo}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+			       	<if test="null!=revFlg and ''!=revFlg ">
+	   			 		AND rev_flg = #{revFlg}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnName and ''!=txnName">
+				    <!-- 	AND txn_name LIKE '%'||#{txnName}||'%' oracle -->
+			   			AND txn_name LIKE concat('%',#{txnName},'%')
+			   			
+			   		</if>
+				    <if test="null!=custId and ''!=custId">
+				    <!-- 	AND cust_id LIKE '%'||#{custId}||'%' oracle -->
+			   			AND cust_id LIKE concat('%',#{custId},'%')
+			   			
+			   		</if>
+				    <if test="null!=custName and ''!=custName">
+				    <!-- 	AND cust_name LIKE '%'||#{custName}||'%' oracle -->
+			   			AND cust_name LIKE concat('%',#{custName},'%')
+			   			
+			   		</if>
+				    <if test="null!=sacId and ''!=sacId">
+				    <!-- 	AND sac_id LIKE '%'||#{sacId}||'%' oracle -->
+			   			AND sac_id LIKE concat('%',#{sacId},'%')
+			   			
+			   		</if>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=memo and ''!=memo">
+				    <!-- 	AND memo LIKE '%'||#{memo}||'%' oracle -->
+			   			AND memo LIKE concat('%',#{memo},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+				    <if test="null!=revFlg and ''!=revFlg">
+				    <!-- 	AND rev_flg LIKE '%'||#{revFlg}||'%' oracle -->
+			   			AND rev_flg LIKE concat('%',#{revFlg},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=tnsLogId and ''!=tnsLogId">
+			    AND tns_log_id = #{tnsLogId}
+			</if>
+		   	<if test="null!=accDateBegin and ''!=accDateBegin">
+		   		AND acc_date >= #{accDateBegin}
+		   	</if>
+		   	<if test="null!=accDateEnd and ''!=accDateEnd">
+		   		AND acc_date &lt; #{accDateEnd}
+		   	</if>
+		   	<if test="null!=custType and ''!=custType">
+			    AND cust_type = #{custType}
+			</if>
+		   	<if test="null!=authAmt and ''!=authAmt">
+			    AND auth_amt = #{authAmt}
+			</if>
+		   	<if test="null!=authBal and ''!=authBal">
+			    AND auth_bal = #{authBal}
+			</if>
+		   	<if test="null!=authStatus and ''!=authStatus">
+			    AND auth_status = #{authStatus}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM tns_auth <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/> FROM tns_auth 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/> FROM tns_auth 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 基础方法End -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tns_auth
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tns_auth
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.TnsAuth">
+		insert into tns_auth
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="tnsLogId != null">
+				tns_log_id,
+			</if>
+			<if test="txnCode != null">
+				txn_code,
+			</if>
+			<if test="txnName != null">
+				txn_name,
+			</if>
+			<if test="accDate != null">
+				acc_date,
+			</if>
+			<if test="custId != null">
+				cust_id,
+			</if>
+			<if test="custName != null">
+				cust_name,
+			</if>
+			<if test="custType != null">
+				cust_type,
+			</if>
+			<if test="sacId != null">
+				sac_id,
+			</if>
+			<if test="cur != null">
+				cur,
+			</if>
+			<if test="authAmt != null">
+				auth_amt,
+			</if>
+			<if test="authBal != null">
+				auth_bal,
+			</if>
+			<if test="authStatus != null">
+				auth_status,
+			</if>
+			<if test="memo != null">
+				memo,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="revFlg != null">
+				rev_flg,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tnsLogId != null">
+				#{tnsLogId,jdbcType=BIGINT},
+			</if>
+			<if test="txnCode != null">
+				#{txnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="txnName != null">
+				#{txnName,jdbcType=VARCHAR},
+			</if>
+			<if test="accDate != null">
+				#{accDate,jdbcType=DATE},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				#{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="custType != null">
+				#{custType,jdbcType=INTEGER},
+			</if>
+			<if test="sacId != null">
+				#{sacId,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				#{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="authAmt != null">
+				#{authAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="authBal != null">
+				#{authBal,jdbcType=DECIMAL},
+			</if>
+			<if test="authStatus != null">
+				#{authStatus,jdbcType=INTEGER},
+			</if>
+			<if test="memo != null">
+				#{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="revFlg != null">
+				#{revFlg,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.TnsAuth">
+		update tns_auth
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tnsLogId != null">
+				tns_log_id = #{tnsLogId,jdbcType=BIGINT},
+			</if>
+			<if test="txnCode != null">
+				txn_code = #{txnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="txnName != null">
+				txn_name = #{txnName,jdbcType=VARCHAR},
+			</if>
+			<if test="accDate != null">
+				acc_date = #{accDate,jdbcType=DATE},
+			</if>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				cust_name = #{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="custType != null">
+				cust_type = #{custType,jdbcType=INTEGER},
+			</if>
+			<if test="sacId != null">
+				sac_id = #{sacId,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				cur = #{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="authAmt != null">
+				auth_amt = #{authAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="authBal != null">
+				auth_bal = #{authBal,jdbcType=DECIMAL},
+			</if>
+			<if test="authStatus != null">
+				auth_status = #{authStatus,jdbcType=INTEGER},
+			</if>
+			<if test="memo != null">
+				memo = #{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+			<if test="revFlg != null">
+				rev_flg = #{revFlg,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT} AND version = #{version,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.TnsAuth">
+		update tns_auth
+		set 
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+		tns_log_id = #{tnsLogId,jdbcType=BIGINT},
+		txn_code = #{txnCode,jdbcType=VARCHAR},
+		txn_name = #{txnName,jdbcType=VARCHAR},
+		acc_date = #{accDate,jdbcType=DATE},
+		cust_id = #{custId,jdbcType=VARCHAR},
+		cust_name = #{custName,jdbcType=VARCHAR},
+		cust_type = #{custType,jdbcType=INTEGER},
+		sac_id = #{sacId,jdbcType=VARCHAR},
+		cur = #{cur,jdbcType=VARCHAR},
+		auth_amt = #{authAmt,jdbcType=DECIMAL},
+		auth_bal = #{authBal,jdbcType=DECIMAL},
+		auth_status = #{authStatus,jdbcType=INTEGER},
+		memo = #{memo,jdbcType=VARCHAR},
+		del_flag = #{delFlag,jdbcType=BIT},
+		filler1 = #{filler1,jdbcType=VARCHAR},
+		filler2 = #{filler2,jdbcType=VARCHAR},
+		filler3 = #{filler3,jdbcType=VARCHAR},
+		version = #{version,jdbcType=INTEGER} + 1,
+		rev_flg = #{revFlg,jdbcType=CHAR}
+		where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=INTEGER}
+	</update>
+	
+	
+	<select id="selectByTnsLogId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tns_auth
+		where tns_log_id = #{tnsLogId,jdbcType=BIGINT} and del_flag = '0'
+	</select>
+	
+	
+	<update id="updateByTnsLogId" parameterType="com.ink.user.core.po.TnsAuth">
+		update tns_auth
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="txnCode != null">
+				txn_code = #{txnCode,jdbcType=VARCHAR},
+			</if>
+			<if test="txnName != null">
+				txn_name = #{txnName,jdbcType=VARCHAR},
+			</if>
+			<if test="accDate != null">
+				acc_date = #{accDate,jdbcType=DATE},
+			</if>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				cust_name = #{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="custType != null">
+				cust_type = #{custType,jdbcType=INTEGER},
+			</if>
+			<if test="sacId != null">
+				sac_id = #{sacId,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				cur = #{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="authAmt != null">
+				auth_amt = #{authAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="authBal != null">
+				auth_bal = #{authBal,jdbcType=DECIMAL},
+			</if>
+			<if test="authStatus != null">
+				auth_status = #{authStatus,jdbcType=INTEGER},
+			</if>
+			<if test="memo != null">
+				memo = #{memo,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=BIT},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+			<if test="revFlg != null">
+				rev_flg = #{revFlg,jdbcType=CHAR},
+			</if>
+		</set>
+		WHERE tns_log_id = #{tnsLogId,jdbcType=BIGINT} 
+		AND del_flag = '0' AND version = #{version,jdbcType=INTEGER}
+	</update>
+	
+	<select id="getUnfrozenTnsAuth" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tns_auth
+		where ( last_update_time between #{startTime,jdbcType=TIMESTAMP} 
+			and  #{endTime,jdbcType=TIMESTAMP}
+		)
+		and del_flag = '0'
+	</select>
+</mapper>

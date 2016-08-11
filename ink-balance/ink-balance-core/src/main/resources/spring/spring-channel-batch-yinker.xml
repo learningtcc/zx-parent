@@ -1,0 +1,152 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch	http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName" default-init-method="init">
+	<!-- 银客专用-懒猫-充值 -->
+	<bean id="yinkerRechargeBatchJob" class="com.ink.balance.core.batch.job.yinker.YinkerBatchJob">
+		<property name="jobLocator" ref="jobRegistry" />
+		<property name="jobLauncher" ref="jobLauncher" />
+	</bean>
+	<!-- Actual Job -->
+	<batch:job id="yinkerRechargeItemJob" restartable="true">
+		<batch:step id="yinkerRechargeItemJobStep">
+			<batch:tasklet allow-start-if-complete="false"
+				start-limit="1" transaction-manager="transactionManager">
+				<batch:chunk reader="yinkerRechargeItemJobReader"
+					writer="yinkerItemJobWriter" processor="yinkerRechargeItemJobProcessor"
+					commit-interval="600" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<bean id="yinkerRechargeItemJobReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="encoding" value="UTF-8" />
+		<property name="lineMapper" ref="yinkerRechargeItemJobLineMapper" />
+		<property name="linesToSkip" value="1" />
+		<property name="resource" ref="res" />
+		<property name="strict" value="false" />
+	</bean>
+
+	<bean id="res" class="com.ink.balance.core.batch.job.FileSystemResource">
+		<constructor-arg type="java.lang.String" value="${spring_batch_resource}" />
+	</bean>
+
+	<bean id="yinkerRechargeItemJobLineMapper"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="interestItemLineTokenizer" />
+		<property name="fieldSetMapper" ref="yinkerRechargeItemFieldSetMapper" />
+	</bean>
+
+	<bean id="yinkerRechargeItemFieldSetMapper"
+		class="com.ink.balance.core.batch.mapper.yinker.RechargeItemJobMapper" />
+
+
+	<bean id="interestItemLineTokenizer"
+		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer" />
+
+	<bean id="yinkerItemJobWriter"
+		class="com.ink.balance.core.batch.writer.MyBatisTBatchItemWriter"
+		scope="step">
+		<property name="statementId" value="ChannelData.insertSelective" />
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+
+	</bean>
+
+	<bean id="yinkerRechargeItemJobProcessor"
+		class="com.ink.balance.core.batch.processor.yinker.RechargeItemJobProcessor" />
+
+
+	<!-- 银客专用-懒猫-提现 -->
+	<!-- Actual Job -->
+	<batch:job id="yinkerWithdrawItemJob" restartable="true">
+		<batch:step id="yinkerWithdrawItemJobStep">
+			<batch:tasklet allow-start-if-complete="false"
+				start-limit="1" transaction-manager="transactionManager">
+				<batch:chunk reader="yinkerWithdrawItemJobReader"
+					writer="yinkerItemJobWriter" processor="yinkerRechargeItemJobProcessor"
+					commit-interval="600" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<bean id="yinkerWithdrawItemJobReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="encoding" value="UTF-8" />
+		<property name="lineMapper" ref="yinkerWithdrawItemJobLineMapper" />
+		<property name="resource" ref="res" />
+		<property name="strict" value="false" />
+	</bean>
+
+	<bean id="yinkerWithdrawItemJobLineMapper"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="interestItemLineTokenizer" />
+		<property name="fieldSetMapper" ref="interestWithdrawItemFieldSetMapper" />
+	</bean>
+
+	<bean id="interestWithdrawItemFieldSetMapper"
+		class="com.ink.balance.core.batch.mapper.yinker.WithdrawItemJobMapper" />
+
+	<!-- 银客专用-懒猫-交易 -->
+	<!-- Actual Job -->
+	<batch:job id="yinkerTransactionItemJob" restartable="true">
+		<batch:step id="yinkerTransactionItemJobStep">
+			<batch:tasklet allow-start-if-complete="false"
+				start-limit="1" transaction-manager="transactionManager">
+				<batch:chunk reader="yinkerTransactionItemJobReader"
+					writer="yinkerItemJobWriter" processor="yinkerRechargeItemJobProcessor"
+					commit-interval="600" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<bean id="yinkerTransactionItemJobReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="encoding" value="UTF-8" />
+		<property name="lineMapper" ref="yinkerTransactionItemJobLineMapper" />
+		<property name="resource" ref="res" />
+		<property name="strict" value="false" />
+	</bean>
+
+	<bean id="yinkerTransactionItemJobLineMapper"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="interestItemLineTokenizer" />
+		<property name="fieldSetMapper" ref="interestTransactionItemFieldSetMapper" />
+	</bean>
+
+	<bean id="interestTransactionItemFieldSetMapper"
+		class="com.ink.balance.core.batch.mapper.yinker.TransactionItemJobMapper" />
+
+
+	<!-- 银客专用-懒猫-佣金 -->
+	<!-- Actual Job -->
+	<batch:job id="yinkerCommissionItemJob" restartable="true">
+		<batch:step id="yinkerCommissionItemJobStep">
+			<batch:tasklet allow-start-if-complete="false"
+				start-limit="1" transaction-manager="transactionManager">
+				<batch:chunk reader="yinkerCommissionItemJobReader"
+					writer="yinkerItemJobWriter" processor="yinkerRechargeItemJobProcessor"
+					commit-interval="600" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<bean id="yinkerCommissionItemJobReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="encoding" value="UTF-8" />
+		<property name="lineMapper" ref="yinkerCommissionItemJobLineMapper" />
+		<property name="resource" ref="res" />
+		<property name="strict" value="false" />
+	</bean>
+
+	<bean id="yinkerCommissionItemJobLineMapper"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="interestItemLineTokenizer" />
+		<property name="fieldSetMapper" ref="interestCommissionItemFieldSetMapper" />
+	</bean>
+
+	<bean id="interestCommissionItemFieldSetMapper"
+		class="com.ink.balance.core.batch.mapper.yinker.CommissionItemJobMapper" />
+
+</beans>			

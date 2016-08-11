@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 所有日志进入all.log和控制台日志，错误日志进入error.log, 业务日志进入biz.log。 author: Robert Lee -->
+
+<configuration scan="true" >
+
+    <contextName>${logback_contextName}</contextName>
+
+    <!--日志路径 -->
+    <property name="logback.logs.path" value="${logback_logpath}" />
+    <!--项目名 -->
+    <property name="logback.project.name" value="${logback_project_name}" />
+    <property name="system.source" value="${logback_system_source}" />
+    <!--<property name="mongo.dbName" value="${logback_mongo_db}" />-->
+    <!--<property name="mongo.collectionName" value="all_log" />-->
+    <!--<property name="mongo.host" value="${logback_mongo_host}" />-->
+    <!--<property name="mongo.port" value="${logback_mongo_port}" />-->
+    
+    <!--日志文件名的日期格式 -->
+    <timestamp key="byDay" datePattern="yyyyMMdd" />
+    <!-- 控制台日志 -->
+    <appender name="stdout.default" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%level]%date{yyyy-MM-dd HH:mm:ss}[%X{user.name}|%X{req.remoteAddr}|%X{req.id}|%X{req.serverIp}|%X{req.context}|${system.source}|%X{op.module}|%X{tread.id}|%X{op.infoId}|%X{req.requestURI}]%logger|%msg|%X{op.result}%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 业务日志 -->
+    <appender name="biz.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    	<File> ${logback.logs.path}${logback.project.name}/biz.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]%date{yyyy-MM-dd HH:mm:ss}[%X{user.name}|%X{req.remoteAddr}|%X{req.id}|%X{req.serverIp}|%X{req.context}|${system.source}|%X{op.module}|%X{tread.id}|%X{op.infoId}|%X{req.requestURI}]%logger|%msg|%X{op.result}%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+             <fileNamePattern>${logback.logs.path}${logback.project.name}/biz.%d{yyyy-MM-dd}.%i.log</fileNamePattern>  
+             <maxHistory>100</maxHistory>  
+             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                  <maxFileSize>100MB</maxFileSize>  
+             </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 所有日志-->
+    <appender name="all.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    	<File> ${logback.logs.path}${logback.project.name}/all.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]%date{yyyy-MM-dd HH:mm:ss}[%X{user.name}|%X{req.remoteAddr}|%X{req.id}|%X{req.serverIp}|%X{req.context}|${system.source}|%X{op.module}|%X{tread.id}|%X{op.infoId}|%X{req.requestURI}]%logger|%msg|%X{op.result}%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+             <fileNamePattern>${logback.logs.path}${logback.project.name}/all.%d{yyyy-MM-dd}.%i.log</fileNamePattern>  
+             <maxHistory>100</maxHistory>  
+             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                  <maxFileSize>100MB</maxFileSize>  
+             </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <!-- 所有错误日志-->
+    <appender name="error.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    	<File> ${logback.logs.path}${logback.project.name}/error.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]%date{yyyy-MM-dd HH:mm:ss}[%X{user.name}|%X{req.remoteAddr}|%X{req.id}|%X{req.serverIp}|%X{req.context}|${system.source}|%X{op.module}|%X{tread.id}|%X{op.infoId}|%X{req.requestURI}]%logger|%msg|%X{op.result}%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+             <fileNamePattern>${logback.logs.path}${logback.project.name}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>  
+             <maxHistory>100</maxHistory>  
+             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                  <maxFileSize>100MB</maxFileSize>  
+             </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- mongo日志同步 -->
+   <!-- <appender name="MONGO" class="com.yinker.base.log.mongo.MongoDBAppender">
+        <dbName>${mongo.dbName}</dbName>
+        <collectionName>${mongo.collectionName}</collectionName>
+        <source>${system.source}</source>
+        <host>${mongo.host}</host>
+        <port>${mongo.port}</port>
+    </appender>-->
+    
+    <logger name="com.yinker.base.mybatis.interceptor" level="${logback_sql_level}" />
+    
+    <root level="INFO">
+        <appender-ref ref="stdout.default" />
+        <appender-ref ref="all.log" />
+        <appender-ref ref="error.log" />
+        <!--<appender-ref ref="MONGO" />-->
+    </root>
+</configuration>

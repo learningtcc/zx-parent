@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RouteInfo">
+
+    <resultMap id="RouteInfo" type="com.ink.route.core.po.RouteInfo">
+        <result property="limitType" column="limit_type"/>
+        <result property="limitAmt" column="limit_amt"/>
+        <result property="id" column="id"/>
+        <result property="routeName" column="route_name"/>
+        <result property="routeCode" column="route_code"/>
+        <result property="payType" column="pay_type"/>
+        <result property="priority" column="priority"/>
+        <result property="routeStatus" column="route_status"/>
+        <result property="bankId" column="bank_id"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="asileId" column="asile_id"/>
+        <result property="routeStartTime" column="route_start_time"/>
+        <result property="routeEndTime" column="route_end_time"/>
+        <result property="routeTimeOutUnit" column="route_time_out_unit"/>
+        <result property="routeTimeOutNum" column="route_time_out_num"/>
+        <result property="isSpecial" column="is_special"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="merchantName" column="merchant_name"/>
+        <result property="asileName" column="asile_name"/>
+        <result property="auditerName" column="auditer_name"/>
+        <result property="auditerId" column="auditer_id"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="auditOpinion" column="audit_opinion"/>
+        <result property="asuitStatus" column="asuit_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createrId" column="creater_id"/>
+        <result property="createrName" column="creater_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterName" column="updater_name"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="businessLineNo" column="business_line_no"/>
+        <result property="businessLineNanme" column="business_line_nanme"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        limit_type ,limit_amt ,id ,route_name ,route_code ,pay_type ,priority ,route_status ,bank_id ,bank_name ,asile_id ,route_start_time ,route_end_time ,route_time_out_unit ,route_time_out_num ,is_special ,merchant_id ,merchant_name ,asile_name ,auditer_name ,auditer_id ,audit_time ,audit_opinion ,asuit_status ,remark ,create_time ,creater_id ,creater_name ,update_time ,updater_id ,updater_name ,is_delete ,business_line_no ,business_line_nanme 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO route_info (
+	        limit_type  ,
+	        limit_amt  ,
+	        id  ,
+	        route_name  ,
+	        route_code  ,
+	        pay_type  ,
+	        priority  ,
+	        route_status  ,
+	        bank_id  ,
+	        bank_name  ,
+	        asile_id  ,
+	        route_start_time  ,
+	        route_end_time  ,
+	        route_time_out_unit  ,
+	        route_time_out_num  ,
+	        is_special  ,
+	        merchant_id  ,
+	        merchant_name  ,
+	        asile_name  ,
+	        auditer_name  ,
+	        auditer_id  ,
+	        audit_time  ,
+	        audit_opinion  ,
+	        asuit_status  ,
+	        remark  ,
+	        create_time  ,
+	        creater_id  ,
+	        creater_name  ,
+	        update_time  ,
+	        updater_id  ,
+	        updater_name  ,
+	        is_delete  ,
+	        business_line_no  ,
+	        business_line_nanme  
+        ) VALUES (
+        	#{limitType, jdbcType=TINYINT} ,
+        	#{limitAmt, jdbcType=DECIMAL} ,
+        	#{id, jdbcType=BIGINT} ,
+        	#{routeName, jdbcType=VARCHAR} ,
+        	#{routeCode, jdbcType=CHAR} ,
+        	#{payType, jdbcType=CHAR} ,
+        	#{priority, jdbcType=TINYINT} ,
+        	#{routeStatus, jdbcType=CHAR} ,
+        	#{bankId, jdbcType=BIGINT} ,
+        	#{bankName, jdbcType=VARCHAR} ,
+        	#{asileId, jdbcType=BIGINT} ,
+        	#{routeStartTime, jdbcType=TIMESTAMP} ,
+        	#{routeEndTime, jdbcType=TIMESTAMP} ,
+        	#{routeTimeOutUnit, jdbcType=CHAR} ,
+        	#{routeTimeOutNum, jdbcType=INTEGER} ,
+        	#{isSpecial, jdbcType=CHAR} ,
+        	#{merchantId, jdbcType=VARCHAR} ,
+        	#{merchantName, jdbcType=VARCHAR} ,
+        	#{asileName, jdbcType=VARCHAR} ,
+        	#{auditerName, jdbcType=VARCHAR} ,
+        	#{auditerId, jdbcType=CHAR} ,
+        	#{auditTime, jdbcType=TIMESTAMP} ,
+        	#{auditOpinion, jdbcType=VARCHAR} ,
+        	#{asuitStatus, jdbcType=CHAR} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{createrId, jdbcType=BIGINT} ,
+        	#{createrName, jdbcType=VARCHAR} ,
+        	#{updateTime, jdbcType=TIMESTAMP} ,
+        	#{updaterId, jdbcType=BIGINT} ,
+        	#{updaterName, jdbcType=VARCHAR} ,
+        	#{isDelete, jdbcType=CHAR} ,
+        	#{businessLineNo, jdbcType=VARCHAR} ,
+        	#{businessLineNanme, jdbcType=VARCHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO route_info ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.limitType, jdbcType=TINYINT} ,
+        	#{item.limitAmt, jdbcType=DECIMAL} ,
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.routeName, jdbcType=VARCHAR} ,
+        	#{item.routeCode, jdbcType=CHAR} ,
+        	#{item.payType, jdbcType=CHAR} ,
+        	#{item.priority, jdbcType=TINYINT} ,
+        	#{item.routeStatus, jdbcType=CHAR} ,
+        	#{item.bankId, jdbcType=BIGINT} ,
+        	#{item.bankName, jdbcType=VARCHAR} ,
+        	#{item.asileId, jdbcType=BIGINT} ,
+        	#{item.routeStartTime, jdbcType=TIMESTAMP} ,
+        	#{item.routeEndTime, jdbcType=TIMESTAMP} ,
+        	#{item.routeTimeOutUnit, jdbcType=CHAR} ,
+        	#{item.routeTimeOutNum, jdbcType=INTEGER} ,
+        	#{item.isSpecial, jdbcType=CHAR} ,
+        	#{item.merchantId, jdbcType=VARCHAR} ,
+        	#{item.merchantName, jdbcType=VARCHAR} ,
+        	#{item.asileName, jdbcType=VARCHAR} ,
+        	#{item.auditerName, jdbcType=VARCHAR} ,
+        	#{item.auditerId, jdbcType=CHAR} ,
+        	#{item.auditTime, jdbcType=TIMESTAMP} ,
+        	#{item.auditOpinion, jdbcType=VARCHAR} ,
+        	#{item.asuitStatus, jdbcType=CHAR} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.createrId, jdbcType=BIGINT} ,
+        	#{item.createrName, jdbcType=VARCHAR} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} ,
+        	#{item.updaterId, jdbcType=BIGINT} ,
+        	#{item.updaterName, jdbcType=VARCHAR} ,
+        	#{item.isDelete, jdbcType=CHAR} ,
+        	#{item.businessLineNo, jdbcType=VARCHAR} ,
+        	#{item.businessLineNanme, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE route_info SET
+	        limit_type = #{limitType, jdbcType=TINYINT} ,
+	        limit_amt = #{limitAmt, jdbcType=DECIMAL} ,
+	        route_name = #{routeName, jdbcType=VARCHAR} ,
+	        route_code = #{routeCode, jdbcType=CHAR} ,
+	        pay_type = #{payType, jdbcType=CHAR} ,
+	        priority = #{priority, jdbcType=TINYINT} ,
+	        route_status = #{routeStatus, jdbcType=CHAR} ,
+	        bank_id = #{bankId, jdbcType=BIGINT} ,
+	        bank_name = #{bankName, jdbcType=VARCHAR} ,
+	        asile_id = #{asileId, jdbcType=BIGINT} ,
+	        route_start_time = #{routeStartTime, jdbcType=TIMESTAMP} ,
+	        route_end_time = #{routeEndTime, jdbcType=TIMESTAMP} ,
+	        route_time_out_unit = #{routeTimeOutUnit, jdbcType=CHAR} ,
+	        route_time_out_num = #{routeTimeOutNum, jdbcType=INTEGER} ,
+	        is_special = #{isSpecial, jdbcType=CHAR} ,
+	        merchant_id = #{merchantId, jdbcType=VARCHAR} ,
+	        merchant_name = #{merchantName, jdbcType=VARCHAR} ,
+	        asile_name = #{asileName, jdbcType=VARCHAR} ,
+	        auditer_name = #{auditerName, jdbcType=VARCHAR} ,
+	        auditer_id = #{auditerId, jdbcType=CHAR} ,
+	        audit_time = #{auditTime, jdbcType=TIMESTAMP} ,
+	        audit_opinion = #{auditOpinion, jdbcType=VARCHAR} ,
+	        asuit_status = #{asuitStatus, jdbcType=CHAR} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        creater_id = #{createrId, jdbcType=BIGINT} ,
+	        creater_name = #{createrName, jdbcType=VARCHAR} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	        updater_id = #{updaterId, jdbcType=BIGINT} ,
+	        updater_name = #{updaterName, jdbcType=VARCHAR} ,
+	        is_delete = #{isDelete, jdbcType=CHAR} ,
+	        business_line_no = #{businessLineNo, jdbcType=VARCHAR} ,
+	        business_line_nanme = #{businessLineNanme, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM route_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RouteInfo">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM route_info 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=routeName and ''!=routeName ">
+	   			 		AND route_name = #{routeName}
+	   			   	</if>
+			       	<if test="null!=routeCode and ''!=routeCode ">
+	   			 		AND route_code = #{routeCode}
+	   			   	</if>
+			       	<if test="null!=payType and ''!=payType ">
+	   			 		AND pay_type = #{payType}
+	   			   	</if>
+			       	<if test="null!=routeStatus and ''!=routeStatus ">
+	   			 		AND route_status = #{routeStatus}
+	   			   	</if>
+			       	<if test="null!=bankName and ''!=bankName ">
+	   			 		AND bank_name = #{bankName}
+	   			   	</if>
+			       	<if test="null!=routeTimeOutUnit and ''!=routeTimeOutUnit ">
+	   			 		AND route_time_out_unit = #{routeTimeOutUnit}
+	   			   	</if>
+			       	<if test="null!=isSpecial and ''!=isSpecial ">
+	   			 		AND is_special = #{isSpecial}
+	   			   	</if>
+			       	<if test="null!=merchantId and ''!=merchantId ">
+	   			 		AND merchant_id = #{merchantId}
+	   			   	</if>
+			       	<if test="null!=merchantName and ''!=merchantName ">
+	   			 		AND merchant_name = #{merchantName}
+	   			   	</if>
+			       	<if test="null!=asileName and ''!=asileName ">
+	   			 		AND asile_name = #{asileName}
+	   			   	</if>
+			       	<if test="null!=auditerName and ''!=auditerName ">
+	   			 		AND auditer_name = #{auditerName}
+	   			   	</if>
+			       	<if test="null!=auditerId and ''!=auditerId ">
+	   			 		AND auditer_id = #{auditerId}
+	   			   	</if>
+			       	<if test="null!=auditOpinion and ''!=auditOpinion ">
+	   			 		AND audit_opinion = #{auditOpinion}
+	   			   	</if>
+			       	<if test="null!=asuitStatus and ''!=asuitStatus ">
+	   			 		AND asuit_status = #{asuitStatus}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=createrName and ''!=createrName ">
+	   			 		AND creater_name = #{createrName}
+	   			   	</if>
+			       	<if test="null!=updaterName and ''!=updaterName ">
+	   			 		AND updater_name = #{updaterName}
+	   			   	</if>
+			       	<if test="null!=isDelete and ''!=isDelete ">
+	   			 		AND is_delete = #{isDelete}
+	   			   	</if>
+			       	<if test="null!=businessLineNo and ''!=businessLineNo ">
+	   			 		AND business_line_no = #{businessLineNo}
+	   			   	</if>
+			       	<if test="null!=businessLineNanme and ''!=businessLineNanme ">
+	   			 		AND business_line_nanme = #{businessLineNanme}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=routeName and ''!=routeName">
+				    <!-- 	AND route_name LIKE '%'||#{routeName}||'%' oracle -->
+			   			AND route_name LIKE concat('%',#{routeName},'%')
+			   			
+			   		</if>
+				    <if test="null!=routeCode and ''!=routeCode">
+				    <!-- 	AND route_code LIKE '%'||#{routeCode}||'%' oracle -->
+			   			AND route_code LIKE concat('%',#{routeCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=payType and ''!=payType">
+				    <!-- 	AND pay_type LIKE '%'||#{payType}||'%' oracle -->
+			   			AND pay_type LIKE concat('%',#{payType},'%')
+			   			
+			   		</if>
+				    <if test="null!=routeStatus and ''!=routeStatus">
+				    <!-- 	AND route_status LIKE '%'||#{routeStatus}||'%' oracle -->
+			   			AND route_status LIKE concat('%',#{routeStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=bankName and ''!=bankName">
+				    <!-- 	AND bank_name LIKE '%'||#{bankName}||'%' oracle -->
+			   			AND bank_name LIKE concat('%',#{bankName},'%')
+			   			
+			   		</if>
+				    <if test="null!=routeTimeOutUnit and ''!=routeTimeOutUnit">
+				    <!-- 	AND route_time_out_unit LIKE '%'||#{routeTimeOutUnit}||'%' oracle -->
+			   			AND route_time_out_unit LIKE concat('%',#{routeTimeOutUnit},'%')
+			   			
+			   		</if>
+				    <if test="null!=isSpecial and ''!=isSpecial">
+				    <!-- 	AND is_special LIKE '%'||#{isSpecial}||'%' oracle -->
+			   			AND is_special LIKE concat('%',#{isSpecial},'%')
+			   			
+			   		</if>
+				    <if test="null!=merchantId and ''!=merchantId">
+				    <!-- 	AND merchant_id LIKE '%'||#{merchantId}||'%' oracle -->
+			   			AND merchant_id LIKE concat('%',#{merchantId},'%')
+			   			
+			   		</if>
+				    <if test="null!=merchantName and ''!=merchantName">
+				    <!-- 	AND merchant_name LIKE '%'||#{merchantName}||'%' oracle -->
+			   			AND merchant_name LIKE concat('%',#{merchantName},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileName and ''!=asileName">
+				    <!-- 	AND asile_name LIKE '%'||#{asileName}||'%' oracle -->
+			   			AND asile_name LIKE concat('%',#{asileName},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditerName and ''!=auditerName">
+				    <!-- 	AND auditer_name LIKE '%'||#{auditerName}||'%' oracle -->
+			   			AND auditer_name LIKE concat('%',#{auditerName},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditerId and ''!=auditerId">
+				    <!-- 	AND auditer_id LIKE '%'||#{auditerId}||'%' oracle -->
+			   			AND auditer_id LIKE concat('%',#{auditerId},'%')
+			   			
+			   		</if>
+				    <if test="null!=auditOpinion and ''!=auditOpinion">
+				    <!-- 	AND audit_opinion LIKE '%'||#{auditOpinion}||'%' oracle -->
+			   			AND audit_opinion LIKE concat('%',#{auditOpinion},'%')
+			   			
+			   		</if>
+				    <if test="null!=asuitStatus and ''!=asuitStatus">
+				    <!-- 	AND asuit_status LIKE '%'||#{asuitStatus}||'%' oracle -->
+			   			AND asuit_status LIKE concat('%',#{asuitStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=createrName and ''!=createrName">
+				    <!-- 	AND creater_name LIKE '%'||#{createrName}||'%' oracle -->
+			   			AND creater_name LIKE concat('%',#{createrName},'%')
+			   			
+			   		</if>
+				    <if test="null!=updaterName and ''!=updaterName">
+				    <!-- 	AND updater_name LIKE '%'||#{updaterName}||'%' oracle -->
+			   			AND updater_name LIKE concat('%',#{updaterName},'%')
+			   			
+			   		</if>
+				    <if test="null!=isDelete and ''!=isDelete">
+				    <!-- 	AND is_delete LIKE '%'||#{isDelete}||'%' oracle -->
+			   			AND is_delete LIKE concat('%',#{isDelete},'%')
+			   			
+			   		</if>
+				    <if test="null!=businessLineNo and ''!=businessLineNo">
+				    <!-- 	AND business_line_no LIKE '%'||#{businessLineNo}||'%' oracle -->
+			   			AND business_line_no LIKE concat('%',#{businessLineNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=businessLineNanme and ''!=businessLineNanme">
+				    <!-- 	AND business_line_nanme LIKE '%'||#{businessLineNanme}||'%' oracle -->
+			   			AND business_line_nanme LIKE concat('%',#{businessLineNanme},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=limitType and ''!=limitType">
+			    AND limit_type = #{limitType}
+			</if>
+		   	<if test="null!=limitAmt and ''!=limitAmt">
+			    AND limit_amt = #{limitAmt}
+			</if>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=priority and ''!=priority">
+			    AND priority = #{priority}
+			</if>
+		   	<if test="null!=bankId and ''!=bankId">
+			    AND bank_id = #{bankId}
+			</if>
+		   	<if test="null!=asileId and ''!=asileId">
+			    AND asile_id = #{asileId}
+			</if>
+		   	<if test="null!=routeStartTimeBegin and ''!=routeStartTimeBegin">
+		   		AND route_start_time >= #{routeStartTimeBegin}
+		   	</if>
+		   	<if test="null!=routeStartTimeEnd and ''!=routeStartTimeEnd">
+		   		AND route_start_time &lt; #{routeStartTimeEnd}
+		   	</if>
+		   	<if test="null!=routeEndTimeBegin and ''!=routeEndTimeBegin">
+		   		AND route_end_time >= #{routeEndTimeBegin}
+		   	</if>
+		   	<if test="null!=routeEndTimeEnd and ''!=routeEndTimeEnd">
+		   		AND route_end_time &lt; #{routeEndTimeEnd}
+		   	</if>
+		   	<if test="null!=routeTimeOutNum and ''!=routeTimeOutNum">
+			    AND route_time_out_num = #{routeTimeOutNum}
+			</if>
+		   	<if test="null!=auditTimeBegin and ''!=auditTimeBegin">
+		   		AND audit_time >= #{auditTimeBegin}
+		   	</if>
+		   	<if test="null!=auditTimeEnd and ''!=auditTimeEnd">
+		   		AND audit_time &lt; #{auditTimeEnd}
+		   	</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=createrId and ''!=createrId">
+			    AND creater_id = #{createrId}
+			</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND update_time >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND update_time &lt; #{updateTimeEnd}
+		   	</if>
+		   	<if test="null!=updaterId and ''!=updaterId">
+			    AND updater_id = #{updaterId}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM route_info <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="RouteInfo">
+    	SELECT <include refid="columns"/> FROM route_info 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="RouteInfo">
+	    SELECT <include refid="columns"/> FROM route_info 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

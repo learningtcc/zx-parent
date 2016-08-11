@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:noNamespaceSchemaLocation="classpath:xsd/dubbo.xsd"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+ <!-- 权限后台duboo服务 ：user 接口 -->
+ 	<bean id="platformDubboService" class="com.ink.platform.dubbo.UserResourceServiceImpl" />
+ 	<dubbo:service ref="platformDubboService" interface="com.ink.platform.api.dubbo.IUserResourceService" version="1.0" />
+</beans>    

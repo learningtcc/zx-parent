@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccSacType">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.AccSacType">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="sac_type" property="sacType" jdbcType="VARCHAR" />
+		<result column="sac_name" property="sacName" jdbcType="VARCHAR" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="day_varchargelmt_amt" property="dayVarchargelmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="day_varchargelmt_cnt" property="dayVarchargelmtCnt"
+			jdbcType="INTEGER" />
+		<result column="day_paylmt_amt" property="dayPaylmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="day_paylmt_cnt" property="dayPaylmtCnt"
+			jdbcType="INTEGER" />
+		<result column="day_inlmt_amt" property="dayInlmtAmt" jdbcType="DECIMAL" />
+		<result column="day_inlmt_cnt" property="dayInlmtCnt" jdbcType="INTEGER" />
+		<result column="day_outlmt_amt" property="dayOutlmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="day_outlmt_cnt" property="dayOutlmtCnt"
+			jdbcType="INTEGER" />
+		<result column="day_cashlmt_amt" property="dayCashlmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="day_cashlmt_cnt" property="dayCashlmtCnt"
+			jdbcType="INTEGER" />
+		<result column="mon_varchargelmt_amt" property="monVarchargelmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="mon_varchargelmt_cnt" property="monVarchargelmtCnt"
+			jdbcType="INTEGER" />
+		<result column="mon_paylmt_amt" property="monPaylmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="mon_paylmt_cnt" property="monPaylmtCnt"
+			jdbcType="INTEGER" />
+		<result column="mon_inlmt_amt" property="monInlmtAmt" jdbcType="DECIMAL" />
+		<result column="mon_inlmt_cnt" property="monInlmtCnt" jdbcType="INTEGER" />
+		<result column="mon_outlmt_amt" property="monOutlmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="mon_outlmt_cnt" property="monOutlmtCnt"
+			jdbcType="INTEGER" />
+		<result column="mon_cashlmt_amt" property="monCashlmtAmt"
+			jdbcType="DECIMAL" />
+		<result column="mon_cashlmt_cnt" property="monCashlmtCnt"
+			jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, last_update_time,
+		sac_type,
+		sac_name, cur,
+		day_varchargelmt_amt,
+		day_varchargelmt_cnt, day_paylmt_amt, day_paylmt_cnt,
+		day_inlmt_amt,
+		day_inlmt_cnt, day_outlmt_amt, day_outlmt_cnt,
+		day_cashlmt_amt,
+		day_cashlmt_cnt,
+		mon_varchargelmt_amt,
+		mon_varchargelmt_cnt, mon_paylmt_amt, mon_paylmt_cnt,
+		mon_inlmt_amt,
+		mon_inlmt_cnt, mon_outlmt_amt, mon_outlmt_cnt,
+		mon_cashlmt_amt,
+		mon_cashlmt_cnt,
+		status, version
+	</sql>
+
+	<!-- 基础方法Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO acc_sac_type (
+	        id  ,
+	        create_time  ,
+	        last_update_time  ,
+	        sac_type  ,
+	        sac_name  ,
+	        cur  ,
+	        day_varchargelmt_amt  ,
+	        day_varchargelmt_cnt  ,
+	        day_paylmt_amt  ,
+	        day_paylmt_cnt  ,
+	        day_inlmt_amt  ,
+	        day_inlmt_cnt  ,
+	        day_outlmt_amt  ,
+	        day_outlmt_cnt  ,
+	        day_cashlmt_amt  ,
+	        day_cashlmt_cnt  ,
+	        mon_varchargelmt_amt  ,
+	        mon_varchargelmt_cnt  ,
+	        mon_paylmt_amt  ,
+	        mon_paylmt_cnt  ,
+	        mon_inlmt_amt  ,
+	        mon_inlmt_cnt  ,
+	        mon_outlmt_amt  ,
+	        mon_outlmt_cnt  ,
+	        mon_cashlmt_amt  ,
+	        mon_cashlmt_cnt  ,
+	        status  ,
+	        version  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{sacType, jdbcType=VARCHAR} ,
+        	#{sacName, jdbcType=VARCHAR} ,
+        	#{cur, jdbcType=VARCHAR} ,
+        	#{dayVarchargelmtAmt, jdbcType=DECIMAL} ,
+        	#{dayVarchargelmtCnt, jdbcType=INTEGER} ,
+        	#{dayPaylmtAmt, jdbcType=DECIMAL} ,
+        	#{dayPaylmtCnt, jdbcType=INTEGER} ,
+        	#{dayInlmtAmt, jdbcType=DECIMAL} ,
+        	#{dayInlmtCnt, jdbcType=INTEGER} ,
+        	#{dayOutlmtAmt, jdbcType=DECIMAL} ,
+        	#{dayOutlmtCnt, jdbcType=INTEGER} ,
+        	#{dayCashlmtAmt, jdbcType=DECIMAL} ,
+        	#{dayCashlmtCnt, jdbcType=INTEGER} ,
+        	#{monVarchargelmtAmt, jdbcType=DECIMAL} ,
+        	#{monVarchargelmtCnt, jdbcType=INTEGER} ,
+        	#{monPaylmtAmt, jdbcType=DECIMAL} ,
+        	#{monPaylmtCnt, jdbcType=INTEGER} ,
+        	#{monInlmtAmt, jdbcType=DECIMAL} ,
+        	#{monInlmtCnt, jdbcType=INTEGER} ,
+        	#{monOutlmtAmt, jdbcType=DECIMAL} ,
+        	#{monOutlmtCnt, jdbcType=INTEGER} ,
+        	#{monCashlmtAmt, jdbcType=DECIMAL} ,
+        	#{monCashlmtCnt, jdbcType=INTEGER} ,
+        	#{status, jdbcType=BIT} ,
+        	#{version, jdbcType=INTEGER} 
+        )
+    ]]>
+	</insert>
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO acc_sac_type (
+		<include refid="Base_Column_List" />
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.id, jdbcType=BIGINT} ,
+			#{item.createTime, jdbcType=TIMESTAMP} ,
+			#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+			#{item.sacType, jdbcType=VARCHAR} ,
+			#{item.sacName, jdbcType=VARCHAR} ,
+			#{item.cur, jdbcType=VARCHAR} ,
+			#{item.dayVarchargelmtAmt, jdbcType=DECIMAL} ,
+			#{item.dayVarchargelmtCnt, jdbcType=INTEGER} ,
+			#{item.dayPaylmtAmt, jdbcType=DECIMAL} ,
+			#{item.dayPaylmtCnt, jdbcType=INTEGER} ,
+			#{item.dayInlmtAmt, jdbcType=DECIMAL} ,
+			#{item.dayInlmtCnt, jdbcType=INTEGER} ,
+			#{item.dayOutlmtAmt, jdbcType=DECIMAL} ,
+			#{item.dayOutlmtCnt, jdbcType=INTEGER} ,
+			#{item.dayCashlmtAmt, jdbcType=DECIMAL} ,
+			#{item.dayCashlmtCnt, jdbcType=INTEGER} ,
+			#{item.monVarchargelmtAmt, jdbcType=DECIMAL} ,
+			#{item.monVarchargelmtCnt, jdbcType=INTEGER} ,
+			#{item.monPaylmtAmt, jdbcType=DECIMAL} ,
+			#{item.monPaylmtCnt, jdbcType=INTEGER} ,
+			#{item.monInlmtAmt, jdbcType=DECIMAL} ,
+			#{item.monInlmtCnt, jdbcType=INTEGER} ,
+			#{item.monOutlmtAmt, jdbcType=DECIMAL} ,
+			#{item.monOutlmtCnt, jdbcType=INTEGER} ,
+			#{item.monCashlmtAmt, jdbcType=DECIMAL} ,
+			#{item.monCashlmtCnt, jdbcType=INTEGER} ,
+			#{item.status, jdbcType=BIT} ,
+			#{item.version, jdbcType=INTEGER}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update">
+    <![CDATA[
+        UPDATE acc_sac_type SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        sac_type = #{sacType, jdbcType=VARCHAR} ,
+	        sac_name = #{sacName, jdbcType=VARCHAR} ,
+	        cur = #{cur, jdbcType=VARCHAR} ,
+	        day_varchargelmt_amt = #{dayVarchargelmtAmt, jdbcType=DECIMAL} ,
+	        day_varchargelmt_cnt = #{dayVarchargelmtCnt, jdbcType=INTEGER} ,
+	        day_paylmt_amt = #{dayPaylmtAmt, jdbcType=DECIMAL} ,
+	        day_paylmt_cnt = #{dayPaylmtCnt, jdbcType=INTEGER} ,
+	        day_inlmt_amt = #{dayInlmtAmt, jdbcType=DECIMAL} ,
+	        day_inlmt_cnt = #{dayInlmtCnt, jdbcType=INTEGER} ,
+	        day_outlmt_amt = #{dayOutlmtAmt, jdbcType=DECIMAL} ,
+	        day_outlmt_cnt = #{dayOutlmtCnt, jdbcType=INTEGER} ,
+	        day_cashlmt_amt = #{dayCashlmtAmt, jdbcType=DECIMAL} ,
+	        day_cashlmt_cnt = #{dayCashlmtCnt, jdbcType=INTEGER} ,
+	        mon_varchargelmt_amt = #{monVarchargelmtAmt, jdbcType=DECIMAL} ,
+	        mon_varchargelmt_cnt = #{monVarchargelmtCnt, jdbcType=INTEGER} ,
+	        mon_paylmt_amt = #{monPaylmtAmt, jdbcType=DECIMAL} ,
+	        mon_paylmt_cnt = #{monPaylmtCnt, jdbcType=INTEGER} ,
+	        mon_inlmt_amt = #{monInlmtAmt, jdbcType=DECIMAL} ,
+	        mon_inlmt_cnt = #{monInlmtCnt, jdbcType=INTEGER} ,
+	        mon_outlmt_amt = #{monOutlmtAmt, jdbcType=DECIMAL} ,
+	        mon_outlmt_cnt = #{monOutlmtCnt, jdbcType=INTEGER} ,
+	        mon_cashlmt_amt = #{monCashlmtAmt, jdbcType=DECIMAL} ,
+	        mon_cashlmt_cnt = #{monCashlmtCnt, jdbcType=INTEGER} ,
+	        status = #{status, jdbcType=BIT} ,
+	        version = #{version, jdbcType=INTEGER} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+	<delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_sac_type WHERE
+        id = #{id} 
+    ]]>
+	</delete>
+
+	<select id="getById" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+	    <![CDATA[
+	        FROM acc_sac_type 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+
+	<sql id="findWhere">
+		<where>
+			<choose>
+				<when test="queryType==0">
+					<if test="null!=sacType and ''!=sacType ">
+						AND sac_type = #{sacType}
+					</if>
+					<if test="null!=sacName and ''!=sacName ">
+						AND sac_name = #{sacName}
+					</if>
+					<if test="null!=cur and ''!=cur ">
+						AND cur = #{cur}
+					</if>
+				</when>
+				<otherwise>
+					<if test="null!=sacType and ''!=sacType">
+						<!-- AND sac_type LIKE '%'||#{sacType}||'%' oracle -->
+						AND sac_type LIKE concat('%',#{sacType},'%')
+
+					</if>
+					<if test="null!=sacName and ''!=sacName">
+						<!-- AND sac_name LIKE '%'||#{sacName}||'%' oracle -->
+						AND sac_name LIKE concat('%',#{sacName},'%')
+
+					</if>
+					<if test="null!=cur and ''!=cur">
+						<!-- AND cur LIKE '%'||#{cur}||'%' oracle -->
+						AND cur LIKE concat('%',#{cur},'%')
+
+					</if>
+				</otherwise>
+			</choose>
+			<if test="null!=id and ''!=id">
+				AND id = #{id}
+			</if>
+			<if test="null!=createTimeBegin and ''!=createTimeBegin">
+				AND create_time >= #{createTimeBegin}
+			</if>
+			<if test="null!=createTimeEnd and ''!=createTimeEnd">
+				AND create_time &lt; #{createTimeEnd}
+			</if>
+			<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+				AND last_update_time >= #{lastUpdateTimeBegin}
+			</if>
+			<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+				AND last_update_time &lt; #{lastUpdateTimeEnd}
+			</if>
+			<if test="null!=dayVarchargelmtAmt and ''!=dayVarchargelmtAmt">
+				AND day_varchargelmt_amt = #{dayVarchargelmtAmt}
+			</if>
+			<if test="null!=dayVarchargelmtCnt and ''!=dayVarchargelmtCnt">
+				AND day_varchargelmt_cnt = #{dayVarchargelmtCnt}
+			</if>
+			<if test="null!=dayPaylmtAmt and ''!=dayPaylmtAmt">
+				AND day_paylmt_amt = #{dayPaylmtAmt}
+			</if>
+			<if test="null!=dayPaylmtCnt and ''!=dayPaylmtCnt">
+				AND day_paylmt_cnt = #{dayPaylmtCnt}
+			</if>
+			<if test="null!=dayInlmtAmt and ''!=dayInlmtAmt">
+				AND day_inlmt_amt = #{dayInlmtAmt}
+			</if>
+			<if test="null!=dayInlmtCnt and ''!=dayInlmtCnt">
+				AND day_inlmt_cnt = #{dayInlmtCnt}
+			</if>
+			<if test="null!=dayOutlmtAmt and ''!=dayOutlmtAmt">
+				AND day_outlmt_amt = #{dayOutlmtAmt}
+			</if>
+			<if test="null!=dayOutlmtCnt and ''!=dayOutlmtCnt">
+				AND day_outlmt_cnt = #{dayOutlmtCnt}
+			</if>
+			<if test="null!=dayCashlmtAmt and ''!=dayCashlmtAmt">
+				AND day_cashlmt_amt = #{dayCashlmtAmt}
+			</if>
+			<if test="null!=dayCashlmtCnt and ''!=dayCashlmtCnt">
+				AND day_cashlmt_cnt = #{dayCashlmtCnt}
+			</if>
+			<if test="null!=monVarchargelmtAmt and ''!=monVarchargelmtAmt">
+				AND mon_varchargelmt_amt = #{monVarchargelmtAmt}
+			</if>
+			<if test="null!=monVarchargelmtCnt and ''!=monVarchargelmtCnt">
+				AND mon_varchargelmt_cnt = #{monVarchargelmtCnt}
+			</if>
+			<if test="null!=monPaylmtAmt and ''!=monPaylmtAmt">
+				AND mon_paylmt_amt = #{monPaylmtAmt}
+			</if>
+			<if test="null!=monPaylmtCnt and ''!=monPaylmtCnt">
+				AND mon_paylmt_cnt = #{monPaylmtCnt}
+			</if>
+			<if test="null!=monInlmtAmt and ''!=monInlmtAmt">
+				AND mon_inlmt_amt = #{monInlmtAmt}
+			</if>
+			<if test="null!=monInlmtCnt and ''!=monInlmtCnt">
+				AND mon_inlmt_cnt = #{monInlmtCnt}
+			</if>
+			<if test="null!=monOutlmtAmt and ''!=monOutlmtAmt">
+				AND mon_outlmt_amt = #{monOutlmtAmt}
+			</if>
+			<if test="null!=monOutlmtCnt and ''!=monOutlmtCnt">
+				AND mon_outlmt_cnt = #{monOutlmtCnt}
+			</if>
+			<if test="null!=monCashlmtAmt and ''!=monCashlmtAmt">
+				AND mon_cashlmt_amt = #{monCashlmtAmt}
+			</if>
+			<if test="null!=monCashlmtCnt and ''!=monCashlmtCnt">
+				AND mon_cashlmt_cnt = #{monCashlmtCnt}
+			</if>
+			<if test="null!=status and ''!=status">
+				AND status = #{status}
+			</if>
+			<if test="null!=version and ''!=version">
+				AND version = #{version}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(*) FROM acc_sac_type
+		<include refid="findWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="findPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM acc_sac_type
+		<include refid="findWhere" />
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+	<select id="getBySacType" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+	    <![CDATA[
+	        FROM acc_sac_type WHERE sac_type = #sacType#
+	    ]]>
+	</select>
+
+
+	<select id="find" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM acc_sac_type
+		<include refid="findWhere" />
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+	<!-- 基础方法End -->
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from acc_sac_type
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		acc_sac_type
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.AccSacType">
+		insert into acc_sac_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="sacType != null">
+				sac_type,
+			</if>
+			<if test="sacName != null">
+				sac_name,
+			</if>
+			<if test="cur != null">
+				cur,
+			</if>
+			<if test="dayVarchargelmtAmt != null">
+				day_varchargelmt_amt,
+			</if>
+			<if test="dayVarchargelmtCnt != null">
+				day_varchargelmt_cnt,
+			</if>
+			<if test="dayPaylmtAmt != null">
+				day_paylmt_amt,
+			</if>
+			<if test="dayPaylmtCnt != null">
+				day_paylmt_cnt,
+			</if>
+			<if test="dayInlmtAmt != null">
+				day_inlmt_amt,
+			</if>
+			<if test="dayInlmtCnt != null">
+				day_inlmt_cnt,
+			</if>
+			<if test="dayOutlmtAmt != null">
+				day_outlmt_amt,
+			</if>
+			<if test="dayOutlmtCnt != null">
+				day_outlmt_cnt,
+			</if>
+			<if test="dayCashlmtAmt != null">
+				day_cashlmt_amt,
+			</if>
+			<if test="dayCashlmtCnt != null">
+				day_cashlmt_cnt,
+			</if>
+			<if test="monVarchargelmtAmt != null">
+				mon_varchargelmt_amt,
+			</if>
+			<if test="monVarchargelmtCnt != null">
+				mon_varchargelmt_cnt,
+			</if>
+			<if test="monPaylmtAmt != null">
+				mon_paylmt_amt,
+			</if>
+			<if test="monPaylmtCnt != null">
+				mon_paylmt_cnt,
+			</if>
+			<if test="monInlmtAmt != null">
+				mon_inlmt_amt,
+			</if>
+			<if test="monInlmtCnt != null">
+				mon_inlmt_cnt,
+			</if>
+			<if test="monOutlmtAmt != null">
+				mon_outlmt_amt,
+			</if>
+			<if test="monOutlmtCnt != null">
+				mon_outlmt_cnt,
+			</if>
+			<if test="monCashlmtAmt != null">
+				mon_cashlmt_amt,
+			</if>
+			<if test="monCashlmtCnt != null">
+				mon_cashlmt_cnt,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sacType != null">
+				#{sacType,jdbcType=VARCHAR},
+			</if>
+			<if test="sacName != null">
+				#{sacName,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				#{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="dayVarchargelmtAmt != null">
+				#{dayVarchargelmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayVarchargelmtCnt != null">
+				#{dayVarchargelmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayPaylmtAmt != null">
+				#{dayPaylmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayPaylmtCnt != null">
+				#{dayPaylmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayInlmtAmt != null">
+				#{dayInlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayInlmtCnt != null">
+				#{dayInlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayOutlmtAmt != null">
+				#{dayOutlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayOutlmtCnt != null">
+				#{dayOutlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayCashlmtAmt != null">
+				#{dayCashlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayCashlmtCnt != null">
+				#{dayCashlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monVarchargelmtAmt != null">
+				#{monVarchargelmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monVarchargelmtCnt != null">
+				#{monVarchargelmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monPaylmtAmt != null">
+				#{monPaylmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monPaylmtCnt != null">
+				#{monPaylmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monInlmtAmt != null">
+				#{monInlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monInlmtCnt != null">
+				#{monInlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monOutlmtAmt != null">
+				#{monOutlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monOutlmtCnt != null">
+				#{monOutlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monCashlmtAmt != null">
+				#{monCashlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monCashlmtCnt != null">
+				#{monCashlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.AccSacType">
+		update acc_sac_type
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sacType != null">
+				sac_type = #{sacType,jdbcType=VARCHAR},
+			</if>
+			<if test="sacName != null">
+				sac_name = #{sacName,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				cur = #{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="dayVarchargelmtAmt != null">
+				day_varchargelmt_amt =
+				#{dayVarchargelmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayVarchargelmtCnt != null">
+				day_varchargelmt_cnt =
+				#{dayVarchargelmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayPaylmtAmt != null">
+				day_paylmt_amt =
+				#{dayPaylmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayPaylmtCnt != null">
+				day_paylmt_cnt =
+				#{dayPaylmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayInlmtAmt != null">
+				day_inlmt_amt = #{dayInlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayInlmtCnt != null">
+				day_inlmt_cnt = #{dayInlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayOutlmtAmt != null">
+				day_outlmt_amt =
+				#{dayOutlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayOutlmtCnt != null">
+				day_outlmt_cnt =
+				#{dayOutlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="dayCashlmtAmt != null">
+				day_cashlmt_amt =
+				#{dayCashlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="dayCashlmtCnt != null">
+				day_cashlmt_cnt =
+				#{dayCashlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monVarchargelmtAmt != null">
+				mon_varchargelmt_amt =
+				#{monVarchargelmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monVarchargelmtCnt != null">
+				mon_varchargelmt_cnt =
+				#{monVarchargelmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monPaylmtAmt != null">
+				mon_paylmt_amt =
+				#{monPaylmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monPaylmtCnt != null">
+				mon_paylmt_cnt =
+				#{monPaylmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monInlmtAmt != null">
+				mon_inlmt_amt = #{monInlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monInlmtCnt != null">
+				mon_inlmt_cnt = #{monInlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monOutlmtAmt != null">
+				mon_outlmt_amt =
+				#{monOutlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monOutlmtCnt != null">
+				mon_outlmt_cnt =
+				#{monOutlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="monCashlmtAmt != null">
+				mon_cashlmt_amt =
+				#{monCashlmtAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="monCashlmtCnt != null">
+				mon_cashlmt_cnt =
+				#{monCashlmtCnt,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.AccSacType">
+		update
+		acc_sac_type
+		set
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		last_update_time =
+		#{lastUpdateTime,jdbcType=TIMESTAMP},
+		sac_type =
+		#{sacType,jdbcType=VARCHAR},
+		sac_name =
+		#{sacName,jdbcType=VARCHAR},
+		cur = #{cur,jdbcType=VARCHAR},
+		day_varchargelmt_amt =
+		#{dayVarchargelmtAmt,jdbcType=DECIMAL},
+		day_varchargelmt_cnt =
+		#{dayVarchargelmtCnt,jdbcType=INTEGER},
+		day_paylmt_amt =
+		#{dayPaylmtAmt,jdbcType=DECIMAL},
+		day_paylmt_cnt =
+		#{dayPaylmtCnt,jdbcType=INTEGER},
+		day_inlmt_amt =
+		#{dayInlmtAmt,jdbcType=DECIMAL},
+		day_inlmt_cnt =
+		#{dayInlmtCnt,jdbcType=INTEGER},
+		day_outlmt_amt =
+		#{dayOutlmtAmt,jdbcType=DECIMAL},
+		day_outlmt_cnt =
+		#{dayOutlmtCnt,jdbcType=INTEGER},
+		day_cashlmt_amt =
+		#{dayCashlmtAmt,jdbcType=DECIMAL},
+		day_cashlmt_cnt =
+		#{dayCashlmtCnt,jdbcType=INTEGER},
+		mon_varchargelmt_amt =
+		#{monVarchargelmtAmt,jdbcType=DECIMAL},
+		mon_varchargelmt_cnt =
+		#{monVarchargelmtCnt,jdbcType=INTEGER},
+		mon_paylmt_amt =
+		#{monPaylmtAmt,jdbcType=DECIMAL},
+		mon_paylmt_cnt =
+		#{monPaylmtCnt,jdbcType=INTEGER},
+		mon_inlmt_amt =
+		#{monInlmtAmt,jdbcType=DECIMAL},
+		mon_inlmt_cnt =
+		#{monInlmtCnt,jdbcType=INTEGER},
+		mon_outlmt_amt =
+		#{monOutlmtAmt,jdbcType=DECIMAL},
+		mon_outlmt_cnt =
+		#{monOutlmtCnt,jdbcType=INTEGER},
+		mon_cashlmt_amt =
+		#{monCashlmtAmt,jdbcType=DECIMAL},
+		mon_cashlmt_cnt =
+		#{monCashlmtCnt,jdbcType=INTEGER},
+		status =
+		#{status,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 根据子帐户种类查询子帐户种类信息 -->
+	<select id="selectAccSacTypeBySacType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_sac_type where sac_type=#{sacType,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询所有子账户类型的信息 -->
+	<select id="findAccSacTypeAll" parameterType="com.ink.user.core.po.AccSacType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_sac_type where 1=1
+		<if test="status != null">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+	</select>
+
+</mapper>

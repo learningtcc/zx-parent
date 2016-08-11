@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RoutePaySeq">
+
+    <resultMap id="RoutePaySeq" type="com.ink.route.core.po.RoutePaySeq">
+        <result property="id" column="id"/>
+        <result property="accountId" column="account_id"/>
+        <result property="accountName" column="account_name"/>
+        <result property="sendPlatformId" column="send_platform_id"/>
+        <result property="sendPlatformName" column="send_platform_name"/>
+        <result property="msgNote" column="msg_note"/>
+        <result property="msgLevel" column="msg_level"/>
+        <result property="receivingDeviceType" column="receiving_device_type"/>
+        <result property="receivingDeviceNote" column="receiving_device_note"/>
+        <result property="msgSendStatus" column="msg_send_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,account_id ,account_name ,send_platform_id ,send_platform_name ,msg_note ,msg_level ,receiving_device_type ,receiving_device_note ,msg_send_status ,remark ,create_time ,is_delete 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO route_pay_seq (
+	        id  ,
+	        account_id  ,
+	        account_name  ,
+	        send_platform_id  ,
+	        send_platform_name  ,
+	        msg_note  ,
+	        msg_level  ,
+	        receiving_device_type  ,
+	        receiving_device_note  ,
+	        msg_send_status  ,
+	        remark  ,
+	        create_time  ,
+	        is_delete  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{accountId, jdbcType=BIGINT} ,
+        	#{accountName, jdbcType=VARCHAR} ,
+        	#{sendPlatformId, jdbcType=VARCHAR} ,
+        	#{sendPlatformName, jdbcType=VARCHAR} ,
+        	#{msgNote, jdbcType=VARCHAR} ,
+        	#{msgLevel, jdbcType=CHAR} ,
+        	#{receivingDeviceType, jdbcType=TINYINT} ,
+        	#{receivingDeviceNote, jdbcType=VARCHAR} ,
+        	#{msgSendStatus, jdbcType=CHAR} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{isDelete, jdbcType=CHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO route_pay_seq ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.accountId, jdbcType=BIGINT} ,
+        	#{item.accountName, jdbcType=VARCHAR} ,
+        	#{item.sendPlatformId, jdbcType=VARCHAR} ,
+        	#{item.sendPlatformName, jdbcType=VARCHAR} ,
+        	#{item.msgNote, jdbcType=VARCHAR} ,
+        	#{item.msgLevel, jdbcType=CHAR} ,
+        	#{item.receivingDeviceType, jdbcType=TINYINT} ,
+        	#{item.receivingDeviceNote, jdbcType=VARCHAR} ,
+        	#{item.msgSendStatus, jdbcType=CHAR} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.isDelete, jdbcType=CHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE route_pay_seq SET
+	        account_id = #{accountId, jdbcType=BIGINT} ,
+	        account_name = #{accountName, jdbcType=VARCHAR} ,
+	        send_platform_id = #{sendPlatformId, jdbcType=VARCHAR} ,
+	        send_platform_name = #{sendPlatformName, jdbcType=VARCHAR} ,
+	        msg_note = #{msgNote, jdbcType=VARCHAR} ,
+	        msg_level = #{msgLevel, jdbcType=CHAR} ,
+	        receiving_device_type = #{receivingDeviceType, jdbcType=TINYINT} ,
+	        receiving_device_note = #{receivingDeviceNote, jdbcType=VARCHAR} ,
+	        msg_send_status = #{msgSendStatus, jdbcType=CHAR} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        is_delete = #{isDelete, jdbcType=CHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM route_pay_seq WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RoutePaySeq">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM route_pay_seq 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=accountName and ''!=accountName ">
+	   			 		AND account_name = #{accountName}
+	   			   	</if>
+			       	<if test="null!=sendPlatformId and ''!=sendPlatformId ">
+	   			 		AND send_platform_id = #{sendPlatformId}
+	   			   	</if>
+			       	<if test="null!=sendPlatformName and ''!=sendPlatformName ">
+	   			 		AND send_platform_name = #{sendPlatformName}
+	   			   	</if>
+			       	<if test="null!=msgNote and ''!=msgNote ">
+	   			 		AND msg_note = #{msgNote}
+	   			   	</if>
+			       	<if test="null!=msgLevel and ''!=msgLevel ">
+	   			 		AND msg_level = #{msgLevel}
+	   			   	</if>
+			       	<if test="null!=receivingDeviceNote and ''!=receivingDeviceNote ">
+	   			 		AND receiving_device_note = #{receivingDeviceNote}
+	   			   	</if>
+			       	<if test="null!=msgSendStatus and ''!=msgSendStatus ">
+	   			 		AND msg_send_status = #{msgSendStatus}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=isDelete and ''!=isDelete ">
+	   			 		AND is_delete = #{isDelete}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=accountName and ''!=accountName">
+				    <!-- 	AND account_name LIKE '%'||#{accountName}||'%' oracle -->
+			   			AND account_name LIKE concat('%',#{accountName},'%')
+			   			
+			   		</if>
+				    <if test="null!=sendPlatformId and ''!=sendPlatformId">
+				    <!-- 	AND send_platform_id LIKE '%'||#{sendPlatformId}||'%' oracle -->
+			   			AND send_platform_id LIKE concat('%',#{sendPlatformId},'%')
+			   			
+			   		</if>
+				    <if test="null!=sendPlatformName and ''!=sendPlatformName">
+				    <!-- 	AND send_platform_name LIKE '%'||#{sendPlatformName}||'%' oracle -->
+			   			AND send_platform_name LIKE concat('%',#{sendPlatformName},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgNote and ''!=msgNote">
+				    <!-- 	AND msg_note LIKE '%'||#{msgNote}||'%' oracle -->
+			   			AND msg_note LIKE concat('%',#{msgNote},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgLevel and ''!=msgLevel">
+				    <!-- 	AND msg_level LIKE '%'||#{msgLevel}||'%' oracle -->
+			   			AND msg_level LIKE concat('%',#{msgLevel},'%')
+			   			
+			   		</if>
+				    <if test="null!=receivingDeviceNote and ''!=receivingDeviceNote">
+				    <!-- 	AND receiving_device_note LIKE '%'||#{receivingDeviceNote}||'%' oracle -->
+			   			AND receiving_device_note LIKE concat('%',#{receivingDeviceNote},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgSendStatus and ''!=msgSendStatus">
+				    <!-- 	AND msg_send_status LIKE '%'||#{msgSendStatus}||'%' oracle -->
+			   			AND msg_send_status LIKE concat('%',#{msgSendStatus},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=isDelete and ''!=isDelete">
+				    <!-- 	AND is_delete LIKE '%'||#{isDelete}||'%' oracle -->
+			   			AND is_delete LIKE concat('%',#{isDelete},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=accountId and ''!=accountId">
+			    AND account_id = #{accountId}
+			</if>
+		   	<if test="null!=receivingDeviceType and ''!=receivingDeviceType">
+			    AND receiving_device_type = #{receivingDeviceType}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM route_pay_seq <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="RoutePaySeq">
+    	SELECT <include refid="columns"/> FROM route_pay_seq 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="RoutePaySeq">
+	    SELECT <include refid="columns"/> FROM route_pay_seq 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+   <!--  <import resource="classpath:spring/trade-spring-conf.xml" /> -->
+    <!-- 数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${YINKER_PLATFORM_JDBC_DRIVER}" />
+        <property name="jdbcUrl" value="jdbc:mysql://${YINKER_PLATFORM_JDBC_HOST}:${YINKER_PLATFORM_JDBC_PORT}/${YINKER_PLATFORM_JDBC_DBNAME}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
+        <property name="user" value="${YINKER_PLATFORM_JDBC_USERNAME}" />
+        <property name="password" value="${YINKER_PLATFORM_JDBC_PASSWORD}" />
+        <property name="initialPoolSize" value="${YINKER_PLATFORM_DS_INITIALPOOLSIZE}" />
+        <property name="minPoolSize" value="${YINKER_PLATFORM_DS_MINPOOLSIZE}" />
+        <property name="maxPoolSize" value="${YINKER_PLATFORM_DS_MAXPOOLSIZE}" />
+        <!-- 最大空闲时间,单位:秒 -->
+        <property name="maxIdleTime" value="60" />
+        <property name="acquireIncrement" value="3" />
+        <property name="maxStatements" value="0" />
+        <!-- 单位:秒 -->
+        <property name="idleConnectionTestPeriod" value="60" />
+        <!-- 从数据库获取新连接失败后，重复尝试获取的次数 -->
+        <property name="acquireRetryAttempts" value="10" />
+        <property name="breakAfterAcquireFailure" value="false" />
+        <!-- 在取得连接时测试连接的有效性，默认为false -->
+        <property name="testConnectionOnCheckin" value="true" />
+        <!-- 在每个connection提交时是否校验其有效性。默认为false -->
+        <property name="testConnectionOnCheckout" value="false" />
+        <property name="checkoutTimeout" value="50000" />
+        <property name="preferredTestQuery" value="SELECT 1 FROM DUAL" />
+    </bean>
+    
+    <!--从库数据源 -->
+      <bean id="slaveDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${YINKER_PLATFORM_JDBC_DRIVER}" />
+        <property name="jdbcUrl" value="jdbc:mysql://${SLAVE_YINKER_PLATFORM_JDBC_HOST}:${YINKER_PLATFORM_JDBC_PORT}/${YINKER_PLATFORM_JDBC_DBNAME}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
+        <property name="user" value="${SLAVE_YINKER_PLATFORM_JDBC_USERNAME}" />
+        <property name="password" value="${SLAVE_YINKER_PLATFORM_JDBC_PASSWORD}" />
+        <property name="initialPoolSize" value="${YINKER_PLATFORM_DS_INITIALPOOLSIZE}" />
+        <property name="minPoolSize" value="${YINKER_PLATFORM_DS_MINPOOLSIZE}" />
+        <property name="maxPoolSize" value="${YINKER_PLATFORM_DS_MAXPOOLSIZE}" />
+        <!-- 最大空闲时间,单位:秒 -->
+        <property name="maxIdleTime" value="60" />
+        <property name="acquireIncrement" value="3" />
+        <property name="maxStatements" value="0" />
+        <!-- 单位:秒 -->
+        <property name="idleConnectionTestPeriod" value="60" />
+        <!-- 从数据库获取新连接失败后，重复尝试获取的次数 -->
+        <property name="acquireRetryAttempts" value="10" />
+        <property name="breakAfterAcquireFailure" value="false" />
+        <!-- 在取得连接时测试连接的有效性，默认为false -->
+        <property name="testConnectionOnCheckin" value="true" />
+        <!-- 在每个connection提交时是否校验其有效性。默认为false -->
+        <property name="testConnectionOnCheckout" value="false" />
+        <property name="checkoutTimeout" value="50000" />
+        <property name="preferredTestQuery" value="SELECT 1 FROM DUAL" />
+    </bean>
+
+</beans>

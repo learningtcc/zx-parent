@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MonitorMqLog">
+
+    <resultMap id="MonitorMqLog" type="com.ink.monitor.core.po.MonitorMqLog">
+        <result property="id" column="id"/>
+        <result property="sysCode" column="sysCode"/>
+        <result property="appName" column="appName"/>
+        <result property="exchange" column="Exchange"/>
+        <result property="routingKey" column="routingKey"/>
+        <result property="msgId" column="msgId"/>
+        <result property="rabbitAddress" column="rabbitAddress"/>
+        <result property="rabbitPort" column="rabbitPort"/>
+        <result property="localAddress" column="localAddress"/>
+        <result property="msgException" column="msgException"/>
+        <result property="requestId" column="requestId"/>
+        <result property="msgType" column="msgType"/>
+        <result property="msgText" column="msgText"/>
+        <result property="msgObject" column="msgObject"/>
+		<result property="className" column="className"/>
+        <result property="logStatus" column="logStatus"/>
+        <result property="createTime" column="createTime"/>
+        <result property="fixedTime" column="fixedTime"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,sysCode ,appName,Exchange ,routingKey ,msgId ,rabbitAddress ,rabbitPort ,localAddress ,msgException ,requestId ,msgType ,msgText ,msgObject,className ,logStatus ,createTime ,fixedTime
+	    ]]>
+	</sql>
+
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id"  >
+    <![CDATA[
+        INSERT INTO monitor_mq_log (
+	        id  ,
+	        sysCode  ,
+	        appName,
+	        Exchange  ,
+	        routingKey  ,
+	        msgId  ,
+	        rabbitAddress  ,
+	        rabbitPort  ,
+	        localAddress  ,
+	        msgException  ,
+	        requestId  ,
+	        msgType  ,
+	        msgText  ,
+	        msgObject  ,
+	        className  ,
+	        logStatus  ,
+	        createTime  ,
+	        fixedTime
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{sysCode, jdbcType=VARCHAR} ,
+        	#{appName, jdbcType=VARCHAR} ,
+        	#{exchange, jdbcType=VARCHAR} ,
+        	#{routingKey, jdbcType=VARCHAR} ,
+        	#{msgId, jdbcType=VARCHAR} ,
+        	#{rabbitAddress, jdbcType=VARCHAR} ,
+        	#{rabbitPort, jdbcType=INTEGER} ,
+        	#{localAddress, jdbcType=VARCHAR} ,
+        	#{msgException, jdbcType=VARCHAR} ,
+        	#{requestId, jdbcType=VARCHAR} ,
+        	#{msgType, jdbcType=VARCHAR} ,
+        	#{msgText, jdbcType=VARCHAR} ,
+        	#{msgObject, jdbcType=BLOB} ,
+        	#{className, jdbcType=VARCHAR} ,
+        	#{logStatus, jdbcType=CHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{fixedTime, jdbcType=TIMESTAMP}
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO monitor_mq_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.sysCode, jdbcType=VARCHAR} ,
+        	#{item.exchange, jdbcType=VARCHAR} ,
+        	#{item.routingKey, jdbcType=VARCHAR} ,
+        	#{item.msgId, jdbcType=VARCHAR} ,
+        	#{item.rabbitAddress, jdbcType=VARCHAR} ,
+        	#{item.rabbitPort, jdbcType=INTEGER} ,
+        	#{item.localAddress, jdbcType=VARCHAR} ,
+        	#{item.msgException, jdbcType=VARCHAR} ,
+        	#{item.requestId, jdbcType=VARCHAR} ,
+        	#{item.msgType, jdbcType=VARCHAR} ,
+        	#{item.msgText, jdbcType=VARCHAR} ,
+        	#{item.msgObject, jdbcType=BLOB} ,
+			#{item.className, jdbcType=VARCHAR} ,
+        	#{item.logStatus, jdbcType=CHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.fixedTime, jdbcType=TIMESTAMP}
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE monitor_mq_log SET
+	        sysCode = #{sysCode, jdbcType=VARCHAR} ,
+	        Exchange = #{exchange, jdbcType=VARCHAR} ,
+	        routingKey = #{routingKey, jdbcType=VARCHAR} ,
+	        msgId = #{msgId, jdbcType=VARCHAR} ,
+	        rabbitAddress = #{rabbitAddress, jdbcType=VARCHAR} ,
+	        rabbitPort = #{rabbitPort, jdbcType=INTEGER} ,
+	        localAddress = #{localAddress, jdbcType=VARCHAR} ,
+	        msgException = #{msgException, jdbcType=VARCHAR} ,
+	        requestId = #{requestId, jdbcType=VARCHAR} ,
+	        msgType = #{msgType, jdbcType=VARCHAR} ,
+	        msgText = #{msgText, jdbcType=VARCHAR} ,
+	        msgObject = #{msgObject, jdbcType=BLOB} ,
+	        logStatus = #{logStatus, jdbcType=CHAR} ,
+	        createTime = #{createTime, jdbcType=TIMESTAMP} ,
+	        fixedTime = #{fixedTime, jdbcType=TIMESTAMP} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+	<update id="updateNotNull" >
+			UPDATE monitor_mq_log
+				<set>
+			       	<if test="null!=sysCode and ''!=sysCode ">
+	   			 		sysCode = #{sysCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=exchange and ''!=exchange ">
+	   			 		Exchange = #{exchange, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=routingKey and ''!=routingKey ">
+	   			 		routingKey = #{routingKey, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=msgId and ''!=msgId ">
+	   			 		msgId = #{msgId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=rabbitAddress and ''!=rabbitAddress ">
+	   			 		rabbitAddress = #{rabbitAddress, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=rabbitPort and ''!=rabbitPort ">
+	   			 		rabbitPort = #{rabbitPort, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=localAddress and ''!=localAddress ">
+	   			 		localAddress = #{localAddress, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=msgException and ''!=msgException ">
+	   			 		msgException = #{msgException, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=requestId and ''!=requestId ">
+	   			 		requestId = #{requestId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=msgType and ''!=msgType ">
+	   			 		msgType = #{msgType, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=msgText and ''!=msgText ">
+	   			 		msgText = #{msgText, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=msgObject and ''!=msgObject ">
+	   			 		msgObject = #{msgObject, jdbcType=BLOB} ,
+	   			   	</if>
+			       	<if test="null!=logStatus and ''!=logStatus ">
+	   			 		logStatus = #{logStatus, jdbcType=CHAR} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		createTime = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=fixedTime and ''!=fixedTime ">
+	   			 		fixedTime = #{fixedTime, jdbcType=TIMESTAMP} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM monitor_mq_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="MonitorMqLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM monitor_mq_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=sysCode and ''!=sysCode ">
+	   			 		AND sysCode = #{sysCode}
+	   			   	</if>
+			       	<if test="null!=exchange and ''!=exchange ">
+	   			 		AND Exchange = #{exchange}
+	   			   	</if>
+			       	<if test="null!=routingKey and ''!=routingKey ">
+	   			 		AND routingKey = #{routingKey}
+	   			   	</if>
+			       	<if test="null!=msgId and ''!=msgId ">
+	   			 		AND msgId = #{msgId}
+	   			   	</if>
+			       	<if test="null!=rabbitAddress and ''!=rabbitAddress ">
+	   			 		AND rabbitAddress = #{rabbitAddress}
+	   			   	</if>
+			       	<if test="null!=localAddress and ''!=localAddress ">
+	   			 		AND localAddress = #{localAddress}
+	   			   	</if>
+			       	<if test="null!=msgException and ''!=msgException ">
+	   			 		AND msgException = #{msgException}
+	   			   	</if>
+			       	<if test="null!=requestId and ''!=requestId ">
+	   			 		AND requestId = #{requestId}
+	   			   	</if>
+			       	<if test="null!=msgType and ''!=msgType ">
+	   			 		AND msgType = #{msgType}
+	   			   	</if>
+			       	<if test="null!=msgText and ''!=msgText ">
+	   			 		AND msgText = #{msgText}
+	   			   	</if>
+			       	<if test="null!=logStatus and ''!=logStatus ">
+	   			 		AND logStatus = #{logStatus}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=sysCode and ''!=sysCode">
+				    <!-- 	AND sysCode LIKE '%'||#{sysCode}||'%' oracle -->
+			   			AND sysCode LIKE concat('%',#{sysCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=exchange and ''!=exchange">
+				    <!-- 	AND Exchange LIKE '%'||#{exchange}||'%' oracle -->
+			   			AND Exchange LIKE concat('%',#{exchange},'%')
+			   			
+			   		</if>
+				    <if test="null!=routingKey and ''!=routingKey">
+				    <!-- 	AND routingKey LIKE '%'||#{routingKey}||'%' oracle -->
+			   			AND routingKey LIKE concat('%',#{routingKey},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgId and ''!=msgId">
+				    <!-- 	AND msgId LIKE '%'||#{msgId}||'%' oracle -->
+			   			AND msgId LIKE concat('%',#{msgId},'%')
+			   			
+			   		</if>
+				    <if test="null!=rabbitAddress and ''!=rabbitAddress">
+				    <!-- 	AND rabbitAddress LIKE '%'||#{rabbitAddress}||'%' oracle -->
+			   			AND rabbitAddress LIKE concat('%',#{rabbitAddress},'%')
+			   			
+			   		</if>
+				    <if test="null!=localAddress and ''!=localAddress">
+				    <!-- 	AND localAddress LIKE '%'||#{localAddress}||'%' oracle -->
+			   			AND localAddress LIKE concat('%',#{localAddress},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgException and ''!=msgException">
+				    <!-- 	AND msgException LIKE '%'||#{msgException}||'%' oracle -->
+			   			AND msgException LIKE concat('%',#{msgException},'%')
+			   			
+			   		</if>
+				    <if test="null!=requestId and ''!=requestId">
+				    <!-- 	AND requestId LIKE '%'||#{requestId}||'%' oracle -->
+			   			AND requestId LIKE concat('%',#{requestId},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgType and ''!=msgType">
+				    <!-- 	AND msgType LIKE '%'||#{msgType}||'%' oracle -->
+			   			AND msgType LIKE concat('%',#{msgType},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgText and ''!=msgText">
+				    <!-- 	AND msgText LIKE '%'||#{msgText}||'%' oracle -->
+			   			AND msgText LIKE concat('%',#{msgText},'%')
+			   			
+			   		</if>
+				    <if test="null!=logStatus and ''!=logStatus">
+				    <!-- 	AND logStatus LIKE '%'||#{logStatus}||'%' oracle -->
+			   			AND logStatus LIKE concat('%',#{logStatus},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=rabbitPort and ''!=rabbitPort">
+			    AND rabbitPort = #{rabbitPort}
+			</if>
+		   	<if test="null!=msgObject and ''!=msgObject">
+			    AND msgObject = #{msgObject}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND createTime >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND createTime &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=fixedTimeBegin and ''!=fixedTimeBegin">
+		   		AND fixedTime >= #{fixedTimeBegin}
+		   	</if>
+		   	<if test="null!=fixedTimeEnd and ''!=fixedTimeEnd">
+		   		AND fixedTime &lt; #{fixedTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM monitor_mq_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="MonitorMqLog">
+    	SELECT <include refid="columns"/> FROM monitor_mq_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="MonitorMqLog">
+	    SELECT <include refid="columns"/> FROM monitor_mq_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

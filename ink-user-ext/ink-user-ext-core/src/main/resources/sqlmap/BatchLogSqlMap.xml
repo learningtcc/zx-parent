@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BatchLog">
+
+    <resultMap id="BatchLog" type="com.ink.user.ext.core.po.BatchLog">
+        <result property="id" column="id"/>
+        <result property="fileId" column="file_id"/>
+        <result property="batchId" column="batch_id"/>
+        <result property="itemCount" column="item_count"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="sendType" column="send_type"/>
+        <result property="msgType" column="msg_type"/>
+        <result property="msgChannel" column="msg_channel"/>
+        <result property="msgTemplate" column="msg_template"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,file_id ,batch_id ,item_count ,send_time ,send_type ,msg_type ,msg_channel ,msg_template ,create_time ,update_time ,del_flag 
+	    ]]>
+	</sql>
+	
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id"  >
+    <![CDATA[
+        INSERT INTO batch_log (
+	        id  ,
+	        file_id  ,
+	        batch_id  ,
+	        item_count  ,
+	        send_time  ,
+	        send_type  ,
+	        msg_type  ,
+	        msg_channel  ,
+	        msg_template  ,
+	        create_time  ,
+	        update_time  ,
+	        del_flag  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{fileId, jdbcType=BIGINT} ,
+        	#{batchId, jdbcType=VARCHAR} ,
+        	#{itemCount, jdbcType=INTEGER} ,
+        	#{sendTime, jdbcType=TIMESTAMP} ,
+        	#{sendType, jdbcType=CHAR} ,
+        	#{msgType, jdbcType=CHAR} ,
+        	#{msgChannel, jdbcType=VARCHAR} ,
+        	#{msgTemplate, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{updateTime, jdbcType=TIMESTAMP} ,
+        	#{delFlag, jdbcType=BIT} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO batch_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.fileId, jdbcType=BIGINT} ,
+        	#{item.batchId, jdbcType=VARCHAR} ,
+        	#{item.itemCount, jdbcType=INTEGER} ,
+        	#{item.sendTime, jdbcType=TIMESTAMP} ,
+        	#{item.sendType, jdbcType=CHAR} ,
+        	#{item.msgType, jdbcType=CHAR} ,
+        	#{item.msgChannel, jdbcType=VARCHAR} ,
+        	#{item.msgTemplate, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} ,
+        	#{item.delFlag, jdbcType=BIT} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE batch_log SET
+	        file_id = #{fileId, jdbcType=BIGINT} ,
+	        batch_id = #{batchId, jdbcType=VARCHAR} ,
+	        item_count = #{itemCount, jdbcType=INTEGER} ,
+	        send_time = #{sendTime, jdbcType=TIMESTAMP} ,
+	        send_type = #{sendType, jdbcType=CHAR} ,
+	        msg_type = #{msgType, jdbcType=CHAR} ,
+	        msg_channel = #{msgChannel, jdbcType=VARCHAR} ,
+	        msg_template = #{msgTemplate, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	        del_flag = #{delFlag, jdbcType=BIT} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM batch_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BatchLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM batch_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+	    			<if test="null!=fileId and ''!=fileId">
+					    AND file_id = #{fileId}
+					</if>
+			       	<if test="null!=batchId and ''!=batchId ">
+	   			 		AND batch_id = #{batchId}
+	   			   	</if>
+			       	<if test="null!=sendType and ''!=sendType ">
+	   			 		AND send_type = #{sendType}
+	   			   	</if>
+			       	<if test="null!=msgType and ''!=msgType ">
+	   			 		AND msg_type = #{msgType}
+	   			   	</if>
+			       	<if test="null!=msgChannel and ''!=msgChannel ">
+	   			 		AND msg_channel = #{msgChannel}
+	   			   	</if>
+			       	<if test="null!=msgTemplate and ''!=msgTemplate ">
+	   			 		AND msg_template = #{msgTemplate}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+	       			<if test="null!=fileId and ''!=fileId">
+					    AND file_id LIKE concat('%',#{fileId},'%')
+					</if>
+				    <if test="null!=batchId and ''!=batchId">
+				    <!-- 	AND batch_id LIKE '%'||#{batchId}||'%' oracle -->
+			   			AND batch_id LIKE concat('%',#{batchId},'%')
+			   			
+			   		</if>
+				    <if test="null!=sendType and ''!=sendType">
+				    <!-- 	AND send_type LIKE '%'||#{sendType}||'%' oracle -->
+			   			AND send_type LIKE concat('%',#{sendType},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgType and ''!=msgType">
+				    <!-- 	AND msg_type LIKE '%'||#{msgType}||'%' oracle -->
+			   			AND msg_type LIKE concat('%',#{msgType},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgChannel and ''!=msgChannel">
+				    <!-- 	AND msg_channel LIKE '%'||#{msgChannel}||'%' oracle -->
+			   			AND msg_channel LIKE concat('%',#{msgChannel},'%')
+			   			
+			   		</if>
+				    <if test="null!=msgTemplate and ''!=msgTemplate">
+				    <!-- 	AND msg_template LIKE '%'||#{msgTemplate}||'%' oracle -->
+			   			AND msg_template LIKE concat('%',#{msgTemplate},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=itemCount and ''!=itemCount">
+			    AND item_count = #{itemCount}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND update_time >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND update_time &lt; #{updateTimeEnd}
+		   	</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM batch_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BatchLog">
+    	SELECT <include refid="columns"/> FROM batch_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="BatchLog">
+	    SELECT <include refid="columns"/> FROM batch_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	<!-- 账户dubbo begin -->
+	
+	<!-- 商户用户合法性检查 -->	  
+	<dubbo:reference id="checkCustService" interface="com.ink.user.api.service.ICheckCustService" check="false" version="1.0.0"/>
+	<!-- 提现受理 -->	  
+	<dubbo:reference id="accWithdrawAcceptService" interface="com.ink.user.api.service.IAccWithdrawAcceptService" check="false" version="1.0.0"/>
+	<!-- 提现冻结 -->	  
+	<dubbo:reference id="accWithdrawFreezeService" interface="com.ink.user.api.service.IAccWithdrawFreezeService" check="false" version="1.0.0"/>
+	<!-- 提现业务撤回-->	  
+	<dubbo:reference id="accWithdrawCancelService" interface="com.ink.user.api.service.IAccWithdrawCancelService" check="false" version="1.0.0"/>
+	<!-- 充值 -->	  
+	<dubbo:reference id="accRechargeService" interface="com.ink.user.api.service.IAccRechargeService" check="false" version="1.0.0"/>
+	
+	<!-- 账户dubbo end -->
+
+	<!-- 证书中心 -->
+	<dubbo:reference id="dataSecretService" interface="com.ink.cert.api.dubbo.DataSecretService" check="false" version="1.0"/>
+
+
+</beans>

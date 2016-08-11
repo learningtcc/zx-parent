@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ykrabbit="http://www.ink.com/schema/ykrabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd 
+       http://www.ink.com/schema/ykrabbit http://www.ink.com/schema/ykrabbit/ink-rabbit-1.0.xsd"
+       >
+<!--     <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/conf/app.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8" />
+    </bean>
+    mq 工场
+   <bean id="connectionFactory"
+		class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="${rabbitmq.host}" />
+		<property name="username" value="${rabbitmq.username}" />
+		<property name="password" value="${rabbitmq.password}" />
+	</bean>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+    <rabbit:admin connection-factory="connectionFactory"/>
+     业务队列
+    DEMO异步MQ
+    <rabbit:queue name="ink.ccb.notifyOpt" durable="true" auto-delete="false" exclusive="false"/>
+    <bean id="ccbNotifyConsumer" class="com.ink.user.service.mq.CcbNotifyConsumer" />
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener queues="ink.ccb.notifyOpt" ref="ccbNotifyConsumer" method="handle"/>
+    </rabbit:listener-container>
+ -->
+
+
+</beans>

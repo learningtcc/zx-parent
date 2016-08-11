@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ink.platform.core.dao.SecOrgDao">
+
+<resultMap id="SecOrg" type="com.ink.platform.api.model.SecOrg" >
+		<result column="id" property="id" />
+		<result column="org_name" property="orgName" />
+		<result column="org_code" property="orgCode" />
+		<result column="parent_org_id" property="parentOrgId" />
+		
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="creator_id" property="creatorId" />
+		<result column="version" property="version" />
+		
+		<result column="del_flag" property="delFlag" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+
+		<result column="state" property="state" />
+		<!--  创建者用户姓名-->
+		<result column="user_name" property="userName" />
+		<result column="subject_type" property="subjectType" />
+	</resultMap>
+<resultMap id="OrgAllUser" type="com.ink.platform.api.model.SecOrg" >
+		<result column="id" property="id" />
+		<result column="org_name" property="orgName" />
+		<result column="org_code" property="orgCode" />
+		<result column="parent_org_id" property="parentOrgId" />
+		
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="creator_id" property="creatorId" />
+		<result column="version" property="version" />
+		
+		<result column="del_flag" property="delFlag" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+
+		<result column="state" property="state" />
+		<!--  创建者用户姓名-->
+		<result column="user_name" property="userName" />
+		<result column="subject_type" property="subjectType" />
+					<!-- 查询子模块 -->
+		<collection property="children" column="id" select="getChildren" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    id, org_name,org_code,parent_org_id,create_time,create_time,update_time,creator_id,
+	    version,del_flag,status,remark,subject_type
+ 	 </sql>
+  
+  <select id="selectChildOrg"  resultMap="OrgAllUser" parameterType="java.util.Map">
+		select * from sec_org where 
+		  STATUS = 1
+    	 AND del_flag = 0 
+		<if test="orgId != null" >
+        and	id =#{orgId}
+      	</if>
+	</select>
+	<select id="getChildren" parameterType="java.util.Map" resultMap="OrgAllUser">
+		select * from sec_org where 
+		del_flag=0
+		and status=1
+		and parent_org_id = #{orgId}
+	</select>
+	<!--  查询所有菜单：-->
+	<select id="selectOrgList"  resultMap="SecOrg">
+		select * from sec_org where 
+		  STATUS = 1
+    	 AND del_flag = 0 
+		
+	</select>
+	
+	<!--  按条件查询：-->
+	<select id="selectOrgMsg" parameterType="java.util.HashMap" resultMap="SecOrg">
+	
+	 SELECT
+		o.*,
+		u.user_name
+	FROM
+		sec_user u,
+		sec_org o
+	WHERE
+		o.creator_id = u.id
+		<if test="orgName != null" >
+        and	org_name =#{orgName}
+      	</if>
+      <if test="statusA != null" >
+     and  o.status=#{statusA}
+      </if>
+       <if test="status != null" >
+     and  o.status=#{status}
+      </if>
+      <if test="statusB != null" >
+     and  o.status=#{statusB}
+      </if>
+       <if test="pageVO!=null and pageVO!=''">
+  order by o.create_time
+			LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}	
+</if>
+	</select>
+    <!--  查询下级机构：-->
+	<select id="getChildrenModues" parameterType="java.lang.Long" resultMap="SecOrg">
+		select * from sec_org where 
+		del_flag=0
+		and status=1
+		and parent_org_id = #{id}
+	</select>
+	<!-- 查询组织机构下用户菜单树 -->
+		<select id="getOrgUserList" resultType="java.util.Map">
+		SELECT
+			ou.user_id AS id,
+			ou.org_id AS parentOrgId, 
+		    u.user_name as orgName,
+			u.url as url,
+			u.subject_type as subjectType
+			
+		FROM
+			sec_user u,
+			sec_org o,
+			sec_user_org_relation ou
+		WHERE
+			o.id = ou.org_id
+		AND u.id = ou.user_id
+		and u. del_flag=0 
+		and u. status=1
+		 and o. del_flag=0 
+		and o. status=1
+		 and ou. del_flag=0 
+		and ou. status=1
+		</select>
+
+   <!-- 创建时间查询 -->
+	<sql id="liqDateWhere">
+		<if test="create_time !=null and create_time !=''">
+			<![CDATA[ and create_time >= #{queryEntity.createTime, jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="create_time !=null and create_time !=''">
+			<![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{queryEntity.createTime, jdbcType=TIMESTAMP}]]>
+		</if>
+	</sql>
+	  <sql id="dynamicPageWhere">
+    <where>
+    <if test="orgName != null  and orgName !=''"  >
+        AND org_name = #{queryEntity.orgName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from sec_org
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>
+  <!-- 分页查询记录总记录数 -->
+	<select id="selectListCount" resultType="int">
+		SELECT
+		count(1)
+		FROM sec_org
+		<include refid="dynamicPageWhere" />
+	</select>
+   <select id="selectList" resultMap="SecOrg">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM sec_org
+				<include refid="dynamicPageWhere" />
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy}
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	
+	 <insert id="insert" parameterType="com.ink.platform.api.model.SecOrg" >
+    insert into sec_org
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="parentOrgId != null" >
+        parent_org_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+       <if test="url != null" >
+        url,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrgId != null" >
+        #{parentOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+	<!-- 删除 -->
+	 <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sec_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--  查询 本组织信息级及创建者用户信息-->
+  <select id="selectByPrimaryId" resultMap="SecOrg" parameterType="java.lang.Long" >
+   select o.*  , u.user_name from sec_user u,sec_org o where o.creator_id =u.id 
+   and o.id=#{id,jdbcType=BIGINT}
+
+  </select>
+
+  <!--  更新-->
+  <update id="updateByPrimaryKey" parameterType="com.ink.platform.api.model.SecOrg" >
+    update sec_org
+    <set >
+      <if test="orgName != null" >
+        org_name =#{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code =#{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrgId != null" >
+        parent_org_id =#{parentOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time =#{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time =#{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id =#{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version =#{version,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null" >
+        del_flag =#{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status =#{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark =#{remark,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccAcc">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.AccAcc">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+		<result column="acc_sac_id" property="accSacId" jdbcType="BIGINT" />
+		<result column="sac_id" property="sacId" jdbcType="BIGINT" />
+		<result column="acc_pac_id" property="accPacId" jdbcType="BIGINT" />
+		<result column="pac_id" property="pacId" jdbcType="BIGINT" />
+		<result column="sac_type" property="sacType" jdbcType="VARCHAR" />
+		<result column="cur" property="cur" jdbcType="VARCHAR" />
+		<result column="lst_bal" property="lstBal" jdbcType="DECIMAL" />
+		<result column="cur_bal" property="curBal" jdbcType="DECIMAL" />
+		<result column="tmp_bal" property="tmpBal" jdbcType="DECIMAL" />
+		<result column="frozen_amt" property="frozenAmt" jdbcType="DECIMAL" />
+		<result column="open_date" property="openDate" jdbcType="DATE" />
+		<result column="close_date" property="closeDate" jdbcType="DATE" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.ink.user.core.po.AccAcc"
+		extends="BaseResultMap">
+		<result column="acc_mac" property="accMac" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, last_update_time,
+		acc_sac_id, sac_id, acc_pac_id,
+		pac_id, sac_type, cur,
+		lst_bal, cur_bal,
+		tmp_bal, frozen_amt,
+		open_date,
+		close_date, status, del_flag,  version,
+		uid
+	</sql>
+	<sql id="Blob_Column_List">
+		acc_mac
+	</sql>
+	<sql id="Base_Column_List_AccBal">
+		acc_acc.id,
+		acc_acc.create_time,
+		acc_acc.last_update_time,
+		acc_acc.acc_sac_id,
+		acc_acc.sac_id, acc_acc.acc_pac_id,
+		acc_acc.pac_id, acc_acc.sac_type,
+		acc_acc.cur,
+		acc_acc.lst_bal,
+		acc_acc.cur_bal,
+		acc_acc.tmp_bal,
+		acc_acc.frozen_amt,
+		acc_acc.open_date,
+		acc_acc.close_date,
+		acc_acc.status,
+		acc_acc.del_flag, acc_acc.version,
+		acc_acc.uid
+	</sql>
+	
+	<!-- 基础方法 Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+		insert into acc_acc (id,
+		create_time, last_update_time, acc_sac_id,
+		sac_id,
+		acc_pac_id, pac_id,
+		sac_type, cur,
+		lst_bal,
+		cur_bal,
+		tmp_bal, frozen_amt, open_date,
+		close_date, status, del_flag,
+		version,
+		uid, acc_mac
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastUpdateTime,jdbcType=TIMESTAMP}, #{accSacId,jdbcType=BIGINT},
+		#{sacId,jdbcType=VARCHAR}, #{accPacId,jdbcType=BIGINT},
+		#{pacId,jdbcType=BIGINT},
+		#{sacType,jdbcType=VARCHAR}, #{cur,jdbcType=VARCHAR},
+		#{lstBal,jdbcType=DECIMAL},
+		#{curBal,jdbcType=DECIMAL},
+		#{tmpBal,jdbcType=DECIMAL},
+		#{frozenAmt,jdbcType=DECIMAL}, #{openDate,jdbcType=DATE},
+		#{closeDate,jdbcType=DATE}, #{status,jdbcType=INTEGER},
+		#{delFlag,jdbcType=INTEGER}, 
+		#{version,jdbcType=INTEGER},
+		#{uid,jdbcType=BIGINT}, #{accMac,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_acc ( <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.accSacId, jdbcType=BIGINT} ,
+        	#{item.sacId, jdbcType=BIGINT} ,
+        	#{item.accPacId, jdbcType=BIGINT} ,
+        	#{item.pacId, jdbcType=BIGINT} ,
+        	#{item.sacType, jdbcType=VARCHAR} ,
+        	#{item.cur, jdbcType=VARCHAR} ,
+        	#{item.upItemId, jdbcType=VARCHAR} ,
+        	#{item.lstBal, jdbcType=DECIMAL} ,
+        	#{item.curBal, jdbcType=DECIMAL} ,
+        	#{item.tmpBal, jdbcType=DECIMAL} ,
+        	#{item.frozenAmt, jdbcType=DECIMAL} ,
+        	#{item.openDate, jdbcType=DATE} ,
+        	#{item.closeDate, jdbcType=DATE} ,
+        	#{item.status, jdbcType=INTEGER} ,
+        	#{item.accMac, jdbcType=VARCHAR} ,
+        	#{item.delFlag, jdbcType=INTEGER} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.uid, jdbcType=BIGINT} 
+    )
+        </foreach>
+    </insert>
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_acc SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        acc_sac_id = #{accSacId, jdbcType=BIGINT} ,
+	        sac_id = #{sacId, jdbcType=BIGINT} ,
+	        acc_pac_id = #{accPacId, jdbcType=BIGINT} ,
+	        pac_id = #{pacId, jdbcType=BIGINT} ,
+	        sac_type = #{sacType, jdbcType=VARCHAR} ,
+	        cur = #{cur, jdbcType=VARCHAR} ,
+	        up_item_id = #{upItemId, jdbcType=VARCHAR} ,
+	        lst_bal = #{lstBal, jdbcType=DECIMAL} ,
+	        cur_bal = #{curBal, jdbcType=DECIMAL} ,
+	        tmp_bal = #{tmpBal, jdbcType=DECIMAL} ,
+	        frozen_amt = #{frozenAmt, jdbcType=DECIMAL} ,
+	        open_date = #{openDate, jdbcType=DATE} ,
+	        close_date = #{closeDate, jdbcType=DATE} ,
+	        status = #{status, jdbcType=INTEGER} ,
+	        acc_mac = #{accMac, jdbcType=VARCHAR} ,
+	        del_flag = #{delFlag, jdbcType=INTEGER} ,
+	        version = #{version, jdbcType=INTEGER} ,
+	        uid = #{uid, jdbcType=BIGINT}
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_acc WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+	<select id="getById" resultMap="ResultMapWithBLOBs">
+	    SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />
+	    <![CDATA[
+	        FROM acc_acc 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=sacType and ''!=sacType ">
+	   			 		AND sac_type = #{sacType}
+	   			   	</if>
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=upItemId and ''!=upItemId ">
+	   			 		AND up_item_id = #{upItemId}
+	   			   	</if>
+			       	<if test="null!=accMac and ''!=accMac ">
+	   			 		AND acc_mac = #{accMac}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=sacType and ''!=sacType">
+				    <!-- 	AND sac_type LIKE '%'||#{sacType}||'%' oracle -->
+			   			AND sac_type LIKE concat('%',#{sacType},'%')
+			   			
+			   		</if>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=upItemId and ''!=upItemId">
+				    <!-- 	AND up_item_id LIKE '%'||#{upItemId}||'%' oracle -->
+			   			AND up_item_id LIKE concat('%',#{upItemId},'%')
+			   			
+			   		</if>
+				    <if test="null!=accMac and ''!=accMac">
+				    <!-- 	AND acc_mac LIKE '%'||#{accMac}||'%' oracle -->
+			   			AND acc_mac LIKE concat('%',#{accMac},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=accSacId and ''!=accSacId">
+			    AND acc_sac_id = #{accSacId}
+			</if>
+		   	<if test="null!=sacId and ''!=sacId">
+			    AND sac_id = #{sacId}
+			</if>
+		   	<if test="null!=accPacId and ''!=accPacId">
+			    AND acc_pac_id = #{accPacId}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=lstBal and ''!=lstBal">
+			    AND lst_bal = #{lstBal}
+			</if>
+		   	<if test="null!=curBal and ''!=curBal">
+			    AND cur_bal = #{curBal}
+			</if>
+		   	<if test="null!=tmpBal and ''!=tmpBal">
+			    AND tmp_bal = #{tmpBal}
+			</if>
+		   	<if test="null!=frozenAmt and ''!=frozenAmt">
+			    AND frozen_amt = #{frozenAmt}
+			</if>
+		   	<if test="null!=openDateBegin and ''!=openDateBegin">
+		   		AND open_date >= #{openDateBegin}
+		   	</if>
+		   	<if test="null!=openDateEnd and ''!=openDateEnd">
+		   		AND open_date &lt; #{openDateEnd}
+		   	</if>
+		   	<if test="null!=closeDateBegin and ''!=closeDateBegin">
+		   		AND close_date >= #{closeDateBegin}
+		   	</if>
+		   	<if test="null!=closeDateEnd and ''!=closeDateEnd">
+		   		AND close_date &lt; #{closeDateEnd}
+		   	</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_acc <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="ResultMapWithBLOBs">
+    	SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />
+    	FROM acc_acc 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <select id="find" resultMap="ResultMapWithBLOBs">
+	    SELECT <include refid="Base_Column_List" />,<include refid="Blob_Column_List" /> FROM acc_acc 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<!-- 基础方法End -->
+	
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_acc
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		acc_acc
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.AccAcc">
+		insert into acc_acc
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="accSacId != null">
+				acc_sac_id,
+			</if>
+			<if test="sacId != null">
+				sac_id,
+			</if>
+			<if test="accPacId != null">
+				acc_pac_id,
+			</if>
+			<if test="pacId != null">
+				pac_id,
+			</if>
+			<if test="sacType != null">
+				sac_type,
+			</if>
+			<if test="cur != null">
+				cur,
+			</if>
+			<if test="lstBal != null">
+				lst_bal,
+			</if>
+			<if test="curBal != null">
+				cur_bal,
+			</if>
+			<if test="tmpBal != null">
+				tmp_bal,
+			</if>
+			<if test="frozenAmt != null">
+				frozen_amt,
+			</if>
+			<if test="openDate != null">
+				open_date,
+			</if>
+			<if test="closeDate != null">
+				close_date,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="accMac != null">
+				acc_mac,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="accSacId != null">
+				#{accSacId,jdbcType=BIGINT},
+			</if>
+			<if test="sacId != null">
+				#{sacId,jdbcType=VARCHAR},
+			</if>
+			<if test="accPacId != null">
+				#{accPacId,jdbcType=BIGINT},
+			</if>
+			<if test="pacId != null">
+				#{pacId,jdbcType=BIGINT},
+			</if>
+			<if test="sacType != null">
+				#{sacType,jdbcType=VARCHAR},
+			</if>
+			<if test="cur != null">
+				#{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="lstBal != null">
+				#{lstBal,jdbcType=DECIMAL},
+			</if>
+			<if test="curBal != null">
+				#{curBal,jdbcType=DECIMAL},
+			</if>
+			<if test="tmpBal != null">
+				#{tmpBal,jdbcType=DECIMAL},
+			</if>
+			<if test="frozenAmt != null">
+				#{frozenAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="openDate != null">
+				#{openDate,jdbcType=DATE},
+			</if>
+			<if test="closeDate != null">
+				#{closeDate,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="accMac != null">
+				#{accMac,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+		
+	<update id="updateByPrimaryKeyWithBLOBs" >
+		update
+		acc_acc
+		set 
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		acc_sac_id =
+		#{accSacId,jdbcType=BIGINT},
+		sac_id = #{sacId,jdbcType=VARCHAR},
+		acc_pac_id = #{accPacId,jdbcType=BIGINT},
+		pac_id =
+		#{pacId,jdbcType=BIGINT},
+		sac_type =
+		#{sacType,jdbcType=VARCHAR},
+		cur = #{cur,jdbcType=VARCHAR},
+		lst_bal =
+		#{lstBal,jdbcType=DECIMAL},
+		cur_bal = #{curBal,jdbcType=DECIMAL},
+		tmp_bal =
+		#{tmpBal,jdbcType=DECIMAL},
+		frozen_amt =
+		#{frozenAmt,jdbcType=DECIMAL},
+		open_date =
+		#{openDate,jdbcType=DATE},
+		close_date =
+		#{closeDate,jdbcType=DATE},
+		status = #{status,jdbcType=INTEGER},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=BIGINT},
+		acc_mac = #{accMac,jdbcType=LONGVARCHAR},
+		version =
+		#{version,jdbcType=INTEGER} +
+		1,
+		<choose>
+			<when test="lastUpdateTime != null and lastUpdateTime !=''">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP}
+			</when>
+			<otherwise>
+				last_update_time = NOW()
+			</otherwise>
+		</choose>
+		where id = #{id,jdbcType=BIGINT} and
+		version =
+		#{version,jdbcType=INTEGER}
+	</update>
+ 	
+ 	
+ 	<update id="updateForFrozenByPrimaryKeyWithBLOBs" >
+		update
+		acc_acc
+		set 
+		lst_bal = #{lstBal,jdbcType=DECIMAL},
+		cur_bal = cur_bal - #{amt,jdbcType=DECIMAL},
+		tmp_bal = #{tmpBal,jdbcType=DECIMAL},
+		frozen_amt = frozen_amt + #{amt,jdbcType=DECIMAL},
+		acc_mac = MD5(CONCAT(cur_bal,#{lastUpdateTimeStr,jdbcType=VARCHAR})),
+		version = version + 1,
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT} 
+	</update>
+	
+	<update id="updateForWithdrawAcceptByPrimaryKeyWithBLOBs" >
+		update
+		acc_acc
+		set 
+		lst_bal = cur_bal + #{amt,jdbcType=DECIMAL},
+		tmp_bal = 0 - #{amt,jdbcType=DECIMAL},
+		frozen_amt = frozen_amt - #{amt,jdbcType=DECIMAL},
+		acc_mac = MD5(CONCAT(cur_bal,#{lastUpdateTimeStr,jdbcType=VARCHAR})),
+		version = version + 1,
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT} 
+	</update>
+	
+	<update id="updateMchAccount" >
+		update
+		acc_acc
+		set 
+		cur_bal = cur_bal + #{amt,jdbcType=DECIMAL},
+		acc_mac = MD5(CONCAT(cur_bal,#{lastUpdateTimeStr,jdbcType=VARCHAR})),
+		version = version + 1,
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+		where pac_id = #{pacId,jdbcType=BIGINT}
+			and sac_type =  #{sacType,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="forUpdateByPrimaryKeyWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_acc
+		where id = #{id,jdbcType=BIGINT} for update
+	</select>
+
+
+	<select id="selectListByPacIdAndSacType" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		acc_acc
+		where 1=1
+		<if test="pacId != null and pacId !='' ">
+			and pac_id=#{pacId,jdbcType=BIGINT}
+		</if>
+		<if test="sacType != null and sacType !='' ">
+			and sac_type=#{sacType,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKey" >
+		update acc_acc
+		set
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		acc_sac_id =
+		#{accSacId,jdbcType=BIGINT},
+		sac_id = #{sacId,jdbcType=VARCHAR},
+		acc_pac_id = #{accPacId,jdbcType=BIGINT},
+		pac_id =
+		#{pacId,jdbcType=BIGINT},
+		sac_type =
+		#{sacType,jdbcType=VARCHAR},
+		cur = #{cur,jdbcType=VARCHAR},
+		lst_bal =
+		#{lstBal,jdbcType=DECIMAL},
+		cur_bal = #{curBal,jdbcType=DECIMAL},
+		tmp_bal =
+		#{tmpBal,jdbcType=DECIMAL},
+		frozen_amt =
+		#{frozenAmt,jdbcType=DECIMAL},
+		open_date =
+		#{openDate,jdbcType=DATE},
+		close_date =
+		#{closeDate,jdbcType=DATE},
+		status = #{status,jdbcType=INTEGER},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=BIGINT},
+		version =
+		#{version,jdbcType=INTEGER} + 1,
+		<choose>
+			<when test="lastUpdateTime != null and lastUpdateTime !=''">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP}
+			</when>
+			<otherwise>
+				last_update_time = NOW()
+			</otherwise>
+		</choose>
+		where id = #{id,jdbcType=BIGINT} and
+		version =
+		#{version,jdbcType=INTEGER}
+	</update>
+	<!-- 根据主账号、子帐户种类查询资金账户信息 -->
+	<select id="selectAccAccByPacIdAndSacType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_acc where pac_id=#{pacId,jdbcType=BIGINT} 
+		<if test="sacType != null and sacType != ''">
+			and sac_type=#{sacType,jdbcType=VARCHAR}
+		</if>
+		
+	</select>
+	<!-- 根据主账号、子帐户种类查询资金账户信息(包含MAC数据) -->
+	<select id="selectAccAccByPacIdAndSacTypeWithBLOBs" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from acc_acc 
+		where 1=1 
+		<if test="pacId != null and pacId != ''">
+			and pac_id=#{pacId,jdbcType=BIGINT} 
+		</if>
+		<if test="sacType != null and sacType != ''">
+			and sac_type=#{sacType,jdbcType=VARCHAR}
+		</if>
+		and del_flag = 0 and status = 1
+	</select>
+	
+	<!-- 根据pac_id查资金账户 -->
+	<select id="getAccAccByPacId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		acc_acc
+		where 1=1
+		<if test="pacId != null">
+			and pac_id=#{pacId,jdbcType=BIGINT}
+		</if>
+	</select>
+	
+	<update id="updateAccAccByPacIdAndSacType" parameterType="com.ink.user.core.po.AccAcc">
+		update acc_acc
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time =
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="accSacId != null">
+				acc_sac_id = #{accSacId,jdbcType=BIGINT},
+			</if>
+			<if test="sacId != null">
+				sac_id = #{sacId,jdbcType=VARCHAR},
+			</if>
+			<if test="accPacId != null">
+				acc_pac_id = #{accPacId,jdbcType=BIGINT},
+			</if>
+			<if test="cur != null">
+				cur = #{cur,jdbcType=VARCHAR},
+			</if>
+			<if test="lstBal != null">
+				lst_bal = #{lstBal,jdbcType=DECIMAL},
+			</if>
+			<if test="curBal != null">
+				cur_bal = #{curBal,jdbcType=DECIMAL},
+			</if>
+			<if test="tmpBal != null">
+				tmp_bal = #{tmpBal,jdbcType=DECIMAL},
+			</if>
+			<if test="frozenAmt != null">
+				frozen_amt = #{frozenAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="openDate != null">
+				open_date = #{openDate,jdbcType=DATE},
+			</if>
+			<if test="closeDate != null">
+				close_date = #{closeDate,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+			<if test="accMac != null">
+				acc_mac = #{accMac,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where pac_id = #{pacId,jdbcType=BIGINT} and version =
+		#{version,jdbcType=INTEGER}
+		and sac_type = #{sacType,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 实体查询条件 -->
+	<sql id="dynamicPageWhere">
+		<where>
+			1=1
+			<if test="queryEntity.createTime != null and queryEntity.createTime != ''">
+				AND create_time =
+				#{queryEntity.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="queryEntity.lastUpdateTime != null and queryEntity.lastUpdateTime != ''">
+				AND last_update_time =
+				#{queryEntity.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="queryEntity.accSacId != null and queryEntity.accSacId != ''">
+				AND acc_sac_id = #{queryEntity.accSacId,jdbcType=BIGINT}
+			</if>
+			<if test="queryEntity.sacId != null and queryEntity.sacId != ''">
+				AND sac_id = #{queryEntity.sacId,jdbcType=VARCHAR}
+			</if>
+			<if test="queryEntity.accPacId != null and queryEntity.accPacId != ''">
+				AND acc_pac_id = #{queryEntity.accPacId,jdbcType=BIGINT}
+			</if>
+			<if test="queryEntity.pacId != null and queryEntity.pacId != ''">
+				AND pac_id = #{queryEntity.pacId,jdbcType=BIGINT}
+			</if>
+			<if test="queryEntity.sacType != null and queryEntity.sacType != ''">
+				AND sac_type = #{queryEntity.sacType,jdbcType=VARCHAR}
+			</if>
+			<if test="queryEntity.cur != null and queryEntity.cur != ''">
+				AND cur = #{queryEntity.cur,jdbcType=VARCHAR}
+			</if>
+			<if test="queryEntity.lstBal != null and queryEntity.lstBal != ''">
+				AND lst_bal = #{queryEntity.lstBal,jdbcType=DECIMAL}
+			</if>
+			<if test="queryEntity.curBal != null and queryEntity.curBal != ''">
+				AND cur_bal = #{queryEntity.curBal,jdbcType=DECIMAL}
+			</if>
+			<if test="queryEntity.tmpBal != null and queryEntity.tmpBal != ''">
+				AND tmp_bal = #{queryEntity.tmpBal,jdbcType=DECIMAL}
+			</if>
+			<if test="queryEntity.frozenAmt != null and queryEntity.frozenAmt != ''">
+				AND frozen_amt =
+				#{queryEntity.frozenAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="queryEntity.openDate != null and queryEntity.openDate != ''">
+				AND open_date = #{queryEntity.openDate,jdbcType=DATE}
+			</if>
+			<if test="queryEntity.closeDate != null and queryEntity.closeDate != ''">
+				AND close_date = #{queryEntity.closeDate,jdbcType=DATE}
+			</if>
+			<if test="queryEntity.status != null and queryEntity.status != ''">
+				AND status = #{queryEntity.status,jdbcType=INTEGER}
+			</if>
+			<if test="queryEntity.delFlag != null and queryEntity.delFlag != ''">
+				AND del_flag = #{queryEntity.delFlag,jdbcType=INTEGER}
+			</if>
+			<if test="queryEntity.version != null and queryEntity.version != ''">
+				AND version = #{queryEntity.version,jdbcType=INTEGER}
+			</if>
+			<if test="queryEntity.accMac != null and queryEntity.accMac != ''">
+				AND acc_mac = #{queryEntity.accMac,jdbcType=LONGVARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List_Union">
+		aa.id, aa.create_time,
+		aa.last_update_time,
+		aa.acc_sac_id,
+		aa.sac_id, aa.acc_pac_id,
+		aa.pac_id, aa.sac_type,
+		aa.cur,
+		aa.lst_bal,
+		aa.cur_bal,
+		aa.tmp_bal, aa.frozen_amt,
+		aa.open_date,
+		aa.close_date,
+		aa.status, aa.del_flag, aa.version
+	</sql>
+
+	<select id="selectAccAccByCustTypeAndIdTypeAndIdNo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List_Union" />
+		from acc_master_cust_relation amcr, acc_cust ac , acc_acc aa
+		where
+		1=1
+		AND amcr.cust_type = ac.cust_type
+		AND amcr.mch_id = ac.mch_id
+		AND
+		amcr.cust_id = ac.cust_id
+		AND ac.pac_id = aa.pac_id
+		<if test="custType != null">
+			AND amcr.cust_type = #{custType,jdbcType=INTEGER}
+		</if>
+		<if test="idType != null">
+			AND amcr.id_type = #{idType,jdbcType=INTEGER}
+		</if>
+		<if test="idNo != null">
+			AND amcr.id_no = #{idNo,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<!-- 后台分页用  Start-->
+	<sql id="findWhereCust">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=accMac and ''!=accMac ">
+	   			 		AND acc_mac = #{accMac}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=accMac and ''!=accMac">
+				    <!-- 	AND acc_mac LIKE '%'||#{accMac}||'%' oracle -->
+			   			AND acc_mac LIKE concat('%',#{accMac},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+	       	<if test="null!=sacType and ''!=sacType ">
+  			 		AND sac_type = #{sacType}
+  			</if>
+	      	<if test="null==sacType or ''==sacType ">
+		 		AND sac_type &lt; '0011'
+	   		</if> 
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=accSacId and ''!=accSacId">
+			    AND acc_sac_id = #{accSacId}
+			</if>
+		   	<if test="null!=sacId and ''!=sacId">
+			    AND sac_id = #{sacId}
+			</if>
+		   	<if test="null!=accPacId and ''!=accPacId">
+			    AND acc_pac_id = #{accPacId}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=lstBal and ''!=lstBal">
+			    AND lst_bal = #{lstBal}
+			</if>
+		   	<if test="null!=curBal and ''!=curBal">
+			    AND cur_bal = #{curBal}
+			</if>
+		   	<if test="null!=tmpBal and ''!=tmpBal">
+			    AND tmp_bal = #{tmpBal}
+			</if>
+		   	<if test="null!=frozenAmt and ''!=frozenAmt">
+			    AND frozen_amt = #{frozenAmt}
+			</if>
+		   	<if test="null!=openDateBegin and ''!=openDateBegin">
+		   		AND open_date >= #{openDateBegin}
+		   	</if>
+		   	<if test="null!=openDateEnd and ''!=openDateEnd">
+		   		AND open_date &lt; #{openDateEnd}
+		   	</if>
+		   	<if test="null!=closeDateBegin and ''!=closeDateBegin">
+		   		AND close_date >= #{closeDateBegin}
+		   	</if>
+		   	<if test="null!=closeDateEnd and ''!=closeDateEnd">
+		   		AND close_date &lt; #{closeDateEnd}
+		   	</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+	    </where>
+	</sql>
+    
+    <select id="findCustPageCount" resultType="long">
+        SELECT count(*) FROM acc_acc <include refid="findWhereCust"/>   
+    </select>
+    
+    <select id="findCustPage" resultMap="ResultMapWithBLOBs">
+    	SELECT <include refid="Base_Column_List"/> FROM acc_acc 
+		<include refid="findWhereCust"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    
+    <sql id="findWhereMch">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=cur and ''!=cur ">
+	   			 		AND cur = #{cur}
+	   			   	</if>
+			       	<if test="null!=accMac and ''!=accMac ">
+	   			 		AND acc_mac = #{accMac}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=cur and ''!=cur">
+				    <!-- 	AND cur LIKE '%'||#{cur}||'%' oracle -->
+			   			AND cur LIKE concat('%',#{cur},'%')
+			   			
+			   		</if>
+				    <if test="null!=accMac and ''!=accMac">
+				    <!-- 	AND acc_mac LIKE '%'||#{accMac}||'%' oracle -->
+			   			AND acc_mac LIKE concat('%',#{accMac},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+	       	<if test="null!=sacType and ''!=sacType ">
+  			 		AND sac_type = #{sacType}
+  			</if>
+	      	<if test="null==sacType or ''==sacType ">
+		 		AND sac_type >= '0011'
+	   		</if> 
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=accSacId and ''!=accSacId">
+			    AND acc_sac_id = #{accSacId}
+			</if>
+		   	<if test="null!=sacId and ''!=sacId">
+			    AND sac_id = #{sacId}
+			</if>
+		   	<if test="null!=accPacId and ''!=accPacId">
+			    AND acc_pac_id = #{accPacId}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=lstBal and ''!=lstBal">
+			    AND lst_bal = #{lstBal}
+			</if>
+		   	<if test="null!=curBal and ''!=curBal">
+			    AND cur_bal = #{curBal}
+			</if>
+		   	<if test="null!=tmpBal and ''!=tmpBal">
+			    AND tmp_bal = #{tmpBal}
+			</if>
+		   	<if test="null!=frozenAmt and ''!=frozenAmt">
+			    AND frozen_amt = #{frozenAmt}
+			</if>
+		   	<if test="null!=openDateBegin and ''!=openDateBegin">
+		   		AND open_date >= #{openDateBegin}
+		   	</if>
+		   	<if test="null!=openDateEnd and ''!=openDateEnd">
+		   		AND open_date &lt; #{openDateEnd}
+		   	</if>
+		   	<if test="null!=closeDateBegin and ''!=closeDateBegin">
+		   		AND close_date >= #{closeDateBegin}
+		   	</if>
+		   	<if test="null!=closeDateEnd and ''!=closeDateEnd">
+		   		AND close_date &lt; #{closeDateEnd}
+		   	</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag and ''!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+	    </where>
+	</sql>
+    
+    <select id="findMchPageCount" resultType="long">
+        SELECT count(*) FROM acc_acc <include refid="findWhereMch"/>   
+    </select>
+    
+    <select id="findMchPage" resultMap="ResultMapWithBLOBs">
+    	SELECT <include refid="Base_Column_List"/> FROM acc_acc 
+		<include refid="findWhereMch"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 后台分页用  End -->
+
+	<update id="initUpdateLastTime" >
+		update
+		acc_acc
+		set
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+		where id = 1=1
+	</update>
+	<update id="initAccMac" >
+		update acc_acc set acc_mac=md5(CONCAT(cur_bal, #{lastUpdateTime,jdbcType=VARCHAR})) where 1=1;
+	</update>
+</mapper>

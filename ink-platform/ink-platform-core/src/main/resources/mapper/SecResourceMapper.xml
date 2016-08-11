@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ink.platform.core.dao.SecResourceDao">
+
+	<resultMap id="SecResource" type="com.ink.platform.api.model.SecResource">
+	
+		<result column="sys_code" property="sysCode" />
+		<result column="id" property="id" />
+		<result column="pid" property="pid" />
+		<result column="resource_name" property="resourceName" />
+		<result column="resource_code" property="resourceCode" />
+
+		<result column="permission" property="permission" />
+		<result column="resource_level" property="resourceLevel" />
+		<result column="resource_position" property="resourcePosition" />
+		<result column="create_time" property="createTime" />
+
+		<result column="update_time" property="updateTime" />
+		<result column="operator_id" property="operatorId" />
+		<result column="version" property="version" />
+		<result column="del_flag" property="delFlag" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+		<result column="state" property="state" />
+		<result column="away" property="away" />
+		<result column="creator" property="creator" />
+ 		<result column="rCode" property="rcode" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,pid,resource_name as resourceName,resource_code as
+		resourceCode,
+		permission as url,resource_level as
+		resourceLevel,resource_position as resourcePosition,create_time as
+		createTime,
+		update_time as updateTime,operator_id as
+		operatorId,version,del_flag as delFlag,status,remark,
+		state,away
+	</sql>
+	<!-- 查询角色授权信息 -->
+	<select id="getRoleResourceList" resultMap="SecResource"
+		parameterType="java.util.Map">
+	SELECT
+	r.id,
+	r.pid,
+	r.resource_name,
+	r.permission,
+	r.sys_code
+FROM
+	sec_resource r,
+	sec_role_resource_relation rr
+WHERE
+	r.id = rr.resource_id
+<if test="roleId != null and roleId !=''">
+			AND rr.role_id =#{roleId}
+		</if>
+	
+	<if test="sysCode != null and sysCode !=''">
+			and r.sys_code =#{sysCode}
+		</if>
+UNION
+	SELECT
+		o.id,
+		rr.resource_id AS pid,
+		o.operation_name AS resourceName,
+		o.url AS permission,
+		r.sys_code
+	FROM
+		sec_resource r,
+		sec_role_resource_relation rr,
+		sec_operation o
+	WHERE
+		o.id = rr.operation_id
+	AND rr.resource_id = r.id
+	<if test="roleId != null and roleId !=''">
+			AND rr.role_id =#{roleId}
+		</if>
+	
+	<if test="sysCode != null and sysCode !=''">
+			and r.sys_code =#{sysCode}
+		</if>
+	</select>
+	<!-- 按条件查询 -->
+	<select id="selectResourceByMap" resultMap="SecResource"
+		parameterType="java.util.Map">
+		select * from sec_resource where
+		1=1
+		<if test="resourceName != null and resourceName !=''">
+			and resource_name =#{resourceName}
+		</if>
+		<if test="resourceCode != null and resourceCode !=''">
+			and resource_code =#{resourceCode}
+		</if>
+		<if test="resourceLevel != null and resourceLevel !=''">
+			and resource_level =#{resourceLevel}
+		</if>
+		<if test="status != null  and  status !=''" >
+			and status =#{status}
+		</if>
+		<if test="createTime != null and createTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[>=]]>
+			#{createTime}
+		</if>
+		<if test="updateTime != null and updateTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[<=]]>
+			#{updateTime}
+		</if>
+		<if test="pageVO!=null and pageVO!=''">
+			order by create_time desc
+			LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+			jdbcType=INTEGER}
+		</if>
+
+	</select>
+	<!--查询总数 -->
+	<select id="selectListCount" resultType="int" parameterType="java.util.Map">
+		select count(*) from sec_resource where
+		1=1
+		<if test="resourceName != null and resourceName !=''">
+			and resource_name =#{resourceName}
+		</if>
+		<if test="resourceCode != null and  resourceCode !=''">
+			and resource_code =#{resourceCode}
+		</if>
+		<if test="resourceLevel != null and resourceLevel !=''">
+			and resource_level =#{resourceLevel}
+		</if>
+		<if test="status != null  and status !=''" >
+			and status =#{status}
+		</if>
+		<if test="createTime != null and createTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[>=]]>
+			#{createTime}
+		</if>
+		<if test="updateTime != null and updateTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[<=]]>
+			#{updateTime}
+		</if>
+	</select>
+	<select id="selectAllResource" resultMap="SecResource">
+	<!-- 	select * from
+		sec_resource -->
+SELECT
+	r.id as relationId,
+	r.id as id,
+	r.pid as pid,
+	r.resource_name as resource_name,
+	r.rCode as resourceCode
+
+FROM
+	sec_resource r
+	where 
+r.`status`=1
+UNION
+
+	SELECT	
+		orr.id as relationId,
+		orr.operation_id  as id,
+		orr.resource_id AS pid,
+		o.operation_name AS resource_name,
+		o.opCode as resourceCode
+	FROM
+		sec_operation_resource_relation orr,
+		sec_operation o,
+		sec_resource r
+	WHERE
+		1 = 1
+	AND orr.resource_id = r.id
+	AND orr.operation_id = o.id
+	and orr.`status` =1
+	</select>
+	<select id="getResourceAndOperation" resultType="SecResource"
+		parameterType="java.lang.String">
+
+		SELECT
+			r.id,
+			r.pid,
+			r.resource_name AS resourceName,
+			r.del_flag AS delFlag,
+			r. STATUS AS STATUS,
+			r.permission AS permission,
+			r.rCode
+		FROM
+			sec_resource r,
+			sec_role_resource_relation rrr,
+			sec_user_role_relation urr
+		WHERE
+			rrr.resource_id = r.id
+		AND urr.role_id = rrr.role_id
+		AND r. STATUS = rrr. STATUS = urr. STATUS = 1
+		AND r.del_flag = rrr.del_flag = urr.del_flag = 0
+		AND urr.subject_id = #{userId}
+		GROUP BY id
+UNION
+	SELECT
+		orr.operation_id AS id,
+		orr.resource_id AS pid,
+		o.operation_name AS resourceName,
+		orr.del_flag AS delFlag,
+		orr. STATUS AS STATUS,
+		o.url AS permission,
+		o.opCode as rCode
+	FROM
+		sec_resource r,
+		sec_role_resource_relation rrr,
+		sec_user_role_relation urr,
+		sec_operation o,
+		sec_operation_resource_relation orr
+	WHERE
+		rrr.resource_id = r.id
+	AND urr.role_id = rrr.role_id
+	AND orr.resource_id = r.id
+	AND orr.operation_id = o.id
+	AND r. STATUS = rrr. STATUS = urr. STATUS = orr. STATUS = 1
+	AND r.del_flag = rrr.del_flag = urr.del_flag = orr. STATUS = 0
+	AND urr.subject_id = #{userId}
+
+
+	</select>
+	<select id="getResourceList" resultMap="SecResource"
+		parameterType="java.util.Map">
+
+		SELECT
+		r.id,
+		r.pid,
+		r.resource_name as resourceName,
+		r.del_flag as delFlag,
+		r.status as status,
+		r.permission as permission,
+		r.rCode
+
+
+		FROM
+		sec_resource r,
+		sec_role_resource_relation rrr,
+		sec_user_role_relation urr
+		WHERE
+		rrr.resource_id = r.id
+		AND urr.role_id = rrr.role_id
+		AND r. STATUS = rrr. STATUS = urr. STATUS = 1
+		AND r.del_flag = rrr.del_flag = urr.del_flag = 0
+		<if test="userId != null and userId!=''">
+				AND urr.subject_id = #{userId}
+		</if>
+		<if test="sysCode != null and sysCode!=''">
+				and r.sys_code =#{sysCode}
+		</if>
+		GROUP BY  r.id
+		order by r.resource_position asc
+
+
+
+	</select>
+	<!--查询子菜单 -->
+
+	<select id="getChildrenModues" parameterType="java.lang.String"
+		resultMap="SecResource">
+		SELECT
+		*
+		FROM
+		sec_resource
+		WHERE
+		pid = #{id}
+		UNION
+		SELECT
+		r.*
+		FROM
+		sec_resource r,
+		sec_plantform p
+		WHERE
+		r.pid = p.id = #{id}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="SecResource"
+		parameterType="java.lang.Long">
+		SELECT
+		r.*,
+		u.user_name as creator
+		FROM
+		sec_resource r,
+		sec_user u
+		WHERE
+		r.id =#{id,jdbcType=BIGINT}
+		AND r.operator_id = u.id
+	</select>
+	<select id="resourceTree" resultMap="SecResource">
+
+		<!-- SELECT p.id as id, p.plantform_name as resourceName, p.pid as pid, 
+			p.version as level FROM sec_plantform p UNION -->
+
+		select *from sec_resource
+
+	</select>
+	<!--根据id查询对象 -->
+	<select id="selectResource" resultMap="SecResource"
+		parameterType="com.ink.platform.api.model.SecResource">
+		select
+		*
+		from sec_resource
+		where
+		1=1
+		<if test="id != null">
+			and id=#{id}
+		</if>
+		<if test="resourceName != null and resourceName!=''">
+			and resource_name =#{resourceName}
+		</if>
+		<if test="status != null and status !=''">
+			and status= #{status}
+		</if>
+		<if test="createTime != null and createTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[>=]]>
+			#{createTime}
+		</if>
+		<if test="updateTime != null and updateTime !=''">
+			and DATE_FORMAT(create_time,'%Y-%m-%d')<![CDATA[<=]]>
+			#{updateTime}
+		</if>
+		order by create_time
+
+	</select>
+	<insert id="insertSelective" parameterType="com.ink.platform.api.model.SecResource">
+		insert into sec_resource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="sysCode != null">
+				sys_code,
+			</if>
+			<if test="id != null">
+				id,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="resourceName != null">
+				resource_name,
+			</if>
+			<if test="resourceCode != null">
+				resource_code,
+			</if>
+			<if test="permission != null">
+				permission,
+			</if>
+			<if test="resourceLevel != null">
+				resource_level,
+			</if>
+			<if test="resourcePosition != null">
+				resource_position,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="sysCode != null">
+				#{sysCode,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=BIGINT},
+			</if>
+			<if test="resourceName != null">
+				#{resourceName,jdbcType=VARCHAR},
+			</if>
+			<if test="resourceCode != null">
+				#{resourceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="permission != null">
+				#{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="resourceLevel != null">
+				#{resourceLevel,jdbcType=INTEGER},
+			</if>
+			<if test="resourcePosition != null">
+				#{resourcePosition,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sec_resource
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByPid" parameterType="java.lang.Long">
+		delete from sec_resource
+		where pid = #{id,jdbcType=BIGINT}
+	</delete>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.platform.api.model.SecResource">
+		update sec_resource
+		<set>
+		<if test="sysCode != null">
+			sys_code =#{sysCode,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=BIGINT},
+			</if>
+			<if test="resourceName != null">
+				resource_name = #{resourceName,jdbcType=VARCHAR},
+			</if>
+			<if test="resourceCode != null">
+				resource_code = #{resourceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="permission != null">
+				permission = #{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="resourceLevel != null">
+				resource_level = #{pid,jdbcType=INTEGER},
+			</if>
+			<if test="resourcePosition != null">
+				resource_position = #{resourcePosition,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

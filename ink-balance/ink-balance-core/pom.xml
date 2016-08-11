@@ -1,0 +1,292 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ink</groupId>
+		<artifactId>ink-balance</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>ink-balance-core</artifactId>
+	<groupId>com.ink</groupId>
+	<packaging>jar</packaging>
+	<version>${main.version}-${slave.version}</version>
+
+	<properties>
+		<main.version>1.0.0</main.version>
+		<slave.version>SNAPSHOT</slave.version>
+		<skipTests>true</skipTests>
+		<env>dev</env>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-balance-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-base-data</artifactId>
+			<version>1.0.0-RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-base-util</artifactId>
+			<version>1.0.0-RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-tfs-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-base-redis</artifactId>
+			<version>1.0.0-RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-base-nosql</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-base-mybatis</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+
+		<!-- 序列化 -->
+		<dependency>
+			<groupId>com.esotericsoftware.kryo</groupId>
+			<artifactId>kryo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.javakaffee</groupId>
+			<artifactId>kryo-serializers</artifactId>
+		</dependency>
+		<!-- JPush.begin -->
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>mockwebserver</artifactId>
+		</dependency>
+		<!-- JPush.end -->
+
+		<!--<dependency> <groupId>com.dangdang</groupId> <artifactId>config-toolkit</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>com.ink</groupId>
+			<artifactId>ink-config-api</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+
+		<!-- Spring Batch -->
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-infrastructure</artifactId>
+		</dependency>
+
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mongodb</groupId>
+					<artifactId>mongo-java-driver</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.8.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+		</dependency>
+
+	</dependencies>
+
+
+	<!--<build> <finalName>${project.artifactId}</finalName> <plugins> <plugin> 
+		<groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
+		</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+		</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+		</plugin> &lt;!&ndash; xsd相关 &ndash;&gt; <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-shade-plugin</artifactId> <version>1.4</version> <executions> 
+		<execution> <phase>package</phase> <goals> <goal>shade</goal> </goals> <configuration> 
+		<filters> <filter> <artifact>*:*</artifact> <excludes> <exclude>META-INF/*.SF</exclude> 
+		<exclude>META-INF/*.DSA</exclude> <exclude>META-INF/*.RSA</exclude> </excludes> 
+		</filter> </filters> <transformers> <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> 
+		<resource>META-INF/spring.handlers</resource> </transformer> <transformer 
+		implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> 
+		<mainClass>com.jd.payment.risk.benz.qpay.daylimt.DaylimitAmountTopology</mainClass> 
+		</transformer> <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> 
+		<resource>META-INF/spring.schemas</resource> </transformer> </transformers> 
+		</configuration> </execution> </executions> </plugin> &lt;!&ndash; <plugin> 
+		<groupId>org.codehaus.mojo</groupId> <artifactId>properties-maven-plugin</artifactId> 
+		<version>1.0-alpha-2</version> <executions> <execution> <phase>initialize</phase> 
+		<goals> <goal>read-project-properties</goal> </goals> <configuration> <files> 
+		<file>src/main/filters/filter-${env}.properties</file> </files> </configuration> 
+		</execution> </executions> </plugin> &ndash;&gt; </plugins> <resources> <resource> 
+		<directory>src/main/resources</directory> <filtering>true</filtering> </resource> 
+		</resources> </build> -->
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<filters>
+			<filter>src/main/filters/filter-${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>release</id>
+			<properties>
+				<env>release</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>site</id>
+			<properties>
+				<env>site</env>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

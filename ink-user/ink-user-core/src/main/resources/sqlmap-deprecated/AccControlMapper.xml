@@ -1,0 +1,303 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="AccControl">
+	<resultMap id="BaseResultMap" type="com.yinker.user.core.po.AccControl">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="open_date" property="openDate" jdbcType="TIMESTAMP" />
+		<result column="close_date" property="closeDate" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="owner_group" property="ownerGroup" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="cust_id" property="custId" jdbcType="VARCHAR" />
+		<result column="mch_id" property="mchId" jdbcType="BIGINT" />
+		<result column="txn_code" property="txnCode" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, version, open_date, close_date, status, del_flag, owner, owner_group,
+		create_time,
+		last_update_time, cust_id, mch_id, txn_code
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from acc_control
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from acc_control
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.yinker.user.core.po.AccControl">
+		insert into acc_control (id, version, open_date,
+		close_date, status, del_flag,
+		owner, owner_group, create_time,
+		last_update_time, cust_id, mch_id,
+		txn_code)
+		values (#{id,jdbcType=BIGINT}, #{version,jdbcType=INTEGER},
+		#{openDate,jdbcType=TIMESTAMP},
+		#{closeDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{delFlag,jdbcType=BIT},
+		#{owner,jdbcType=VARCHAR}, #{ownerGroup,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastUpdateTime,jdbcType=TIMESTAMP}, #{custId,jdbcType=VARCHAR},
+		#{mchId,jdbcType=BIGINT},
+		#{txnCode,jdbcType=CHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yinker.user.core.po.AccControl">
+		insert into acc_control
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="openDate != null">
+				open_date,
+			</if>
+			<if test="closeDate != null">
+				close_date,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="owner != null">
+				owner,
+			</if>
+			<if test="ownerGroup != null">
+				owner_group,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="custId != null">
+				cust_id,
+			</if>
+			<if test="mchId != null">
+				mch_id,
+			</if>
+			<if test="txnCode != null">
+				txn_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="openDate != null">
+				#{openDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="closeDate != null">
+				#{closeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=BIT},
+			</if>
+			<if test="owner != null">
+				#{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				#{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				#{mchId,jdbcType=BIGINT},
+			</if>
+			<if test="txnCode != null">
+				#{txnCode,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yinker.user.core.po.AccControl">
+		update acc_control
+		<set>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="openDate != null">
+				open_date = #{openDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="closeDate != null">
+				close_date = #{closeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=BIT},
+			</if>
+			<if test="owner != null">
+				owner = #{owner,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerGroup != null">
+				owner_group = #{ownerGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="mchId != null">
+				mch_id = #{mchId,jdbcType=BIGINT},
+			</if>
+			<if test="txnCode != null">
+				txn_code = #{txnCode,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yinker.user.core.po.AccControl">
+		update acc_control
+		set version = #{version,jdbcType=INTEGER},
+		open_date = #{openDate,jdbcType=TIMESTAMP},
+		close_date = #{closeDate,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=INTEGER},
+		del_flag = #{delFlag,jdbcType=BIT},
+		owner = #{owner,jdbcType=VARCHAR},
+		owner_group = #{ownerGroup,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+		cust_id = #{custId,jdbcType=VARCHAR},
+		mch_id = #{mchId,jdbcType=BIGINT},
+		txn_code = #{txnCode,jdbcType=CHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<sql id="dynamicPageWhere">
+		<where>
+			1=1
+			<if test="accControlVO.version != null and accControlVO.version!=''">
+				AND version = #{accControlVO.version,jdbcType=INTEGER}
+			</if>
+			<if test="accControlVO.openDate != null and accControlVO.openDate!=''">
+				AND DATE_FORMAT(open_date,'%Y-%m-%d') =
+				DATE_FORMAT(#{accControlVO.openDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+			</if>
+			<if test="accControlVO.closeDate != null and accControlVO.closeDate!=''">
+				AND DATE_FORMAT(close_date,'%Y-%m-%d') =
+				DATE_FORMAT(#{accControlVO.closeDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+			</if>
+			<if test="accControlVO.status != null and accControlVO.status!=''">
+				AND status = #{accControlVO.status,jdbcType=INTEGER}
+			</if>
+			<if test="accControlVO.delFlag != null and accControlVO.delFlag!=''">
+				AND del_flag = #{accControlVO.delFlag,jdbcType=BIT}
+			</if>
+			<if test="accControlVO.owner != null and accControlVO.owner!=''">
+				AND owner = #{accControlVO.owner,jdbcType=VARCHAR}
+			</if>
+			<if test="accControlVO.ownerGroup != null and accControlVO.ownerGroup!=''">
+				AND owner_group = #{accControlVO.ownerGroup,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="accControlVO.createTime != null and accControlVO.createTime !=''">
+				AND create_time = #{accControlVO.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="accControlVO.lastUpdateTime != null and accControlVO.lastUpdateTime !=''">
+				AND last_update_time =
+				#{accControlVO.lastUpdateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="accControlVO.custId != null and accControlVO.custId !=''">
+				AND cust_id = #{accControlVO.custId,jdbcType=VARCHAR}
+			</if>
+			<if test="accControlVO.mchId != null and accControlVO.mchId !=''">
+				AND mch_id = #{accControlVO.mchId,jdbcType=BIGINT}
+			</if>
+			<if test="accControlVO.txnCode != null and accControlVO.txnCode  !=''">
+				AND txn_code = #{accControlVO.txnCode,jdbcType=CHAR}
+			</if>
+		</where>
+	</sql>
+-->
+
+	<!-- 交易时间查询 -->
+	<!--<sql id="liqDateWhere">
+		<if test="accControlVO.begLiqDate !=null and accControlVO.begLiqDate !=''">
+			<![CDATA[ and create_time >= #{accControlVO.begLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+		<if test="accControlVO.endLiqDate !=null and accControlVO.endLiqDate !=''">
+			<![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{accControlVO.endLiqDate, jdbcType=VARCHAR}]]>
+		</if>
+	</sql>
+	<sql id="baseDynamicQuery">
+		select
+		<include refid="Base_Column_List" />
+		from acc_control
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+		<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+			order by create_time desc
+		</if>
+		<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+			order by ${pageVO.orderBy}
+		</if>
+	</sql>-->
+	<!-- 分页查询记录总记录数 -->
+	<!--<select id="findListPageCount" resultType="int">
+		SELECT
+		count(1)
+		FROM acc_control
+		<include refid="dynamicPageWhere" />
+		<include refid="liqDateWhere" />
+	</select> -->
+	<!-- 分页查询记录 -->
+	<!--<select id="findListPage" resultMap="BaseResultMap">
+		<choose>
+			<when test="pageVO.totalPage&lt;0">
+				<include refid="baseDynamicQuery" />
+			</when>
+			<otherwise>
+				SELECT
+				<include refid="Base_Column_List" />
+				FROM acc_control
+				<include refid="dynamicPageWhere" />
+				<include refid="liqDateWhere" />
+				<if test="pageVO.orderBy==null or pageVO.orderBy==''">
+					order by create_time desc
+				</if>
+				<if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+					order by ${pageVO.orderBy}
+				</if>
+				LIMIT #{pageVO.start, jdbcType=INTEGER},#{pageVO.pageSize,
+				jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectByMchIdAndTxnCode" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_control where mch_id = #{mchId,jdbcType=BIGINT}
+		and txn_code = #{txnCode,jdbcType=CHAR}
+	</select>
+</mapper> -->

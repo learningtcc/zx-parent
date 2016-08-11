@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <resource id="DefaultResource">
+    <nameserver>10.232.36.209:8108</nameserver>
+    <dataserver>192.168.208.88:3202</dataserver>
+    <tairserver_1>10.232.12.141:5198</tairserver_1>
+    <tairserver_2>10.232.12.142:5198</tairserver_2>
+    <groupname>group_1</groupname>
+    <srcFile>src/test/resources/a.jpg</srcFile>
+    <emptyFile>src/test/resources/empty.jpg</emptyFile>
+  </resource>
+
+  <resource id="TfsUtil" class="com/taobao/common/tfs/etc/TfsUtil">
+    <testCrc32>src/test/resources/a.jpg</testCrc32>
+    <crc>688989445</crc>
+  </resource>
+
+  <resource id="TfsFile" class="com/taobao/common/tfs/impl/TfsFileTest">
+    <srcFile>src/test/resources/b.jpg</srcFile>
+  </resource>
+
+</resources>
+

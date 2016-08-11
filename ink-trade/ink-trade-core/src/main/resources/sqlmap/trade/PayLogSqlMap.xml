@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PayLog">
+
+    <resultMap id="PayLog" type="com.ink.trade.core.po.PayLog">
+        <result property="id" column="id"/>
+        <result property="payId" column="pay_id"/>
+        <result property="reqId" column="req_id"/>
+        <result property="ordId" column="ord_id"/>
+        <result property="chanelName" column="chanel_name"/>
+        <result property="chanelNo" column="chanel_no"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="remark" column="remark"/>
+        <result property="amt" column="amt"/>
+        <result property="mchId" column="mch_id"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="repCode" column="rep_code"/>
+        <result property="repMsg" column="rep_msg"/>
+        <result property="asileRepCode" column="asile_rep_code"/>
+        <result property="asileRepMsg" column="asile_rep_msg"/>
+        <result property="version" column="version"/>
+        <result property="lastupdateTime" column="lastupdate_time"/>
+        <result property="reqTime" column="req_time"/>
+        <result property="repTime" column="rep_time"/>
+        <result property="payOrderId" column="pay_order_id"/>
+        <result property="payReqId" column="pay_req_id"/>
+        <result property="asileTransId" column="asile_trans_id"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,pay_id ,req_id ,ord_id ,chanel_name ,chanel_no ,status ,create_time ,remark ,amt ,mch_id ,order_date ,rep_code ,rep_msg ,asile_rep_code ,asile_rep_msg ,version ,lastupdate_time ,req_time ,rep_time ,pay_order_id ,pay_req_id ,asile_trans_id 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <![CDATA[
+        INSERT INTO pay_log (
+	        id  ,
+	        pay_id  ,
+	        req_id  ,
+	        ord_id  ,
+	        chanel_name  ,
+	        chanel_no  ,
+	        status  ,
+	        create_time  ,
+	        remark  ,
+	        amt  ,
+	        mch_id  ,
+	        order_date  ,
+	        rep_code  ,
+	        rep_msg  ,
+	        asile_rep_code  ,
+	        asile_rep_msg  ,
+	        version  ,
+	        lastupdate_time  ,
+	        req_time  ,
+	        rep_time  ,
+	        pay_order_id  ,
+	        pay_req_id  ,
+	        asile_trans_id  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{payId, jdbcType=BIGINT} ,
+        	#{reqId, jdbcType=VARCHAR} ,
+        	#{ordId, jdbcType=VARCHAR} ,
+        	#{chanelName, jdbcType=VARCHAR} ,
+        	#{chanelNo, jdbcType=VARCHAR} ,
+        	#{status, jdbcType=INTEGER} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{amt, jdbcType=DECIMAL} ,
+        	#{mchId, jdbcType=VARCHAR} ,
+        	#{orderDate, jdbcType=TIMESTAMP} ,
+        	#{repCode, jdbcType=VARCHAR} ,
+        	#{repMsg, jdbcType=VARCHAR} ,
+        	#{asileRepCode, jdbcType=VARCHAR} ,
+        	#{asileRepMsg, jdbcType=VARCHAR} ,
+        	#{version, jdbcType=INTEGER} ,
+        	#{lastupdateTime, jdbcType=TIMESTAMP} ,
+        	#{reqTime, jdbcType=TIMESTAMP} ,
+        	#{repTime, jdbcType=TIMESTAMP} ,
+        	#{payOrderId, jdbcType=VARCHAR} ,
+        	#{payReqId, jdbcType=VARCHAR} ,
+        	#{asileTransId, jdbcType=VARCHAR} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO pay_log ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.payId, jdbcType=BIGINT} ,
+        	#{item.reqId, jdbcType=VARCHAR} ,
+        	#{item.ordId, jdbcType=VARCHAR} ,
+        	#{item.chanelName, jdbcType=VARCHAR} ,
+        	#{item.chanelNo, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=INTEGER} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.amt, jdbcType=DECIMAL} ,
+        	#{item.mchId, jdbcType=VARCHAR} ,
+        	#{item.orderDate, jdbcType=TIMESTAMP} ,
+        	#{item.repCode, jdbcType=VARCHAR} ,
+        	#{item.repMsg, jdbcType=VARCHAR} ,
+        	#{item.asileRepCode, jdbcType=VARCHAR} ,
+        	#{item.asileRepMsg, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.lastupdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.reqTime, jdbcType=TIMESTAMP} ,
+        	#{item.repTime, jdbcType=TIMESTAMP} ,
+        	#{item.payOrderId, jdbcType=VARCHAR} ,
+        	#{item.payReqId, jdbcType=VARCHAR} ,
+        	#{item.asileTransId, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE pay_log SET
+	        pay_id = #{payId, jdbcType=BIGINT} ,
+	        req_id = #{reqId, jdbcType=VARCHAR} ,
+	        ord_id = #{ordId, jdbcType=VARCHAR} ,
+	        chanel_name = #{chanelName, jdbcType=VARCHAR} ,
+	        chanel_no = #{chanelNo, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=INTEGER} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        amt = #{amt, jdbcType=DECIMAL} ,
+	        mch_id = #{mchId, jdbcType=VARCHAR} ,
+	        order_date = #{orderDate, jdbcType=TIMESTAMP} ,
+	        rep_code = #{repCode, jdbcType=VARCHAR} ,
+	        rep_msg = #{repMsg, jdbcType=VARCHAR} ,
+	        asile_rep_code = #{asileRepCode, jdbcType=VARCHAR} ,
+	        asile_rep_msg = #{asileRepMsg, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER} ,
+	        lastupdate_time = #{lastupdateTime, jdbcType=TIMESTAMP} ,
+	        req_time = #{reqTime, jdbcType=TIMESTAMP} ,
+	        rep_time = #{repTime, jdbcType=TIMESTAMP} ,
+	        pay_order_id = #{payOrderId, jdbcType=VARCHAR} ,
+	        pay_req_id = #{payReqId, jdbcType=VARCHAR} ,
+	        asile_trans_id = #{asileTransId, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+<update id="updateNotNull" >
+			UPDATE pay_log
+				<set>
+			       	<if test="null!=payId and ''!=payId ">
+	   			 		pay_id = #{payId, jdbcType=BIGINT} ,
+	   			   	</if>
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		req_id = #{reqId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=ordId and ''!=ordId ">
+	   			 		ord_id = #{ordId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=chanelName and ''!=chanelName ">
+	   			 		chanel_name = #{chanelName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=chanelNo and ''!=chanelNo ">
+	   			 		chanel_no = #{chanelNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		status = #{status, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		remark = #{remark, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=amt and ''!=amt ">
+	   			 		amt = #{amt, jdbcType=DECIMAL} ,
+	   			   	</if>
+			       	<if test="null!=mchId and ''!=mchId ">
+	   			 		mch_id = #{mchId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=orderDate and ''!=orderDate ">
+	   			 		order_date = #{orderDate, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=repCode and ''!=repCode ">
+	   			 		rep_code = #{repCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=repMsg and ''!=repMsg ">
+	   			 		rep_msg = #{repMsg, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileRepCode and ''!=asileRepCode ">
+	   			 		asile_rep_code = #{asileRepCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileRepMsg and ''!=asileRepMsg ">
+	   			 		asile_rep_msg = #{asileRepMsg, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=version and ''!=version ">
+	   			 		version = #{version, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=lastupdateTime and ''!=lastupdateTime ">
+	   			 		lastupdate_time = #{lastupdateTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=reqTime and ''!=reqTime ">
+	   			 		req_time = #{reqTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=repTime and ''!=repTime ">
+	   			 		rep_time = #{repTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=payOrderId and ''!=payOrderId ">
+	   			 		pay_order_id = #{payOrderId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=payReqId and ''!=payReqId ">
+	   			 		pay_req_id = #{payReqId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileTransId and ''!=asileTransId ">
+	   			 		asile_trans_id = #{asileTransId, jdbcType=VARCHAR} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM pay_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="PayLog">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM pay_log 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=chanelName and ''!=chanelName ">
+	   			 		AND chanel_name = #{chanelName}
+	   			   	</if>
+			       	<if test="null!=chanelNo and ''!=chanelNo ">
+	   			 		AND chanel_no = #{chanelNo}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=repCode and ''!=repCode ">
+	   			 		AND rep_code = #{repCode}
+	   			   	</if>
+			       	<if test="null!=repMsg and ''!=repMsg ">
+	   			 		AND rep_msg = #{repMsg}
+	   			   	</if>
+			       	<if test="null!=asileRepCode and ''!=asileRepCode ">
+	   			 		AND asile_rep_code = #{asileRepCode}
+	   			   	</if>
+			       	<if test="null!=asileRepMsg and ''!=asileRepMsg ">
+	   			 		AND asile_rep_msg = #{asileRepMsg}
+	   			   	</if>
+			       	<if test="null!=payOrderId and ''!=payOrderId ">
+	   			 		AND pay_order_id = #{payOrderId}
+	   			   	</if>
+			       	<if test="null!=payReqId and ''!=payReqId ">
+	   			 		AND pay_req_id = #{payReqId}
+	   			   	</if>
+			       	<if test="null!=asileTransId and ''!=asileTransId ">
+	   			 		AND asile_trans_id = #{asileTransId}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=chanelName and ''!=chanelName">
+				    <!-- 	AND chanel_name LIKE '%'||#{chanelName}||'%' oracle -->
+			   			AND chanel_name LIKE concat('%',#{chanelName},'%')
+			   			
+			   		</if>
+				    <if test="null!=chanelNo and ''!=chanelNo">
+				    <!-- 	AND chanel_no LIKE '%'||#{chanelNo}||'%' oracle -->
+			   			AND chanel_no LIKE concat('%',#{chanelNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=repCode and ''!=repCode">
+				    <!-- 	AND rep_code LIKE '%'||#{repCode}||'%' oracle -->
+			   			AND rep_code LIKE concat('%',#{repCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=repMsg and ''!=repMsg">
+				    <!-- 	AND rep_msg LIKE '%'||#{repMsg}||'%' oracle -->
+			   			AND rep_msg LIKE concat('%',#{repMsg},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileRepCode and ''!=asileRepCode">
+				    <!-- 	AND asile_rep_code LIKE '%'||#{asileRepCode}||'%' oracle -->
+			   			AND asile_rep_code LIKE concat('%',#{asileRepCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileRepMsg and ''!=asileRepMsg">
+				    <!-- 	AND asile_rep_msg LIKE '%'||#{asileRepMsg}||'%' oracle -->
+			   			AND asile_rep_msg LIKE concat('%',#{asileRepMsg},'%')
+			   			
+			   		</if>
+				    <if test="null!=payOrderId and ''!=payOrderId">
+				    <!-- 	AND pay_order_id LIKE '%'||#{payOrderId}||'%' oracle -->
+			   			AND pay_order_id LIKE concat('%',#{payOrderId},'%')
+			   			
+			   		</if>
+				    <if test="null!=payReqId and ''!=payReqId">
+				    <!-- 	AND pay_req_id LIKE '%'||#{payReqId}||'%' oracle -->
+			   			AND pay_req_id LIKE concat('%',#{payReqId},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileTransId and ''!=asileTransId">
+				    <!-- 	AND asile_trans_id LIKE '%'||#{asileTransId}||'%' oracle -->
+			   			AND asile_trans_id LIKE concat('%',#{asileTransId},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=payId and ''!=payId">
+			    AND pay_id = #{payId}
+			</if>
+		   	<if test="null!=reqId and ''!=reqId">
+			    AND req_id = #{reqId}
+			</if>
+		   	<if test="null!=ordId and ''!=ordId">
+			    AND ord_id = #{ordId}
+			</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=amt and ''!=amt">
+			    AND amt = #{amt}
+			</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=orderDateBegin and ''!=orderDateBegin">
+		   		AND order_date >= #{orderDateBegin}
+		   	</if>
+		   	<if test="null!=orderDateEnd and ''!=orderDateEnd">
+		   		AND order_date &lt; #{orderDateEnd}
+		   	</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=lastupdateTimeBegin and ''!=lastupdateTimeBegin">
+		   		AND lastupdate_time >= #{lastupdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastupdateTimeEnd and ''!=lastupdateTimeEnd">
+		   		AND lastupdate_time &lt; #{lastupdateTimeEnd}
+		   	</if>
+		   	<if test="null!=reqTimeBegin and ''!=reqTimeBegin">
+		   		AND req_time >= #{reqTimeBegin}
+		   	</if>
+		   	<if test="null!=reqTimeEnd and ''!=reqTimeEnd">
+		   		AND req_time &lt; #{reqTimeEnd}
+		   	</if>
+		   	<if test="null!=repTimeBegin and ''!=repTimeBegin">
+		   		AND rep_time >= #{repTimeBegin}
+		   	</if>
+		   	<if test="null!=repTimeEnd and ''!=repTimeEnd">
+		   		AND rep_time &lt; #{repTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM pay_log <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="PayLog">
+    	SELECT <include refid="columns"/> FROM pay_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="PayLog">
+	    SELECT <include refid="columns"/> FROM pay_log 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

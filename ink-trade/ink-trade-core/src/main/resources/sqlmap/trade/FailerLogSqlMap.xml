@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FailerLog">
+
+	<resultMap id="FailerLog" type="com.ink.trade.core.po.FailerLog">
+		<result property="id" column="id" />
+		<result property="asileName" column="asile_name" />
+		<result property="asileCode" column="asile_code" />
+		<result property="createTime" column="create_time" />
+		<result property="reqId" column="req_id" />
+		<result property="txnCode" column="txn_code" />
+		<result property="remark" column="remark" />
+		<result property="isDelete" column="is_delete" />
+		<result property="bankCode" column="bank_code" />
+		<result property="bankName" column="bank_name" />
+		<result property="routeBusinessType" column="route_business_type" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,asile_name ,asile_code ,create_time ,req_id ,txn_code ,remark ,is_delete ,bank_code ,bank_name,route_business_type 
+	    ]]>
+	</sql>
+
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <![CDATA[
+        INSERT INTO failer_log (
+	        id  ,
+	        asile_name  ,
+	        asile_code  ,
+	        create_time  ,
+	        req_id  ,
+	        txn_code  ,
+	        remark,
+	        is_delete,
+	        bank_code,
+	        bank_name,
+	        route_business_type
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{asileName, jdbcType=VARCHAR} ,
+        	#{asileCode, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{reqId, jdbcType=VARCHAR} ,
+        	#{txnCode, jdbcType=VARCHAR} ,
+        	#{remark, jdbcType=VARCHAR},
+        	#{isDelete,jdbcType=BIT}
+        	#{bankCode, jdbcType=VARCHAR},
+        	#{bankName, jdbcType=VARCHAR},
+        	#{routeBusinessType, jdbcType=VARCHAR}
+        )
+    ]]>
+	</insert>
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO failer_log (
+		<include refid="columns" />
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.id,
+			jdbcType=BIGINT} ,
+			#{item.asileName, jdbcType=VARCHAR} ,
+			#{item.asileCode, jdbcType=VARCHAR} ,
+			#{item.createTime,
+			jdbcType=TIMESTAMP} ,
+			#{item.reqId, jdbcType=VARCHAR} ,
+			#{item.txnCode,
+			jdbcType=VARCHAR} ,
+			#{item.remark, jdbcType=VARCHAR},
+			#{item.isDelete, jdbcType=BIT},
+			#{item.bankCode, jdbcType=VARCHAR},
+			#{item.bankName, jdbcType=VARCHAR},
+			#{item.routeBusinessType, jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update">
+    <![CDATA[
+        UPDATE failer_log SET
+	        id = #{id, jdbcType=BIGINT} ,
+	        asile_name = #{asileName, jdbcType=VARCHAR} ,
+	        asile_code = #{asileCode, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        req_id = #{reqId, jdbcType=VARCHAR} ,
+	        txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	        remark = #{remark, jdbcType=VARCHAR},
+	        is_delete=#{isDelete, jdbcType=BIT},
+	        bank_code=#{bankCode, jdbcType=VARCHAR},
+	        bank_code=#{bankName, jdbcType=VARCHAR},
+	        route_business_type=#{routeBusinessType, jdbcType=VARCHAR}
+       WHERE
+	        id = #{id}
+    ]]>
+	</update>
+<update id="updateNotNull" >
+			UPDATE failer_log
+				<set>
+			       	<if test="null!=asileName and ''!=asileName ">
+	   			 		asile_name = #{asileName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileCode and ''!=asileCode ">
+	   			 		asile_code = #{asileCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		req_id = #{reqId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		txn_code = #{txnCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		remark = #{remark, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=isDelete and ''!=isDelete ">
+	   			 		is_delete = #{isDelete, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=bankCode and ''!=bankCode ">
+	   			 		bank_code = #{bankCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=bankName and ''!=bankName ">
+	   			 		bank_name = #{bankName, jdbcType=VARCHAR} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+	<delete id="delete">
+    <![CDATA[
+        DELETE FROM failer_log  WHERE
+	        id = #{id}
+    ]]>
+	</delete>
+
+	<select id="getById" resultMap="FailerLog">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM failer_log 
+	         WHERE
+	        id = #{id}
+	    ]]>
+	</select>
+
+	<sql id="findWhere">
+		<where>
+			<choose>
+				<when test="queryType==0">
+					<if test="null!=asileName and ''!=asileName ">
+						AND asile_name = #{asileName}
+					</if>
+					<if test="null!=asileCode and ''!=asileCode ">
+						AND asile_code = #{asileCode}
+					</if>
+					<if test="null!=txnCode and ''!=txnCode ">
+						AND txn_code = #{txnCode}
+					</if>
+					<if test="null!=remark and ''!=remark ">
+						AND remark = #{remark}
+					</if>
+					<if test="null!=routeBusinessType and ''!=routeBusinessType ">
+						AND route_business_type = #{routeBusinessType}
+					</if>
+				</when>
+				<otherwise>
+					<if test="null!=asileName and ''!=asileName">
+						<!-- AND asile_name LIKE '%'||#{asileName}||'%' oracle -->
+						AND asile_name LIKE concat('%',#{asileName},'%')
+
+					</if>
+					<if test="null!=asileCode and ''!=asileCode">
+						<!-- AND asile_code LIKE '%'||#{asileCode}||'%' oracle -->
+						AND asile_code LIKE concat('%',#{asileCode},'%')
+
+					</if>
+					<if test="null!=txnCode and ''!=txnCode">
+						<!-- AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+						AND txn_code LIKE concat('%',#{txnCode},'%')
+
+					</if>
+					<if test="null!=remark and ''!=remark">
+						<!-- AND remark LIKE '%'||#{remark}||'%' oracle -->
+						AND remark LIKE concat('%',#{remark},'%')
+
+					</if>
+				</otherwise>
+			</choose>
+			<if test="null!=id and ''!=id">
+				AND id = #{id}
+			</if>
+			<if test="null!=createTimeBegin and ''!=createTimeBegin">
+				AND create_time >= #{createTimeBegin}
+			</if>
+			<if test="null!=createTimeEnd and ''!=createTimeEnd">
+				AND create_time &lt; #{createTimeEnd}
+			</if>
+			<if test="null!=reqId and ''!=reqId">
+				AND req_id = #{reqId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(*) FROM failer_log
+		<include refid="findWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="findPage" resultMap="FailerLog">
+		SELECT
+		<include refid="columns" />
+		FROM failer_log
+		<include refid="findWhere" />
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+			limit #{offset} , #{limit}
+		</if>
+
+
+	</select>
+
+
+	<select id="find" resultMap="FailerLog">
+		SELECT
+		<include refid="columns" />
+		FROM failer_log
+		<include refid="findWhere" />
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+	<select id="findFailerLogByTime" resultMap="FailerLog">
+		SELECT
+		<include refid="columns" />
+		FROM failer_log WHERE
+			TIMESTAMPDIFF(
+			SECOND,DATE_ADD(create_time,INTERVAL #{time,jdbcType=INTEGER}
+			<![CDATA[
+			DAY_MINUTE),now())<0
+			]]>
+
+	</select>
+
+</mapper>
+

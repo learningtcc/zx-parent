@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+    <mongo:db-factory id="mongoDbFactory" host="10.1.5.211:27017" port="27017" dbname="account"/>
+    <mongo:mapping-converter id="mongoConverter" db-factory-ref="mongoDbFactory"/>
+    <bean id="noClassMongoConverter" class="com.yinker.base.nosql.convert.MongoConverterEnhanceFactoryBean">
+        <property name="converter" ref="mongoConverter"/>
+    </bean>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="noClassMongoConverter"/>
+    </bean>
+
+</beans>
+

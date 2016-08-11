@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AuthOrder">
+
+    <resultMap id="AuthOrder" type="com.ink.trade.core.po.AuthOrder">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="reqId" column="req_id"/>
+        <result property="txnCode" column="txn_code"/>
+        <result property="txnName" column="txn_name"/>
+        <result property="status" column="status"/>
+        <result property="channelNo" column="channel_no"/>
+        <result property="version" column="version"/>
+        <result property="userId" column="user_id"/>
+        <result property="mchId" column="mch_id"/>
+        <result property="bankNameShort" column="bank_name_short"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="userName" column="user_name"/>
+        <result property="idNo" column="id_no"/>
+        <result property="idType" column="id_type"/>
+        <result property="phone" column="phone"/>
+        <result property="cvv2" column="cvv2"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="lastupdateTime" column="lastupdate_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="repCode" column="rep_code"/>
+        <result property="repMsg" column="rep_msg"/>
+        <result property="asileRepCode" column="asile_rep_code"/>
+        <result property="asileRepMsg" column="asile_rep_msg"/>
+        <result property="cardType" column="card_type"/>
+        <result property="signId" column="sign_id"/>
+        <result property="token" column="token"/>
+        <result property="tokenCreateTime" column="token_create_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,order_id ,req_id ,txn_code ,txn_name ,status ,channel_no ,version ,user_id ,mch_id ,bank_name_short ,card_no ,user_name ,id_no ,id_type ,phone ,cvv2 ,expire_date ,lastupdate_time ,create_time ,rep_code ,rep_msg ,asile_rep_code ,asile_rep_msg,card_type,sign_id,token,token_create_time 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    <![CDATA[
+        INSERT INTO auth_order (
+	        id  ,
+	        order_id  ,
+	        req_id  ,
+	        txn_code  ,
+	        txn_name  ,
+	        status ,
+	        channel_no  ,
+	        version  ,
+	        user_id  ,
+	        mch_id  ,
+	        bank_name_short  ,
+	        card_no  ,
+	        user_name  ,
+	        id_no  ,
+	        id_type  ,
+	        phone  ,
+	        cvv2  ,
+	        expire_date  ,
+	        lastupdate_time  ,
+	        create_time  ,
+	        rep_code  ,
+	        rep_msg  ,
+	        asile_rep_code  ,
+	        asile_rep_msg,
+	        card_type,
+	        sign_id,
+	        token,
+	        token_create_time
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{orderId, jdbcType=VARCHAR} ,
+        	#{reqId, jdbcType=VARCHAR} ,
+        	#{txnCode, jdbcType=CHAR} ,
+        	#{txnName, jdbcType=CHAR} ,
+        	#{status, jdbcType=INTEGER} ,
+        	#{channelNo, jdbcType=VARCHAR} ,
+        	#{version, jdbcType=INTEGER} ,
+        	#{userId, jdbcType=VARCHAR} ,
+        	#{mchId, jdbcType=VARCHAR} ,
+        	#{bankNameShort, jdbcType=VARCHAR} ,
+        	#{cardNo, jdbcType=VARCHAR} ,
+        	#{userName, jdbcType=VARCHAR} ,
+        	#{idNo, jdbcType=VARCHAR} ,
+        	#{idType, jdbcType=CHAR} ,
+        	#{phone, jdbcType=VARCHAR} ,
+        	#{cvv2, jdbcType=VARCHAR} ,
+        	#{expireDate, jdbcType=VARCHAR} ,
+        	#{lastupdateTime, jdbcType=TIMESTAMP} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{repCode, jdbcType=VARCHAR} ,
+        	#{repMsg, jdbcType=VARCHAR} ,
+        	#{asileRepCode, jdbcType=VARCHAR} ,
+        	#{asileRepMsg, jdbcType=VARCHAR},
+        	#{cardType, jdbcType=CHAR},
+        	#{signId,jdbcType=VARCHAR},
+        	#{token,jdbcType=VARCHAR},
+        	#{tokenCreateTime,jdbcType=TIMESTAMP}
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO auth_order ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.orderId, jdbcType=VARCHAR} ,
+        	#{item.reqId, jdbcType=VARCHAR} ,
+        	#{item.txnCode, jdbcType=CHAR} ,
+        	#{item.txnName, jdbcType=CHAR} ,
+        	#{item.status, jdbcType=INTEGER} ,
+        	#{item.channelNo, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.userId, jdbcType=VARCHAR} ,
+        	#{item.mchId, jdbcType=VARCHAR} ,
+        	#{item.bankNameShort, jdbcType=VARCHAR} ,
+        	#{item.cardNo, jdbcType=VARCHAR} ,
+        	#{item.userName, jdbcType=VARCHAR} ,
+        	#{item.idNo, jdbcType=VARCHAR} ,
+        	#{item.idType, jdbcType=CHAR} ,
+        	#{item.phone, jdbcType=VARCHAR} ,
+        	#{item.cvv2, jdbcType=VARCHAR} ,
+        	#{item.expireDate, jdbcType=VARCHAR} ,
+        	#{item.lastupdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.repCode, jdbcType=VARCHAR} ,
+        	#{item.repMsg, jdbcType=VARCHAR} ,
+        	#{item.asileRepCode, jdbcType=VARCHAR} ,
+        	#{item.asileRepMsg, jdbcType=VARCHAR},
+        	#{item.cardType, jdbcType=CHAR},
+        	#{item.signId, jdbcType=VARCHAR},
+        	#{item.token,jdbcType=VARCHAR},
+        	#{item.tokenCreateTime,jdbcType=TIMESTAMP}
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE auth_order SET
+	        order_id = #{orderId, jdbcType=VARCHAR} ,
+	        req_id = #{reqId, jdbcType=VARCHAR} ,
+	        txn_code = #{txnCode, jdbcType=CHAR} ,
+	        txn_name = #{txnName, jdbcType=CHAR} ,
+	        status = #{status, jdbcType=INTEGER} ,
+	        channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER}+1 ,
+	        user_id = #{userId, jdbcType=VARCHAR} ,
+	        mch_id = #{mchId, jdbcType=VARCHAR} ,
+	        bank_name_short = #{bankNameShort, jdbcType=VARCHAR} ,
+	        card_no = #{cardNo, jdbcType=VARCHAR} ,
+	        user_name = #{userName, jdbcType=VARCHAR} ,
+	        id_no = #{idNo, jdbcType=VARCHAR} ,
+	        id_type = #{idType, jdbcType=CHAR} ,
+	        phone = #{phone, jdbcType=VARCHAR} ,
+	        cvv2 = #{cvv2, jdbcType=VARCHAR} ,
+	        expire_date = #{expireDate, jdbcType=VARCHAR} ,
+	        lastupdate_time = #{lastupdateTime, jdbcType=TIMESTAMP} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        rep_code = #{repCode, jdbcType=VARCHAR} ,
+	        rep_msg = #{repMsg, jdbcType=VARCHAR} ,
+	        asile_rep_code = #{asileRepCode, jdbcType=VARCHAR} ,
+	        asile_rep_msg = #{asileRepMsg, jdbcType=VARCHAR},
+	        card_type=#{cardType,jdbcType=CHAR},
+	        sign_id=#{signId,jdbcType=VARCHAR},
+	        token=#{token,jdbcType=VARCHAR},
+	        token_create_time=#{tokenCreateTime,jdbcType=TIMESTAMP}
+        WHERE 
+	        id = #{id} and version=#{version}
+    ]]>
+    </update>
+<update id="updateNotNull" >
+			UPDATE auth_order
+				<set>
+			       	<if test="null!=orderId and ''!=orderId ">
+	   			 		order_id = #{orderId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		req_id = #{reqId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		txn_code = #{txnCode, jdbcType=CHAR} ,
+	   			   	</if>
+			       	<if test="null!=txnName and ''!=txnName ">
+	   			 		txn_name = #{txnName, jdbcType=CHAR} ,
+	   			   	</if>
+			       	<if test="null!=status and ''!=status ">
+	   			 		status = #{status, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		channel_no = #{channelNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=version and ''!=version ">
+	   			 		version = #{version, jdbcType=INTEGER} ,
+	   			   	</if>
+			       	<if test="null!=userId and ''!=userId ">
+	   			 		user_id = #{userId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=mchId and ''!=mchId ">
+	   			 		mch_id = #{mchId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=bankNameShort and ''!=bankNameShort ">
+	   			 		bank_name_short = #{bankNameShort, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=cardNo and ''!=cardNo ">
+	   			 		card_no = #{cardNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=userName and ''!=userName ">
+	   			 		user_name = #{userName, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=idNo and ''!=idNo ">
+	   			 		id_no = #{idNo, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=idType and ''!=idType ">
+	   			 		id_type = #{idType, jdbcType=CHAR} ,
+	   			   	</if>
+			       	<if test="null!=phone and ''!=phone ">
+	   			 		phone = #{phone, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=cvv2 and ''!=cvv2 ">
+	   			 		cvv2 = #{cvv2, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=expireDate and ''!=expireDate ">
+	   			 		expire_date = #{expireDate, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=lastupdateTime and ''!=lastupdateTime ">
+	   			 		lastupdate_time = #{lastupdateTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=createTime and ''!=createTime ">
+	   			 		create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	   			   	</if>
+			       	<if test="null!=repCode and ''!=repCode ">
+	   			 		rep_code = #{repCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=repMsg and ''!=repMsg ">
+	   			 		rep_msg = #{repMsg, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileRepCode and ''!=asileRepCode ">
+	   			 		asile_rep_code = #{asileRepCode, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=asileRepMsg and ''!=asileRepMsg ">
+	   			 		asile_rep_msg = #{asileRepMsg, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=cardType and ''!=cardType ">
+	   			 		card_type = #{cardType, jdbcType=CHAR} ,
+	   			   	</if>
+			       	<if test="null!=signId and ''!=signId ">
+	   			 		sign_id = #{signId, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=token and ''!=token ">
+	   			 		token = #{token, jdbcType=VARCHAR} ,
+	   			   	</if>
+			       	<if test="null!=tokenCreateTime and ''!=tokenCreateTime ">
+	   			 		token_create_time = #{tokenCreateTime, jdbcType=TIMESTAMP} 
+	   			   	</if>
+				</set>
+			WHERE
+				id = #{id} 
+	</update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM auth_order WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="AuthOrder">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM auth_order 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=orderId and ''!=orderId ">
+	   			 		AND order_id = #{orderId}
+	   			   	</if>
+			       	<if test="null!=reqId and ''!=reqId ">
+	   			 		AND req_id = #{reqId}
+	   			   	</if>
+			       	<if test="null!=txnCode and ''!=txnCode ">
+	   			 		AND txn_code = #{txnCode}
+	   			   	</if>
+			       	<if test="null!=txnName and ''!=txnName ">
+	   			 		AND txn_name = #{txnName}
+	   			   	</if>
+			       	<if test="null!=channelNo and ''!=channelNo ">
+	   			 		AND channel_no = #{channelNo}
+	   			   	</if>
+			       	<if test="null!=userId and ''!=userId ">
+	   			 		AND user_id = #{userId}
+	   			   	</if>
+			       	<if test="null!=mchId and ''!=mchId ">
+	   			 		AND mch_id = #{mchId}
+	   			   	</if>
+			       	<if test="null!=bankNameShort and ''!=bankNameShort ">
+	   			 		AND bank_name_short = #{bankNameShort}
+	   			   	</if>
+			       	<if test="null!=cardNo and ''!=cardNo ">
+	   			 		AND card_no = #{cardNo}
+	   			   	</if>
+			       	<if test="null!=userName and ''!=userName ">
+	   			 		AND user_name = #{userName}
+	   			   	</if>
+			       	<if test="null!=idNo and ''!=idNo ">
+	   			 		AND id_no = #{idNo}
+	   			   	</if>
+			       	<if test="null!=phone and ''!=phone ">
+	   			 		AND phone = #{phone}
+	   			   	</if>
+			       	<if test="null!=cvv2 and ''!=cvv2 ">
+	   			 		AND cvv2 = #{cvv2}
+	   			   	</if>
+			       	<if test="null!=repCode and ''!=repCode ">
+	   			 		AND rep_code = #{repCode}
+	   			   	</if>
+			       	<if test="null!=repMsg and ''!=repMsg ">
+	   			 		AND rep_msg = #{repMsg}
+	   			   	</if>
+			       	<if test="null!=asileRepCode and ''!=asileRepCode ">
+	   			 		AND asile_rep_code = #{asileRepCode}
+	   			   	</if>
+			       	<if test="null!=asileRepMsg and ''!=asileRepMsg ">
+	   			 		AND asile_rep_msg = #{asileRepMsg}
+	   			   	</if>
+	   			   	<!-- 
+	   			    <if test="null!=cardType and ''!=cardType ">
+	   			 		AND card_type = #{cardType}
+	   			   	</if>
+	   			   	 <if test="null!=signId and ''!=signId ">
+	   			 		AND sign_id = #{signId}
+	   			   	</if>
+	   			   	 -->
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=orderId and ''!=orderId">
+				    <!-- 	AND order_id LIKE '%'||#{orderId}||'%' oracle -->
+			   			AND order_id LIKE concat('%',#{orderId},'%')
+			   			
+			   		</if>
+				    <if test="null!=reqId and ''!=reqId">
+				    <!-- 	AND req_id LIKE '%'||#{reqId}||'%' oracle -->
+			   			AND req_id LIKE concat('%',#{reqId},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnCode and ''!=txnCode">
+				    <!-- 	AND txn_code LIKE '%'||#{txnCode}||'%' oracle -->
+			   			AND txn_code LIKE concat('%',#{txnCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=txnName and ''!=txnName">
+				    <!-- 	AND txn_name LIKE '%'||#{txnName}||'%' oracle -->
+			   			AND txn_name LIKE concat('%',#{txnName},'%')
+			   			
+			   		</if>
+				    <if test="null!=channelNo and ''!=channelNo">
+				    <!-- 	AND channel_no LIKE '%'||#{channelNo}||'%' oracle -->
+			   			AND channel_no LIKE concat('%',#{channelNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=userId and ''!=userId">
+				    <!-- 	AND user_id LIKE '%'||#{userId}||'%' oracle -->
+			   			AND user_id LIKE concat('%',#{userId},'%')
+			   			
+			   		</if>
+				    <if test="null!=mchId and ''!=mchId">
+				    <!-- 	AND mch_id LIKE '%'||#{mchId}||'%' oracle -->
+			   			AND mch_id LIKE concat('%',#{mchId},'%')
+			   			
+			   		</if>
+				    <if test="null!=bankNameShort and ''!=bankNameShort">
+				    <!-- 	AND bank_name_short LIKE '%'||#{bankNameShort}||'%' oracle -->
+			   			AND bank_name_short LIKE concat('%',#{bankNameShort},'%')
+			   			
+			   		</if>
+				    <if test="null!=cardNo and ''!=cardNo">
+				    <!-- 	AND card_no LIKE '%'||#{cardNo}||'%' oracle -->
+			   			AND card_no LIKE concat('%',#{cardNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=userName and ''!=userName">
+				    <!-- 	AND user_name LIKE '%'||#{userName}||'%' oracle -->
+			   			AND user_name LIKE concat('%',#{userName},'%')
+			   			
+			   		</if>
+				    <if test="null!=idNo and ''!=idNo">
+				    <!-- 	AND id_no LIKE '%'||#{idNo}||'%' oracle -->
+			   			AND id_no LIKE concat('%',#{idNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=phone and ''!=phone">
+				    <!-- 	AND phone LIKE '%'||#{phone}||'%' oracle -->
+			   			AND phone LIKE concat('%',#{phone},'%')
+			   			
+			   		</if>
+				    <if test="null!=cvv2 and ''!=cvv2">
+				    <!-- 	AND cvv2 LIKE '%'||#{cvv2}||'%' oracle -->
+			   			AND cvv2 LIKE concat('%',#{cvv2},'%')
+			   			
+			   		</if>
+				    <if test="null!=repCode and ''!=repCode">
+				    <!-- 	AND rep_code LIKE '%'||#{repCode}||'%' oracle -->
+			   			AND rep_code LIKE concat('%',#{repCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=repMsg and ''!=repMsg">
+				    <!-- 	AND rep_msg LIKE '%'||#{repMsg}||'%' oracle -->
+			   			AND rep_msg LIKE concat('%',#{repMsg},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileRepCode and ''!=asileRepCode">
+				    <!-- 	AND asile_rep_code LIKE '%'||#{asileRepCode}||'%' oracle -->
+			   			AND asile_rep_code LIKE concat('%',#{asileRepCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileRepMsg and ''!=asileRepMsg">
+				    <!-- 	AND asile_rep_msg LIKE '%'||#{asileRepMsg}||'%' oracle -->
+			   			AND asile_rep_msg LIKE concat('%',#{asileRepMsg},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=idType and ''!=idType">
+			    AND id_type = #{idType}
+			</if>
+<!-- 		   	<if test="null!=expireStartDateBegin and ''!=expireStartDateBegin"> -->
+<!-- 		   		AND expire_start_date >= #{expireStartDateBegin} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=expireStartDateEnd and ''!=expireStartDateEnd"> -->
+<!-- 		   		AND expire_start_date &lt; #{expireStartDateEnd} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=expireEndDateBegin and ''!=expireEndDateBegin"> -->
+<!-- 		   		AND expire_end_date >= #{expireEndDateBegin} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=expireEndDateEnd and ''!=expireEndDateEnd"> -->
+<!-- 		   		AND expire_end_date &lt; #{expireEndDateEnd} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=lastupdateTimeBegin and ''!=lastupdateTimeBegin"> -->
+<!-- 		   		AND lastupdate_time >= #{lastupdateTimeBegin} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=lastupdateTimeEnd and ''!=lastupdateTimeEnd"> -->
+<!-- 		   		AND lastupdate_time &lt; #{lastupdateTimeEnd} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=createTimeBegin and ''!=createTimeBegin"> -->
+<!-- 		   		AND create_time >= #{createTimeBegin} -->
+<!-- 		   	</if> -->
+<!-- 		   	<if test="null!=createTimeEnd and ''!=createTimeEnd"> -->
+<!-- 		   		AND create_time &lt; #{createTimeEnd} -->
+<!-- 		   	</if> -->
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM auth_order <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="AuthOrder">
+    	SELECT <include refid="columns"/> FROM auth_order 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="AuthOrder">
+	    SELECT <include refid="columns"/> FROM auth_order 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="getOrderByOrderId" resultMap="AuthOrder">
+	 SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM auth_order 
+	        WHERE 
+		        order_id = #{authOrderId} 
+	    ]]>
+	</select>
+</mapper>
+

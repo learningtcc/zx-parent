@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EmailLog">
+
+	<resultMap id="EmailLog" type="com.ink.msgcenter.core.po.EmailLog">
+		<result property="id" column="id" />
+		<result property="merctId" column="merctId" />
+		<result property="merctCode" column="merctCode" />
+		<result property="chnId" column="chn_id" />
+		<result property="chnCode" column="chn_code" />
+		<result property="tempId" column="temp_id" />
+		<result property="email" column="email" />
+		<result property="emailId" column="email_id" />
+		<result property="emailType" column="email_type" />
+		<result property="subject" column="subject" />
+		<result property="mailMsg" column="mail_msg" />
+		<result property="infoCode" column="info_code" />
+		<result property="sendStatus" column="send_status" />
+		<result property="submitTime" column="submit_time" />
+		<result property="sendTime" column="send_time" />
+		<result property="sendException" column="send_exception" />
+	</resultMap>
+	
+	<resultMap id="EmailLogMap" type="java.util.HashMap">
+		<result property="totalCount" column="totalCount" />
+		<result property="dayCount" column="dayCount" />
+		<result property="daySuccess" column="daySuccess" />
+		<result property="dayFail" column="dayFail" />
+		
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,merctId ,merctCode ,chn_id ,chn_code ,temp_id ,email ,email_id,email_type, subject ,mail_msg ,info_code ,send_status ,submit_time ,send_time ,send_exception 
+	    ]]>
+	</sql>
+
+	<insert id="insert">
+    <![CDATA[
+        INSERT INTO email_log_${merctCode}(
+	        id  ,
+	        merctId  ,
+	        merctCode  ,
+	        chn_id  ,
+	        chn_code  ,
+	        temp_id  ,
+	        email  ,
+	        email_id,
+	        email_type,
+	        subject  ,
+	        mail_msg  ,
+	        info_code  ,
+	        send_status  ,
+	        submit_time  ,
+	        send_time  ,
+	        send_exception  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{merctId, jdbcType=BIGINT} ,
+        	#{merctCode, jdbcType=VARCHAR} ,
+        	#{chnId, jdbcType=BIGINT} ,
+        	#{chnCode, jdbcType=VARCHAR} ,
+        	#{tempId, jdbcType=BIGINT} ,
+        	#{email, jdbcType=VARCHAR} ,
+        	#{emailId, jdbcType=VARCHAR} ,
+        	#{emailType, jdbcType=CHAR} ,
+        	#{subject, jdbcType=VARCHAR} ,
+        	#{mailMsg, jdbcType=VARCHAR} ,
+        	#{infoCode, jdbcType=VARCHAR} ,
+        	#{sendStatus, jdbcType=CHAR} ,
+        	#{submitTime, jdbcType=TIMESTAMP} ,
+        	#{sendTime, jdbcType=TIMESTAMP} ,
+        	#{sendException, jdbcType=VARCHAR} 
+        )
+    ]]>
+	</insert>
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO email_log_${merctCode}(
+		<include refid="columns" />
+		) values
+		<foreach collection="logList" item="item" separator=",">
+			(
+			#{item.id, jdbcType=BIGINT} ,
+			#{item.merctId, jdbcType=BIGINT} ,
+			#{item.merctCode, jdbcType=VARCHAR} ,
+			#{item.chnId, jdbcType=BIGINT} ,
+			#{item.chnCode, jdbcType=VARCHAR} ,
+			#{item.tempId, jdbcType=BIGINT} ,
+			#{item.email, jdbcType=VARCHAR} ,
+			#{item.emailId, jdbcType=VARCHAR} ,
+        	#{item.emailType, jdbcType=CHAR} ,
+			#{item.subject, jdbcType=VARCHAR} ,
+			#{item.mailMsg, jdbcType=VARCHAR} ,
+			#{item.infoCode, jdbcType=VARCHAR} ,
+			#{item.sendStatus, jdbcType=CHAR} ,
+			#{item.submitTime, jdbcType=TIMESTAMP} ,
+			#{item.sendTime, jdbcType=TIMESTAMP} ,
+			#{item.sendException, jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update">
+    <![CDATA[
+        UPDATE email_log_${merctCode} SET
+	        merctId = #{merctId, jdbcType=BIGINT} ,
+	        merctCode = #{merctCode, jdbcType=VARCHAR} ,
+	        chn_id = #{chnId, jdbcType=BIGINT} ,
+	        chn_code = #{chnCode, jdbcType=VARCHAR} ,
+	        temp_id = #{tempId, jdbcType=BIGINT} ,
+	        email = #{email, jdbcType=VARCHAR} ,
+	        email_id = #{emailId, jdbcType=VARCHAR} ,
+        	email_type = #{emailType, jdbcType=CHAR} ,
+	        subject = #{subject, jdbcType=VARCHAR} ,
+	        mail_msg = #{mailMsg, jdbcType=VARCHAR} ,
+	        info_code = #{infoCode, jdbcType=VARCHAR} ,
+	        send_status = #{sendStatus, jdbcType=CHAR} ,
+	        submit_time = #{submitTime, jdbcType=TIMESTAMP} ,
+	        send_time = #{sendTime, jdbcType=TIMESTAMP} ,
+	        send_exception = #{sendException, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+	<delete id="delete">
+    <![CDATA[
+        DELETE FROM email_log_${merctCode}WHERE
+        id = #{id} 
+    ]]>
+	</delete>
+
+	<select id="getById" resultMap="EmailLog">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM email_log_${merctCode}
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+
+	<sql id="findWhere">
+		<where>
+			<choose>
+				<when test="queryType==0">
+					<if test="null!=merctId and ''!=merctId ">
+						AND merctId = #{merctId}
+					</if>
+					<if test="null!=merctCode and ''!=merctCode ">
+						AND merctCode = #{merctCode}
+					</if>
+					<if test="null!=chnCode and ''!=chnCode ">
+						AND chn_code = #{chnCode}
+					</if>
+					<if test="null!=email and ''!=email ">
+						AND email = #{email}
+					</if>
+					<if test="null!=emailId and ''!=emailId ">
+						AND email_id = #{emailId}
+					</if>
+					<if test="null!=emailType and ''!=emailType ">
+						AND email_type = #{emailType}
+					</if>
+					<if test="null!=subject and ''!=subject ">
+						AND subject = #{subject}
+					</if>
+					<if test="null!=mailMsg and ''!=mailMsg ">
+						AND mail_msg = #{mailMsg}
+					</if>
+					<if test="null!=infoCode and ''!=infoCode ">
+						AND info_code = #{infoCode}
+					</if>
+					<if test="null!=sendStatus and ''!=sendStatus ">
+						AND send_status = #{sendStatus}
+					</if>
+					<if test="null!=sendException and ''!=sendException ">
+						AND send_exception = #{sendException}
+					</if>
+				</when>
+				<otherwise>
+					<if test="null!=merctId and ''!=merctId">
+						<!-- AND merctId LIKE '%'||#{merctId}||'%' oracle -->
+						AND merctId LIKE concat('%',#{merctId},'%')
+
+					</if>
+					<if test="null!=merctCode and ''!=merctCode">
+						<!-- AND merctCode LIKE '%'||#{merctCode}||'%' oracle -->
+						AND merctCode LIKE concat('%',#{merctCode},'%')
+
+					</if>
+					<if test="null!=chnCode and ''!=chnCode">
+						<!-- AND chn_code LIKE '%'||#{chnCode}||'%' oracle -->
+						AND chn_code LIKE concat('%',#{chnCode},'%')
+
+					</if>
+					<if test="null!=email and ''!=email">
+						<!-- AND email LIKE '%'||#{email}||'%' oracle -->
+						AND email LIKE concat('%',#{email},'%')
+
+					</if>
+					<if test="null!=emailId and ''!=emailId">
+						<!-- AND email LIKE '%'||#{email}||'%' oracle -->
+						AND email_id LIKE concat('%',#{emailId},'%')
+
+					</if>
+					<if test="null!=emailType and ''!=emailType">
+						<!-- AND email LIKE '%'||#{email}||'%' oracle -->
+						AND email_type LIKE concat('%',#{emailType},'%')
+
+					</if>
+					<if test="null!=subject and ''!=subject">
+						<!-- AND subject LIKE '%'||#{subject}||'%' oracle -->
+						AND subject LIKE concat('%',#{subject},'%')
+
+					</if>
+					<if test="null!=mailMsg and ''!=mailMsg">
+						<!-- AND mail_msg LIKE '%'||#{mailMsg}||'%' oracle -->
+						AND mail_msg LIKE concat('%',#{mailMsg},'%')
+
+					</if>
+					<if test="null!=infoCode and ''!=infoCode">
+						<!-- AND info_code LIKE '%'||#{infoCode}||'%' oracle -->
+						AND info_code LIKE concat('%',#{infoCode},'%')
+
+					</if>
+					<if test="null!=sendStatus and ''!=sendStatus">
+						<!-- AND send_status LIKE '%'||#{sendStatus}||'%' oracle -->
+						AND send_status LIKE concat('%',#{sendStatus},'%')
+
+					</if>
+					<if test="null!=sendException and ''!=sendException">
+						<!-- AND send_exception LIKE '%'||#{sendException}||'%' oracle -->
+						AND send_exception LIKE concat('%',#{sendException},'%')
+
+					</if>
+				</otherwise>
+			</choose>
+			<if test="null!=id and ''!=id">
+				AND id = #{id}
+			</if>
+			<if test="null!=chnId and ''!=chnId">
+				AND chn_id = #{chnId}
+			</if>
+			<if test="null!=tempId and ''!=tempId">
+				AND temp_id = #{tempId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageCount" resultType="long">
+		SELECT count(*) FROM email_log_${merctCode}
+		<include refid="findWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="findPage" resultMap="EmailLog">
+		SELECT
+		<include refid="columns" />
+		FROM email_log_${merctCode}
+		<include refid="findWhere" />
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+
+	<select id="find" resultMap="EmailLog">
+		SELECT
+		<include refid="columns" />
+		FROM email_log_${merctCode}
+		<include refid="findWhere" />
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+	<select id="getEmailLogById" resultMap="EmailLog">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM email_log_${merctCode}
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="getEmailCount" resultMap="EmailLogMap">
+		SELECT (select count(id) from email_log_${merctCode}) as totalCount,
+		(select count(id) from email_log_${merctCode} where date_format(send_time,'%Y-%m-%d') = date_format(now(),'%Y-%m-%d')) as dayCount,
+		(select count(id) from email_log_${merctCode} where send_status = 1 and
+		date_format(send_time,'%Y-%m-%d') =
+		date_format(now(),'%Y-%m-%d')) as daySuccess,
+		(select count(id) from email_log_${merctCode} where send_status = 2 and
+		date_format(send_time,'%Y-%m-%d') =
+		date_format(now(),'%Y-%m-%d')) as dayFail
+	</select>
+
+</mapper>

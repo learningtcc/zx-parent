@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AsileAreaCode">
+
+    <resultMap id="AsileAreaCode" type="com.ink.asile.core.po.AsileAreaCode">
+        <result property="id" column="id"/>
+        <result property="proviceName" column="provice_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="townName" column="town_name"/>
+        <result property="asileAreaCode" column="asile_area_code"/>
+        <result property="areaCode" column="area_code"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createrId" column="creater_id"/>
+        <result property="createrName" column="creater_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterName" column="updater_name"/>
+        <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,provice_name ,city_name ,town_name ,asile_area_code ,area_code ,remark ,create_time ,creater_id ,creater_name ,update_time ,updater_id ,updater_name ,is_delete 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO asile_area_code (
+	        id  ,
+	        provice_name  ,
+	        city_name  ,
+	        town_name  ,
+	        asile_area_code  ,
+	        area_code  ,
+	        remark  ,
+	        create_time  ,
+	        creater_id  ,
+	        creater_name  ,
+	        update_time  ,
+	        updater_id  ,
+	        updater_name  ,
+	        is_delete  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{proviceName, jdbcType=VARCHAR} ,
+        	#{cityName, jdbcType=VARCHAR} ,
+        	#{townName, jdbcType=VARCHAR} ,
+        	#{asileAreaCode, jdbcType=VARCHAR} ,
+        	#{areaCode, jdbcType=VARCHAR} ,
+        	#{remark, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{createrId, jdbcType=BIGINT} ,
+        	#{createrName, jdbcType=VARCHAR} ,
+        	#{updateTime, jdbcType=TIMESTAMP} ,
+        	#{updaterId, jdbcType=BIGINT} ,
+        	#{updaterName, jdbcType=VARCHAR} ,
+        	#{isDelete, jdbcType=INTEGER} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO asile_area_code ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.proviceName, jdbcType=VARCHAR} ,
+        	#{item.cityName, jdbcType=VARCHAR} ,
+        	#{item.townName, jdbcType=VARCHAR} ,
+        	#{item.asileAreaCode, jdbcType=VARCHAR} ,
+        	#{item.areaCode, jdbcType=VARCHAR} ,
+        	#{item.remark, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.createrId, jdbcType=BIGINT} ,
+        	#{item.createrName, jdbcType=VARCHAR} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} ,
+        	#{item.updaterId, jdbcType=BIGINT} ,
+        	#{item.updaterName, jdbcType=VARCHAR} ,
+        	#{item.isDelete, jdbcType=INTEGER} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE asile_area_code SET
+	        provice_name = #{proviceName, jdbcType=VARCHAR} ,
+	        city_name = #{cityName, jdbcType=VARCHAR} ,
+	        town_name = #{townName, jdbcType=VARCHAR} ,
+	        asile_area_code = #{asileAreaCode, jdbcType=VARCHAR} ,
+	        area_code = #{areaCode, jdbcType=VARCHAR} ,
+	        remark = #{remark, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        creater_id = #{createrId, jdbcType=BIGINT} ,
+	        creater_name = #{createrName, jdbcType=VARCHAR} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+	        updater_id = #{updaterId, jdbcType=BIGINT} ,
+	        updater_name = #{updaterName, jdbcType=VARCHAR} ,
+	        is_delete = #{isDelete, jdbcType=INTEGER} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM asile_area_code WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="AsileAreaCode">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM asile_area_code 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=proviceName and ''!=proviceName ">
+	   			 		AND provice_name = #{proviceName}
+	   			   	</if>
+			       	<if test="null!=cityName and ''!=cityName ">
+	   			 		AND city_name = #{cityName}
+	   			   	</if>
+			       	<if test="null!=townName and ''!=townName ">
+	   			 		AND town_name = #{townName}
+	   			   	</if>
+			       	<if test="null!=asileAreaCode and ''!=asileAreaCode ">
+	   			 		AND asile_area_code = #{asileAreaCode}
+	   			   	</if>
+			       	<if test="null!=areaCode and ''!=areaCode ">
+	   			 		AND area_code = #{areaCode}
+	   			   	</if>
+			       	<if test="null!=remark and ''!=remark ">
+	   			 		AND remark = #{remark}
+	   			   	</if>
+			       	<if test="null!=createrName and ''!=createrName ">
+	   			 		AND creater_name = #{createrName}
+	   			   	</if>
+			       	<if test="null!=updaterName and ''!=updaterName ">
+	   			 		AND updater_name = #{updaterName}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=proviceName and ''!=proviceName">
+				    <!-- 	AND provice_name LIKE '%'||#{proviceName}||'%' oracle -->
+			   			AND provice_name LIKE concat('%',#{proviceName},'%')
+			   			
+			   		</if>
+				    <if test="null!=cityName and ''!=cityName">
+				    <!-- 	AND city_name LIKE '%'||#{cityName}||'%' oracle -->
+			   			AND city_name LIKE concat('%',#{cityName},'%')
+			   			
+			   		</if>
+				    <if test="null!=townName and ''!=townName">
+				    <!-- 	AND town_name LIKE '%'||#{townName}||'%' oracle -->
+			   			AND town_name LIKE concat('%',#{townName},'%')
+			   			
+			   		</if>
+				    <if test="null!=asileAreaCode and ''!=asileAreaCode">
+				    <!-- 	AND asile_area_code LIKE '%'||#{asileAreaCode}||'%' oracle -->
+			   			AND asile_area_code LIKE concat('%',#{asileAreaCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=areaCode and ''!=areaCode">
+				    <!-- 	AND area_code LIKE '%'||#{areaCode}||'%' oracle -->
+			   			AND area_code LIKE concat('%',#{areaCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=remark and ''!=remark">
+				    <!-- 	AND remark LIKE '%'||#{remark}||'%' oracle -->
+			   			AND remark LIKE concat('%',#{remark},'%')
+			   			
+			   		</if>
+				    <if test="null!=createrName and ''!=createrName">
+				    <!-- 	AND creater_name LIKE '%'||#{createrName}||'%' oracle -->
+			   			AND creater_name LIKE concat('%',#{createrName},'%')
+			   			
+			   		</if>
+				    <if test="null!=updaterName and ''!=updaterName">
+				    <!-- 	AND updater_name LIKE '%'||#{updaterName}||'%' oracle -->
+			   			AND updater_name LIKE concat('%',#{updaterName},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=createrId and ''!=createrId">
+			    AND creater_id = #{createrId}
+			</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND update_time >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND update_time &lt; #{updateTimeEnd}
+		   	</if>
+		   	<if test="null!=updaterId and ''!=updaterId">
+			    AND updater_id = #{updaterId}
+			</if>
+		   	<if test="null!=isDelete and ''!=isDelete">
+			    AND is_delete = #{isDelete}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM asile_area_code <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="AsileAreaCode">
+    	SELECT <include refid="columns"/> FROM asile_area_code 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="null!=offset and null!=limit">
+	          limit #{offset} , #{limit} 
+		</if>
+		
+		
+    </select>
+
+	
+	<select id="find" resultMap="AsileAreaCode">
+	    SELECT <include refid="columns"/> FROM asile_area_code 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>
+

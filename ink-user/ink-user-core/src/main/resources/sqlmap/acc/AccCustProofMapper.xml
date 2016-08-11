@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccCustProof" >
+  <resultMap id="BaseResultMap" type="com.ink.user.core.po.AccCustProof" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="before_id_type" property="beforeIdType" jdbcType="VARCHAR" />
+    <result column="before_id_no" property="beforeIdNo" jdbcType="VARCHAR" />
+    <result column="id_type" property="idType" jdbcType="VARCHAR" />
+    <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+    <result column="before_mbl_no" property="beforeMblNo" jdbcType="VARCHAR" />
+    <result column="mbl_no" property="mblNo" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="VARCHAR" />
+    <result column="filler1" property="filler1" jdbcType="VARCHAR" />
+    <result column="filler2" property="filler2" jdbcType="VARCHAR" />
+    <result column="filler3" property="filler3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, last_update_time, uid, before_id_type, before_id_no, id_type, id_no, 
+    before_mbl_no, mbl_no, cust_id, filler1, filler2, filler3
+  </sql>
+  <!-- 基础方法Start -->
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+    insert into acc_cust_proof (id, create_time, last_update_time, 
+      uid, before_id_type, before_id_no, 
+      id_type, id_no, before_mbl_no, 
+      mbl_no, cust_id, filler1, 
+      filler2, filler3)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=BIGINT}, #{beforeIdType,jdbcType=VARCHAR}, #{beforeIdNo,jdbcType=VARCHAR}, 
+      #{idType,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{beforeMblNo,jdbcType=VARCHAR}, 
+      #{mblNo,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{filler1,jdbcType=VARCHAR}, 
+      #{filler2,jdbcType=VARCHAR}, #{filler3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_cust_proof ( <include refid="Base_Column_List"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.uid, jdbcType=BIGINT} ,
+        	#{item.beforeIdType, jdbcType=VARCHAR} ,
+        	#{item.beforeIdNo, jdbcType=VARCHAR} ,
+        	#{item.idType, jdbcType=VARCHAR} ,
+        	#{item.idNo, jdbcType=VARCHAR} ,
+        	#{item.beforeMblNo, jdbcType=VARCHAR} ,
+        	#{item.mblNo, jdbcType=VARCHAR} ,
+        	#{item.custId, jdbcType=VARCHAR} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_cust_proof SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        uid = #{uid, jdbcType=BIGINT} ,
+	        before_id_type = #{beforeIdType, jdbcType=VARCHAR} ,
+	        before_id_no = #{beforeIdNo, jdbcType=VARCHAR} ,
+	        id_type = #{idType, jdbcType=VARCHAR} ,
+	        id_no = #{idNo, jdbcType=VARCHAR} ,
+	        before_mbl_no = #{beforeMblNo, jdbcType=VARCHAR} ,
+	        mbl_no = #{mblNo, jdbcType=VARCHAR} ,
+	        cust_id = #{custId, jdbcType=VARCHAR} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_cust_proof WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/>
+	    <![CDATA[
+	        FROM acc_cust_proof 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=beforeIdType and ''!=beforeIdType ">
+	   			 		AND before_id_type = #{beforeIdType}
+	   			   	</if>
+			       	<if test="null!=beforeIdNo and ''!=beforeIdNo ">
+	   			 		AND before_id_no = #{beforeIdNo}
+	   			   	</if>
+			       	<if test="null!=idType and ''!=idType ">
+	   			 		AND id_type = #{idType}
+	   			   	</if>
+			       	<if test="null!=idNo and ''!=idNo ">
+	   			 		AND id_no = #{idNo}
+	   			   	</if>
+			       	<if test="null!=beforeMblNo and ''!=beforeMblNo ">
+	   			 		AND before_mbl_no = #{beforeMblNo}
+	   			   	</if>
+			       	<if test="null!=mblNo and ''!=mblNo ">
+	   			 		AND mbl_no = #{mblNo}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=beforeIdType and ''!=beforeIdType">
+				    <!-- 	AND before_id_type LIKE '%'||#{beforeIdType}||'%' oracle -->
+			   			AND before_id_type LIKE concat('%',#{beforeIdType},'%')
+			   			
+			   		</if>
+				    <if test="null!=beforeIdNo and ''!=beforeIdNo">
+				    <!-- 	AND before_id_no LIKE '%'||#{beforeIdNo}||'%' oracle -->
+			   			AND before_id_no LIKE concat('%',#{beforeIdNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=idType and ''!=idType">
+				    <!-- 	AND id_type LIKE '%'||#{idType}||'%' oracle -->
+			   			AND id_type LIKE concat('%',#{idType},'%')
+			   			
+			   		</if>
+				    <if test="null!=idNo and ''!=idNo">
+				    <!-- 	AND id_no LIKE '%'||#{idNo}||'%' oracle -->
+			   			AND id_no LIKE concat('%',#{idNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=beforeMblNo and ''!=beforeMblNo">
+				    <!-- 	AND before_mbl_no LIKE '%'||#{beforeMblNo}||'%' oracle -->
+			   			AND before_mbl_no LIKE concat('%',#{beforeMblNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=mblNo and ''!=mblNo">
+				    <!-- 	AND mbl_no LIKE '%'||#{mblNo}||'%' oracle -->
+			   			AND mbl_no LIKE concat('%',#{mblNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+		   	<if test="null!=custId and ''!=custId">
+			    AND cust_id = #{custId}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_cust_proof <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/> FROM acc_cust_proof 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List"/> FROM acc_cust_proof 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+  <!-- 基础方法End -->
+  
+  <insert id="insertSelective" parameterType="com.ink.user.core.po.AccCustProof" >
+    insert into acc_cust_proof
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="beforeIdType != null" >
+        before_id_type,
+      </if>
+      <if test="beforeIdNo != null" >
+        before_id_no,
+      </if>
+      <if test="idType != null" >
+        id_type,
+      </if>
+      <if test="idNo != null" >
+        id_no,
+      </if>
+      <if test="beforeMblNo != null" >
+        before_mbl_no,
+      </if>
+      <if test="mblNo != null" >
+        mbl_no,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="filler1 != null" >
+        filler1,
+      </if>
+      <if test="filler2 != null" >
+        filler2,
+      </if>
+      <if test="filler3 != null" >
+        filler3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="beforeIdType != null" >
+        #{beforeIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeIdNo != null" >
+        #{beforeIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeMblNo != null" >
+        #{beforeMblNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mblNo != null" >
+        #{mblNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="filler1 != null" >
+        #{filler1,jdbcType=VARCHAR},
+      </if>
+      <if test="filler2 != null" >
+        #{filler2,jdbcType=VARCHAR},
+      </if>
+      <if test="filler3 != null" >
+        #{filler3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+ <!--  <update id="updateByPrimaryKeySelective" parameterType="com.yinker.pats.atp.acc.model.AccCustProof" >
+    update acc_cust_proof
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="beforeIdType != null" >
+        before_id_type = #{beforeIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeIdNo != null" >
+        before_id_no = #{beforeIdNo,jdbcType=INTEGER},
+      </if>
+      <if test="idType != null" >
+        id_type = #{idType,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        id_no = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeMblNo != null" >
+        before_mbl_no = #{beforeMblNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mblNo != null" >
+        mbl_no = #{mblNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="filler1 != null" >
+        filler1 = #{filler1,jdbcType=VARCHAR},
+      </if>
+      <if test="filler2 != null" >
+        filler2 = #{filler2,jdbcType=VARCHAR},
+      </if>
+      <if test="filler3 != null" >
+        filler3 = #{filler3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yinker.pats.atp.acc.model.AccCustProof" >
+    update acc_cust_proof
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=BIGINT},
+      before_id_type = #{beforeIdType,jdbcType=VARCHAR},
+      before_id_no = #{beforeIdNo,jdbcType=INTEGER},
+      id_type = #{idType,jdbcType=VARCHAR},
+      id_no = #{idNo,jdbcType=VARCHAR},
+      before_mbl_no = #{beforeMblNo,jdbcType=VARCHAR},
+      mbl_no = #{mblNo,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=BIGINT},
+      filler1 = #{filler1,jdbcType=VARCHAR},
+      filler2 = #{filler2,jdbcType=VARCHAR},
+      filler3 = #{filler3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

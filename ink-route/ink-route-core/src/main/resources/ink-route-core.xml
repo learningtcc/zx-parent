@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd ">
+
+	<context:component-scan base-package="com.ink.*" />
+	<context:component-scan base-package="redis" />
+	<import resource="classpath:spring/route-spring-jdbc.xml" />
+	<import resource="classpath:spring/route-spring-redis.xml" />
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+	<!-- write -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:dialect.xml" 
+			/> <!-- <property name="mapperLocations"> <list> <value>classpath:/sqlmap/*SqlMap.xml</value> 
+			</list> </property> -->
+		<!-- mapper文件存放路径 -->
+		<property name="mapperLocations" value="classpath:sqlmap/**/*SqlMap.xml" />
+		<!-- 实体类所在包 <property name="typeAliasesPackage" value="com.ink.platform.core.po" 
+			/> -->
+	</bean>
+	<!-- read -->
+	<bean id="sqlSessionFactorySlave" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="slaveDataSource" />
+		<property name="configLocation" value="classpath:dialect.xml" 
+			/> <!-- <property name="mapperLocations"> <list> <value>classpath:/sqlmap/*SqlMap.xml</value> 
+			</list> </property> -->
+		<!-- mapper文件存放路径 -->
+		<property name="mapperLocations" value="classpath:sqlmap/**/*SqlMap.xml" />
+		<!-- 实体类所在包 <property name="typeAliasesPackage" value="com.ink.platform.core.po" 
+			/> -->
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+	<bean id="sqlSessionSlave" class="org.mybatis.spring.SqlSessionTemplate"
+		scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactorySlave" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="slaveDataSource" />
+	</bean>
+</beans>

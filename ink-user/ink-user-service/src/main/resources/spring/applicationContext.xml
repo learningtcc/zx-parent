@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+	<context:component-scan base-package="com.ink.user.*" />
+	<context:component-scan base-package="com.ink.user.core.dao.mongo.*" />
+    <context:component-scan base-package="com.ink.base.mybatis.interceptor.*" />
+    <context:component-scan base-package="com.ink.base.*" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<import resource="classpath:spring/spring-config.xml" />
+	<import resource="classpath*:spring/spring-patsglobalkey.xml" />
+	<import resource="classpath:spring/spring-atp-check.xml" />
+	<import resource="classpath:spring/spring-comply-consumer.xml" />
+	<import resource="classpath:spring/spring-id.xml" />
+	<import resource="classpath:spring/spring-jdbc.xml" />
+	<import resource="classpath*:spring/spring-mongo.xml" />
+	<import resource="classpath:spring/spring-quartz.xml" />
+	<import resource="classpath:spring/spring-rabbitmq-producer.xml" />
+	<import resource="classpath:spring/spring-rabbitmq.xml" />
+	<import resource="classpath:spring/spring-redis.xml" />
+	<import resource="classpath:spring/ink-user-core.xml" />
+
+	<import resource="classpath*:dubbo/dubbo-*.xml" /> 
+	<import resource="classpath*:yinker-scheduler-client.xml" />
+	<!-- 线程池配置 -->
+	<bean id ="taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name ="queueCapacity" value ="25" />
+		<property name="keepAliveSeconds" value="300" />
+		<property name="waitForTasksToCompleteOnShutdown" value="true" />
+	</bean>
+
+	<bean id="dynamicDataManager" class="com.ink.base.service.impl.DynamicDataManagerImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+</beans>    

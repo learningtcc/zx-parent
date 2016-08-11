@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TnsAceGen">
+    <resultMap id="BaseResultMap" type="com.ink.user.core.po.TnsAceGen">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="owner" property="owner" jdbcType="VARCHAR" />
+        <result column="owner_group" property="ownerGroup"
+            jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime"
+            jdbcType="TIMESTAMP" />
+        <result column="last_update_time" property="lastUpdateTime"
+            jdbcType="TIMESTAMP" />
+        <result column="tns_txn_id" property="tnsTxnId" jdbcType="BIGINT" />
+        <result column="txn_code" property="txnCode" jdbcType="VARCHAR" />
+        <result column="ace_group" property="aceGroup" jdbcType="VARCHAR" />
+        <result column="dir" property="dir" jdbcType="VARCHAR" />
+        <result column="acc_dir" property="accDir" jdbcType="VARCHAR" />
+        <result column="acc_type" property="accType" jdbcType="INTEGER" />
+        <result column="acc_item_id" property="accItemId"
+            jdbcType="VARCHAR" />
+        <result column="aga_type" property="agaType" jdbcType="INTEGER" />
+        <result column="aga_item_id" property="agaItemId"
+            jdbcType="VARCHAR" />
+        <result column="runtime_flg" property="runtimeFlg"
+            jdbcType="INTEGER" />
+        <result column="rev_flg" property="revFlg" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="charge_type" property="chargeType" jdbcType="VARCHAR" />
+        <result column="up_item_id" property="upItemId" jdbcType="VARCHAR" />
+        <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, owner, owner_group, create_time, last_update_time,
+        tns_txn_id,
+        txn_code, ace_group,
+        dir, acc_dir, acc_type,
+        acc_item_id,
+        aga_type, aga_item_id, runtime_flg, rev_flg,
+        version,charge_type,up_item_id,item_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from tns_ace_gen
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from
+        tns_ace_gen
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ink.user.core.po.TnsAceGen">
+        insert into tns_ace_gen
+        (id, owner, owner_group,
+        create_time, last_update_time,
+        tns_txn_id,
+        txn_code, ace_group, dir, acc_dir,
+        acc_type,
+        acc_item_id,
+        aga_type,
+        aga_item_id, runtime_flg, rev_flg,
+        version,charge_type,up_item_id,item_id)
+        values
+        (#{id,jdbcType=BIGINT}, #{owner,jdbcType=VARCHAR},
+        #{ownerGroup,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+        #{tnsTxnId,jdbcType=BIGINT},
+        #{txnCode,jdbcType=VARCHAR},
+        #{aceGroup,jdbcType=VARCHAR}, #{dir,jdbcType=VARCHAR},
+        #{accDir,jdbcType=VARCHAR},
+        #{accType,jdbcType=INTEGER},
+        #{accItemId,jdbcType=VARCHAR},
+        #{agaType,jdbcType=INTEGER},
+        #{agaItemId,jdbcType=VARCHAR},
+        #{runtimeFlg,jdbcType=INTEGER},
+        #{revFlg,jdbcType=VARCHAR},
+        #{version,jdbcType=INTEGER},
+        #{chargeType,jdbcType=VARCHAR},
+        #{upItemId,jdbcType=VARCHAR},
+        #{itemId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ink.user.core.po.TnsAceGen">
+        insert into tns_ace_gen
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="owner != null">
+                owner,
+            </if>
+            <if test="ownerGroup != null">
+                owner_group,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="tnsTxnId != null">
+                tns_txn_id,
+            </if>
+            <if test="txnCode != null">
+                txn_code,
+            </if>
+            <if test="aceGroup != null">
+                ace_group,
+            </if>
+            <if test="dir != null">
+                dir,
+            </if>
+            <if test="accDir != null">
+                acc_dir,
+            </if>
+            <if test="accType != null">
+                acc_type,
+            </if>
+            <if test="accItemId != null">
+                acc_item_id,
+            </if>
+            <if test="agaType != null">
+                aga_type,
+            </if>
+            <if test="agaItemId != null">
+                aga_item_id,
+            </if>
+            <if test="runtimeFlg != null">
+                runtime_flg,
+            </if>
+            <if test="revFlg != null">
+                rev_flg,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="chargeType != null">
+            	charge_type
+            </if>
+            <if test="upItemId != null">
+            	up_item_id
+            </if>
+            <if test="itemId != null">
+            	item_id
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="owner != null">
+                #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerGroup != null">
+                #{ownerGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tnsTxnId != null">
+                #{tnsTxnId,jdbcType=BIGINT},
+            </if>
+            <if test="txnCode != null">
+                #{txnCode,jdbcType=VARCHAR},
+            </if>
+            <if test="aceGroup != null">
+                #{aceGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="dir != null">
+                #{dir,jdbcType=VARCHAR},
+            </if>
+            <if test="accDir != null">
+                #{accDir,jdbcType=VARCHAR},
+            </if>
+            <if test="accType != null">
+                #{accType,jdbcType=INTEGER},
+            </if>
+            <if test="accItemId != null">
+                #{accItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="agaType != null">
+                #{agaType,jdbcType=INTEGER},
+            </if>
+            <if test="agaItemId != null">
+                #{agaItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="runtimeFlg != null">
+                #{runtimeFlg,jdbcType=INTEGER},
+            </if>
+            <if test="revFlg != null">
+                #{revFlg,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+             <if test="version != null">
+                #{chargeType,jdbcType=VARCHAR},
+            </if>
+            <if test="upItemId != null">
+            	 #{upItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+            	 #{itemId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.TnsAceGen">
+        update tns_ace_gen
+        <set>
+            <if test="owner != null">
+                owner = #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerGroup != null">
+                owner_group = #{ownerGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time =
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tnsTxnId != null">
+                tns_txn_id = #{tnsTxnId,jdbcType=BIGINT},
+            </if>
+            <if test="txnCode != null">
+                txn_code = #{txnCode,jdbcType=VARCHAR},
+            </if>
+            <if test="aceGroup != null">
+                ace_group = #{aceGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="dir != null">
+                dir = #{dir,jdbcType=VARCHAR},
+            </if>
+            <if test="accDir != null">
+                acc_dir = #{accDir,jdbcType=VARCHAR},
+            </if>
+            <if test="accType != null">
+                acc_type = #{accType,jdbcType=INTEGER},
+            </if>
+            <if test="accItemId != null">
+                acc_item_id = #{accItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="agaType != null">
+                aga_type = #{agaType,jdbcType=INTEGER},
+            </if>
+            <if test="agaItemId != null">
+                aga_item_id = #{agaItemId,jdbcType=VARCHAR},
+            </if>
+            <if test="runtimeFlg != null">
+                runtime_flg = #{runtimeFlg,jdbcType=INTEGER},
+            </if>
+            <if test="revFlg != null">
+                rev_flg = #{revFlg,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER} + 1,
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.TnsAceGen">
+        update
+        tns_ace_gen
+        set owner = #{owner,jdbcType=VARCHAR},
+        owner_group =
+        #{ownerGroup,jdbcType=VARCHAR},
+        create_time =
+        #{createTime,jdbcType=TIMESTAMP},
+        last_update_time =
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+        tns_txn_id =
+        #{tnsTxnId,jdbcType=BIGINT},
+        txn_code =
+        #{txnCode,jdbcType=VARCHAR},
+        ace_group =
+        #{aceGroup,jdbcType=VARCHAR},
+        dir = #{dir,jdbcType=VARCHAR},
+        acc_dir = #{accDir,jdbcType=VARCHAR},
+        acc_type =
+        #{accType,jdbcType=INTEGER},
+        acc_item_id =
+        #{accItemId,jdbcType=VARCHAR},
+        aga_type =
+        #{agaType,jdbcType=INTEGER},
+        aga_item_id =
+        #{agaItemId,jdbcType=VARCHAR},
+        runtime_flg =
+        #{runtimeFlg,jdbcType=INTEGER},
+        rev_flg =
+        #{revFlg,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!-- 根据交易代码和分录组号查会计分录生成参数 -->
+    <select id="getTnsAceGenByTxnCodeAndAceGroup" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tns_ace_gen where txn_code=#{txnCode,jdbcType=VARCHAR} order by ace_group
+    </select>
+    
+    
+    <select id="getTnsAceDir" resultMap="BaseResultMap">
+    	SELECT
+        <include refid="Base_Column_List" />
+        FROM tns_ace_gen where txn_code=#{txnCode,jdbcType=VARCHAR} 
+        and acc_dir = 'P' and acc_type = '0'
+        order by ace_group
+    </select>
+    
+    
+    <!-- 依据查询实体分页查询 -->
+    <select id="findList" resultMap="BaseResultMap">
+        <choose>
+            <when test="pageVO.totalPage&lt;0">
+                <include refid="baseDynamicQuery" />
+            </when>
+            <otherwise>
+                <include refid="pageDynamicQuery" />
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 全量查询 -->
+    <sql id="baseDynamicQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tns_ace_gen
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+        <if test="pageVO.orderBy==null or pageVO.orderBy==''">
+            ORDER BY create_time DESC
+        </if>
+        <if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+            ORDER BY ${pageVO.orderBy}
+        </if>
+    </sql>
+
+    <!-- 分页查询 -->
+    <sql id="pageDynamicQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tns_ace_gen
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+        <if test="pageVO.orderBy==null or pageVO.orderBy==''">
+            ORDER BY create_time DESC
+        </if>
+        <if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+            ORDER BY ${pageVO.orderBy}
+        </if>
+        LIMIT #{pageVO.start, jdbcType=INTEGER}, #{pageVO.pageSize, jdbcType=INTEGER}
+    </sql>
+
+    <!-- 实体查询条件 -->
+    <sql id="dynamicPageWhere">
+        <where>
+            1=1
+      <if test="queryEntity.owner != null and queryEntity.owner != ''" >
+        AND owner = #{queryEntity.owner,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.ownerGroup != null and queryEntity.ownerGroup != ''" >
+        AND owner_group = #{queryEntity.ownerGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.createTime != null and queryEntity.createTime != ''" >
+        AND create_time = #{queryEntity.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.lastUpdateTime != null and queryEntity.lastUpdateTime != ''" >
+        AND last_update_time = #{queryEntity.lastUpdateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.tnsTxnId != null and queryEntity.tnsTxnId != ''" >
+        AND tns_txn_id = #{queryEntity.tnsTxnId,jdbcType=BIGINT}
+      </if>
+      <if test="queryEntity.txnCode != null and queryEntity.txnCode != ''" >
+        AND txn_code = #{queryEntity.txnCode,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.aceGroup != null and queryEntity.aceGroup != ''" >
+        AND ace_group = #{queryEntity.aceGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.dir != null and queryEntity.dir != ''" >
+        AND dir = #{queryEntity.dir,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.accDir != null and queryEntity.accDir != ''">
+        AND acc_dir = #{queryEntity.accDir,jdbcType=VARCHAR},
+      </if>
+      <if test="queryEntity.accType != null and queryEntity.accType != ''" >
+        AND acc_type = #{queryEntity.accType,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.accItemId != null and queryEntity.accItemId != ''" >
+        AND acc_item_id = #{queryEntity.accItemId,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.agaType != null and queryEntity.agaType != ''" >
+        AND aga_type = #{queryEntity.agaType,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.agaItemId != null and queryEntity.agaItemId != ''" >
+        AND aga_item_id = #{queryEntity.agaItemId,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.runtimeFlg != null and queryEntity.runtimeFlg != ''" >
+        AND runtime_flg = #{queryEntity.runtimeFlg,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.revFlg != null and queryEntity.revFlg != ''" >
+        AND rev_flg = #{queryEntity.revFlg,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.version != null and queryEntity.version != ''" >
+        AND version = #{queryEntity.version,jdbcType=INTEGER}
+      </if>
+        </where>
+    </sql>
+
+    <!-- 时间查询条件 -->
+    <sql id="dynamicDateWhere">
+        <if test="queryEntity.createTimeStart !=null and queryEntity.createTimeStart !=''">
+            <![CDATA[ and create_time >= #{queryEntity.createTimeStart, jdbcType=TIMESTAMP}]]>
+        </if>
+        <if test="queryEntity.createTimeEnd !=null and queryEntity.createTimeEnd !=''">
+            <![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') <=DATE_FORMAT( #{queryEntity.createTimeEnd, jdbcType=TIMESTAMP},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+    <!-- 分页查询记录总记录数 -->
+    <select id="findCount" resultType="int">
+        SELECT
+        count(1)
+        FROM tns_ace_gen
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+    </select>
+</mapper>

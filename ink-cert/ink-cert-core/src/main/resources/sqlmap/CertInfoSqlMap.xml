@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CertInfo">
+
+    <resultMap id="CertInfo" type="com.ink.cert.core.po.CertInfo">
+        <result property="id" column="id"/>
+        <result property="merchatCode" column="merchat_code"/>
+        <result property="certCode" column="cert_code"/>
+        <result property="endecryType" column="endecry_type"/>
+        <result property="certType" column="cert_type"/>
+        <result property="secretKey" column="secret_key"/>
+        <result property="arithmeticType" column="arithmetic_type"/>
+        <result property="certName" column="cert_name"/>
+		<result property="certId" column="cert_id"/>
+		<result property="fileName" column="file_name"/>
+        <result property="status" column="status"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,merchat_code ,cert_code ,endecry_type ,cert_type ,secret_key ,arithmetic_type,cert_id,file_name,cert_name ,status ,create_user ,create_time ,update_user ,update_time
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO cert_info (
+	        id  ,
+	        merchat_code  ,
+	        cert_code  ,
+	        endecry_type  ,
+	        cert_type  ,
+	        secret_key  ,
+	        arithmetic_type  ,
+	        cert_id,
+	        file_name  ,
+	        cert_name  ,
+	        status  ,
+	        create_user  ,
+	        create_time  ,
+	        update_user  ,
+	        update_time  
+        ) VALUES (
+        	#{id, jdbcType=INTEGER} ,
+        	#{merchatCode, jdbcType=VARCHAR} ,
+        	#{certCode, jdbcType=VARCHAR} ,
+        	#{endecryType, jdbcType=CHAR} ,
+        	#{certType, jdbcType=VARCHAR} ,
+        	#{secretKey, jdbcType=VARCHAR} ,
+        	#{arithmeticType, jdbcType=VARCHAR} ,
+        	#{certId, jdbcType=VARCHAR} ,
+        	#{fileName, jdbcType=VARCHAR} ,
+        	#{certName, jdbcType=VARCHAR} ,
+        	#{status, jdbcType=CHAR} ,
+        	#{createUser, jdbcType=VARCHAR} ,
+        	#{createTime, jdbcType=TIMESTAMP} ,
+        	#{updateUser, jdbcType=VARCHAR} ,
+        	#{updateTime, jdbcType=TIMESTAMP} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO cert_info ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=INTEGER } ,
+        	#{item.merchatCode, jdbcType=VARCHAR} ,
+        	#{item.certCode, jdbcType=VARCHAR} ,
+        	#{item.endecryType, jdbcType=CHAR} ,
+        	#{item.certType, jdbcType=VARCHAR} ,
+        	#{item.secretKey, jdbcType=VARCHAR} ,
+        	#{item.arithmeticType, jdbcType=VARCHAR} ,
+			#{item.certId, jdbcType=VARCHAR} ,
+			#{item.fileName, jdbcType=VARCHAR} ,
+        	#{item.certName, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=CHAR} ,
+        	#{item.createUser, jdbcType=VARCHAR} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.updateUser, jdbcType=VARCHAR} ,
+        	#{item.updateTime, jdbcType=TIMESTAMP} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE cert_info SET
+	        merchat_code = #{merchatCode, jdbcType=VARCHAR} ,
+	        cert_code = #{certCode, jdbcType=VARCHAR} ,
+	        endecry_type = #{endecryType, jdbcType=CHAR} ,
+	        cert_type = #{certType, jdbcType=VARCHAR} ,
+	        secret_key = #{secretKey, jdbcType=VARCHAR} ,
+	        arithmetic_type = #{arithmeticType, jdbcType=VARCHAR} ,
+	        cert_id = #{certId, jdbcType=VARCHAR} ,
+	        file_name = #{fileName, jdbcType=VARCHAR} ,
+	        cert_name = #{certName, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=CHAR} ,
+	        create_user = #{createUser, jdbcType=VARCHAR} ,
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        update_user = #{updateUser, jdbcType=VARCHAR} ,
+	        update_time = #{updateTime, jdbcType=TIMESTAMP} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+	<update id="updateStatus" >
+			<![CDATA[
+			UPDATE cert_info SET
+				status = #{status, jdbcType=CHAR}
+			WHERE
+				id = #{id}
+		]]>
+	</update>
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM cert_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="CertInfo">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM cert_info 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=merchatCode and ''!=merchatCode ">
+	   			 		AND merchat_code = #{merchatCode}
+	   			   	</if>
+			       	<if test="null!=certCode and ''!=certCode ">
+	   			 		AND cert_code = #{certCode}
+	   			   	</if>
+			       	<if test="null!=endecryType and ''!=endecryType ">
+	   			 		AND endecry_type = #{endecryType}
+	   			   	</if>
+			       	<if test="null!=certType and ''!=certType ">
+	   			 		AND cert_type = #{certType}
+	   			   	</if>
+			       	<if test="null!=secretKey and ''!=secretKey ">
+	   			 		AND secret_key = #{secretKey}
+	   			   	</if>
+			       	<if test="null!=arithmeticType and ''!=arithmeticType ">
+	   			 		AND arithmetic_type = #{arithmeticType}
+	   			   	</if>
+			       	<if test="null!=certName and ''!=certName ">
+	   			 		AND cert_name = #{certName}
+	   			   	</if>
+					<if test="null!=certId and ''!=certId ">
+						AND cert_id = #{certId}
+					</if>
+					<if test="null!=fileName and ''!=fileName ">
+						AND file_name = #{fileName}
+					</if>
+					<choose>
+						<when test="null!=status and ''!=status">
+							AND status = #{status}
+						</when>
+						<otherwise>
+							AND status !='2'
+						</otherwise>
+					</choose>
+			       	<if test="null!=createUser and ''!=createUser ">
+	   			 		AND create_user = #{createUser}
+	   			   	</if>
+			       	<if test="null!=updateUser and ''!=updateUser ">
+	   			 		AND update_user = #{updateUser}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=merchatCode and ''!=merchatCode">
+				    <!-- 	AND merchat_code LIKE '%'||#{merchatCode}||'%' oracle -->
+			   			AND merchat_code LIKE concat('%',#{merchatCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=certCode and ''!=certCode">
+				    <!-- 	AND cert_code LIKE '%'||#{certCode}||'%' oracle -->
+			   			AND cert_code LIKE concat('%',#{certCode},'%')
+			   			
+			   		</if>
+				    <if test="null!=endecryType and ''!=endecryType">
+				    <!-- 	AND endecry_type LIKE '%'||#{endecryType}||'%' oracle -->
+			   			AND endecry_type LIKE concat('%',#{endecryType},'%')
+			   			
+			   		</if>
+				    <if test="null!=certType and ''!=certType">
+				    <!-- 	AND cert_type LIKE '%'||#{certType}||'%' oracle -->
+			   			AND cert_type LIKE concat('%',#{certType},'%')
+			   			
+			   		</if>
+				    <if test="null!=secretKey and ''!=secretKey">
+				    <!-- 	AND secret_key LIKE '%'||#{secretKey}||'%' oracle -->
+			   			AND secret_key LIKE concat('%',#{secretKey},'%')
+			   			
+			   		</if>
+				    <if test="null!=arithmeticType and ''!=arithmeticType">
+				    <!-- 	AND arithmetic_type LIKE '%'||#{arithmeticType}||'%' oracle -->
+			   			AND arithmetic_type LIKE concat('%',#{arithmeticType},'%')
+			   			
+			   		</if>
+					<if test="null!=fileName and ''!=fileName ">
+						AND file_name LIKE concat('%',#{fileName},'%')
+					</if>
+
+				    <if test="null!=certName and ''!=certName">
+				    <!-- 	AND cert_name LIKE '%'||#{certName}||'%' oracle -->
+			   			AND cert_name LIKE concat('%',#{certName},'%')
+			   			
+			   		</if>
+					<choose>
+						<when test="null!=status and ''!=status">
+							AND status LIKE concat('%',#{status},'%')
+						</when>
+						<otherwise>
+							AND status !='2'
+						</otherwise>
+					</choose>
+					<if test="null==status || ''==status">
+						<!-- 	AND status LIKE '%'||#{status}||'%' oracle -->
+						AND status !='2'
+					</if>
+				    <if test="null!=createUser and ''!=createUser">
+				    <!-- 	AND create_user LIKE '%'||#{createUser}||'%' oracle -->
+			   			AND create_user LIKE concat('%',#{createUser},'%')
+			   			
+			   		</if>
+				    <if test="null!=updateUser and ''!=updateUser">
+				    <!-- 	AND update_user LIKE '%'||#{updateUser}||'%' oracle -->
+			   			AND update_user LIKE concat('%',#{updateUser},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=updateTimeBegin and ''!=updateTimeBegin">
+		   		AND update_time >= #{updateTimeBegin}
+		   	</if>
+		   	<if test="null!=updateTimeEnd and ''!=updateTimeEnd">
+		   		AND update_time &lt; #{updateTimeEnd}
+		   	</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM cert_info <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="CertInfo">
+    	SELECT <include refid="columns"/> FROM cert_info 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="CertInfo">
+	    SELECT <include refid="columns"/> FROM cert_info 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	
+</mapper>

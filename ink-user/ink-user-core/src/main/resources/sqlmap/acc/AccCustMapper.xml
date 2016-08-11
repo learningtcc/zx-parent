@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccCust">
+	<resultMap id="BaseResultMap" type="com.ink.user.core.po.AccCust">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_update_time" property="lastUpdateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="mch_id" property="mchId" jdbcType="BIGINT" />
+		<result column="cust_id" property="custId" jdbcType="VARCHAR" />
+		<result column="cust_type" property="custType" jdbcType="INTEGER" />
+		<result column="id_type" property="idType" jdbcType="VARCHAR" />
+		<result column="id_no" property="idNo" jdbcType="VARCHAR" />
+		<result column="pac_id" property="pacId" jdbcType="BIGINT" />
+		<result column="cust_name" property="custName" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="mbl_no" property="mblNo" jdbcType="VARCHAR" />
+		<result column="tel_no" property="telNo" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="filler1" property="filler1" jdbcType="VARCHAR" />
+		<result column="filler2" property="filler2" jdbcType="VARCHAR" />
+		<result column="filler3" property="filler3" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+		<result column="third_member_no" property="thirdMemberNo" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, last_update_time, 
+		mch_id, cust_id,
+		cust_type, id_type, id_no, pac_id, cust_name,
+		sex,
+		birthday, mbl_no, tel_no, email, zipcode, address,  status, del_flag,
+		filler1, filler2, filler3,version,uid,third_member_no
+	</sql>
+	<sql id="Base_Column_List_Self">
+		acc_cust.id, acc_cust.create_time, acc_cust.last_update_time,
+		acc_cust.mch_id, acc_cust.cust_id,
+		acc_cust.cust_type, acc_cust.id_type, acc_cust.id_no, acc_cust.pac_id, acc_cust.cust_name,
+		acc_cust.sex,
+		acc_cust.birthday, acc_cust.mbl_no, acc_cust.tel_no, acc_cust.email, acc_cust.zipcode, acc_cust.address,
+		acc_cust.status, acc_cust.del_flag,
+		acc_cust.filler1, acc_cust.filler2, acc_cust.filler3,acc_cust.version,acc_cust.uid,acc_cust.third_member_no
+	</sql>
+	
+	<!-- 基础方法Start -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into acc_cust (id,
+		create_time, last_update_time,
+		mch_id, cust_id, cust_type,
+		id_type, id_no,
+		pac_id,
+		cust_name, sex, birthday,
+		mbl_no, tel_no, email,
+		zipcode, address, 
+		status, del_flag, filler1,
+		filler2, filler3, version,uid,third_member_no
+		)
+		values (#{id,jdbcType=BIGINT}, 
+		#{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+		#{mchId,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR},
+		#{custType,jdbcType=INTEGER},
+		#{idType,jdbcType=INTEGER}, #{idNo,jdbcType=VARCHAR},
+		#{pacId,jdbcType=VARCHAR}, 
+		#{custName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE},
+		#{mblNo,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{zipcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+		#{status,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{filler1,jdbcType=VARCHAR},
+		#{filler2,jdbcType=VARCHAR}, #{filler3,jdbcType=VARCHAR},
+		#{version,jdbcType=INTEGER}, #{uid,jdbcType=BIGINT}, #{thirdMemberNo,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_cust ( <include refid="Base_Column_List" />) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.createTime, jdbcType=TIMESTAMP} ,
+        	#{item.lastUpdateTime, jdbcType=TIMESTAMP} ,
+        	#{item.mchId, jdbcType=BIGINT} ,
+        	#{item.custId, jdbcType=VARCHAR} ,
+        	#{item.custType, jdbcType=INTEGER} ,
+        	#{item.idType, jdbcType=CHAR} ,
+        	#{item.idNo, jdbcType=VARCHAR} ,
+        	#{item.pacId, jdbcType=BIGINT} ,
+        	#{item.custName, jdbcType=VARCHAR} ,
+        	#{item.sex, jdbcType=VARCHAR} ,
+        	#{item.birthday, jdbcType=DATE} ,
+        	#{item.mblNo, jdbcType=VARCHAR} ,
+        	#{item.telNo, jdbcType=VARCHAR} ,
+        	#{item.email, jdbcType=VARCHAR} ,
+        	#{item.zipcode, jdbcType=VARCHAR} ,
+        	#{item.address, jdbcType=VARCHAR} ,
+        	#{item.status, jdbcType=INTEGER} ,
+        	#{item.delFlag, jdbcType=INTEGER} ,
+        	#{item.filler1, jdbcType=VARCHAR} ,
+        	#{item.filler2, jdbcType=VARCHAR} ,
+        	#{item.filler3, jdbcType=VARCHAR} ,
+        	#{item.version, jdbcType=INTEGER} ,
+        	#{item.uid, jdbcType=BIGINT} ,
+        	#{item.thirdMemberNo, jdbcType=VARCHAR} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_cust SET
+	        create_time = #{createTime, jdbcType=TIMESTAMP} ,
+	        last_update_time = #{lastUpdateTime, jdbcType=TIMESTAMP} ,
+	        mch_id = #{mchId, jdbcType=BIGINT} ,
+	        cust_id = #{custId, jdbcType=VARCHAR} ,
+	        cust_type = #{custType, jdbcType=INTEGER} ,
+	        id_type = #{idType, jdbcType=CHAR} ,
+	        id_no = #{idNo, jdbcType=VARCHAR} ,
+	        pac_id = #{pacId, jdbcType=BIGINT} ,
+	        cust_name = #{custName, jdbcType=VARCHAR} ,
+	        sex = #{sex, jdbcType=VARCHAR} ,
+	        birthday = #{birthday, jdbcType=DATE} ,
+	        mbl_no = #{mblNo, jdbcType=VARCHAR} ,
+	        tel_no = #{telNo, jdbcType=VARCHAR} ,
+	        email = #{email, jdbcType=VARCHAR} ,
+	        zipcode = #{zipcode, jdbcType=VARCHAR} ,
+	        address = #{address, jdbcType=VARCHAR} ,
+	        status = #{status, jdbcType=INTEGER} ,
+	        del_flag = #{delFlag, jdbcType=INTEGER} ,
+	        filler1 = #{filler1, jdbcType=VARCHAR} ,
+	        filler2 = #{filler2, jdbcType=VARCHAR} ,
+	        filler3 = #{filler3, jdbcType=VARCHAR} ,
+	        version = #{version, jdbcType=INTEGER} ,
+	        uid = #{uid, jdbcType=BIGINT} ,
+	        third_member_no = #{thirdMemberNo, jdbcType=VARCHAR} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_cust WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List" />
+	    <![CDATA[
+	        FROM acc_cust 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=custId and ''!=custId ">
+	   			 		AND cust_id = #{custId}
+	   			   	</if>
+			       	<if test="null!=idType and ''!=idType ">
+	   			 		AND id_type = #{idType}
+	   			   	</if>
+			       	<if test="null!=idNo and ''!=idNo ">
+	   			 		AND id_no = #{idNo}
+	   			   	</if>
+			       	<if test="null!=custName and ''!=custName ">
+	   			 		AND cust_name = #{custName}
+	   			   	</if>
+			       	<if test="null!=sex and ''!=sex ">
+	   			 		AND sex = #{sex}
+	   			   	</if>
+			       	<if test="null!=mblNo and ''!=mblNo ">
+	   			 		AND mbl_no = #{mblNo}
+	   			   	</if>
+			       	<if test="null!=telNo and ''!=telNo ">
+	   			 		AND tel_no = #{telNo}
+	   			   	</if>
+			       	<if test="null!=email and ''!=email ">
+	   			 		AND email = #{email}
+	   			   	</if>
+			       	<if test="null!=zipcode and ''!=zipcode ">
+	   			 		AND zipcode = #{zipcode}
+	   			   	</if>
+			       	<if test="null!=address and ''!=address ">
+	   			 		AND address = #{address}
+	   			   	</if>
+			       	<if test="null!=filler1 and ''!=filler1 ">
+	   			 		AND filler1 = #{filler1}
+	   			   	</if>
+			       	<if test="null!=filler2 and ''!=filler2 ">
+	   			 		AND filler2 = #{filler2}
+	   			   	</if>
+			       	<if test="null!=filler3 and ''!=filler3 ">
+	   			 		AND filler3 = #{filler3}
+	   			   	</if>
+			       	<if test="null!=thirdMemberNo and ''!=thirdMemberNo ">
+	   			 		AND third_member_no = #{thirdMemberNo}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=custId and ''!=custId">
+				    <!-- 	AND cust_id LIKE '%'||#{custId}||'%' oracle -->
+			   			AND cust_id LIKE concat('%',#{custId},'%')
+			   			
+			   		</if>
+				    <if test="null!=idType and ''!=idType">
+				    <!-- 	AND id_type LIKE '%'||#{idType}||'%' oracle -->
+			   			AND id_type LIKE concat('%',#{idType},'%')
+			   			
+			   		</if>
+				    <if test="null!=idNo and ''!=idNo">
+				    <!-- 	AND id_no LIKE '%'||#{idNo}||'%' oracle -->
+			   			AND id_no LIKE concat('%',#{idNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=custName and ''!=custName">
+				    <!-- 	AND cust_name LIKE '%'||#{custName}||'%' oracle -->
+			   			AND cust_name LIKE concat('%',#{custName},'%')
+			   			
+			   		</if>
+				    <if test="null!=sex and ''!=sex">
+				    <!-- 	AND sex LIKE '%'||#{sex}||'%' oracle -->
+			   			AND sex LIKE concat('%',#{sex},'%')
+			   			
+			   		</if>
+				    <if test="null!=mblNo and ''!=mblNo">
+				    <!-- 	AND mbl_no LIKE '%'||#{mblNo}||'%' oracle -->
+			   			AND mbl_no LIKE concat('%',#{mblNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=telNo and ''!=telNo">
+				    <!-- 	AND tel_no LIKE '%'||#{telNo}||'%' oracle -->
+			   			AND tel_no LIKE concat('%',#{telNo},'%')
+			   			
+			   		</if>
+				    <if test="null!=email and ''!=email">
+				    <!-- 	AND email LIKE '%'||#{email}||'%' oracle -->
+			   			AND email LIKE concat('%',#{email},'%')
+			   			
+			   		</if>
+				    <if test="null!=zipcode and ''!=zipcode">
+				    <!-- 	AND zipcode LIKE '%'||#{zipcode}||'%' oracle -->
+			   			AND zipcode LIKE concat('%',#{zipcode},'%')
+			   			
+			   		</if>
+				    <if test="null!=address and ''!=address">
+				    <!-- 	AND address LIKE '%'||#{address}||'%' oracle -->
+			   			AND address LIKE concat('%',#{address},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler1 and ''!=filler1">
+				    <!-- 	AND filler1 LIKE '%'||#{filler1}||'%' oracle -->
+			   			AND filler1 LIKE concat('%',#{filler1},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler2 and ''!=filler2">
+				    <!-- 	AND filler2 LIKE '%'||#{filler2}||'%' oracle -->
+			   			AND filler2 LIKE concat('%',#{filler2},'%')
+			   			
+			   		</if>
+				    <if test="null!=filler3 and ''!=filler3">
+				    <!-- 	AND filler3 LIKE '%'||#{filler3}||'%' oracle -->
+			   			AND filler3 LIKE concat('%',#{filler3},'%')
+			   			
+			   		</if>
+				    <if test="null!=thirdMemberNo and ''!=thirdMemberNo">
+				    <!-- 	AND third_member_no LIKE '%'||#{thirdMemberNo}||'%' oracle -->
+			   			AND third_member_no LIKE concat('%',#{thirdMemberNo},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=createTimeBegin and ''!=createTimeBegin">
+		   		AND create_time >= #{createTimeBegin}
+		   	</if>
+		   	<if test="null!=createTimeEnd and ''!=createTimeEnd">
+		   		AND create_time &lt; #{createTimeEnd}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeBegin and ''!=lastUpdateTimeBegin">
+		   		AND last_update_time >= #{lastUpdateTimeBegin}
+		   	</if>
+		   	<if test="null!=lastUpdateTimeEnd and ''!=lastUpdateTimeEnd">
+		   		AND last_update_time &lt; #{lastUpdateTimeEnd}
+		   	</if>
+		   	<if test="null!=mchId and ''!=mchId">
+			    AND mch_id = #{mchId}
+			</if>
+		   	<if test="null!=custType and ''!=custType">
+			    AND cust_type = #{custType}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=birthdayBegin and ''!=birthdayBegin">
+		   		AND birthday >= #{birthdayBegin}
+		   	</if>
+		   	<if test="null!=birthdayEnd and ''!=birthdayEnd">
+		   		AND birthday &lt; #{birthdayEnd}
+		   	</if>
+		   	<if test="null!=status and ''!=status">
+			    AND status = #{status}
+			</if>
+		   	<if test="null!=delFlag">
+			    AND del_flag = #{delFlag}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+		   	<if test="null!=uid and ''!=uid">
+			    AND uid = #{uid}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_cust <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List" /> FROM acc_cust 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+	<select id="find" resultMap="BaseResultMap">
+	    SELECT <include refid="Base_Column_List" /> FROM acc_cust 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    <!-- 基础方法End -->
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from acc_cust
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+		<select id="selectByMchIdAndCustType" resultMap="BaseResultMap"
+		>
+		select
+		<include refid="Base_Column_List" />
+		from acc_cust
+		where mch_id = #{mchId,jdbcType=BIGINT} 
+		and cust_type=#{custType,jdbcType=TINYINT}
+	</select>
+	<select id="selectByuid" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from acc_cust
+		where uid = #{uid,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from acc_cust
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertSelective" parameterType="com.ink.user.core.po.AccCust">
+		insert into acc_cust
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
+			</if>
+			<if test="mchId != null">
+				mch_id,
+			</if>
+			<if test="custId != null">
+				cust_id,
+			</if>
+			<if test="custType != null">
+				cust_type,
+			</if>
+			<if test="idType != null">
+				id_type,
+			</if>
+			<if test="idNo != null">
+				id_no,
+			</if>
+			<if test="pacId != null">
+				pac_id,
+			</if>
+			<if test="custName != null">
+				cust_name,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="mblNo != null">
+				mbl_no,
+			</if>
+			<if test="telNo != null">
+				tel_no,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="zipcode != null">
+				zipcode,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="filler1 != null">
+				filler1,
+			</if>
+			<if test="filler2 != null">
+				filler2,
+			</if>
+			<if test="filler3 != null">
+				filler3,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="thirdMemberNo != null">
+				third_member_no,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mchId != null">
+				#{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				#{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custType != null">
+				#{custType,jdbcType=INTEGER},
+			</if>
+			<if test="idType != null">
+				#{idType,jdbcType=INTEGER},
+			</if>
+			<if test="idNo != null">
+				#{idNo,jdbcType=VARCHAR},
+			</if>
+			<if test="pacId != null">
+				#{pacId,jdbcType=VARCHAR},
+			</if>
+			<if test="custName != null">
+				#{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="mblNo != null">
+				#{mblNo,jdbcType=VARCHAR},
+			</if>
+			<if test="telNo != null">
+				#{telNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="zipcode != null">
+				#{zipcode,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="filler1 != null">
+				#{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				#{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				#{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="thirdMemberNo != null">
+				#{thirdMemberNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ink.user.core.po.AccCust">
+		update acc_cust
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mchId != null">
+				mch_id = #{mchId,jdbcType=VARCHAR},
+			</if>
+			<if test="custId != null">
+				cust_id = #{custId,jdbcType=VARCHAR},
+			</if>
+			<if test="custType != null">
+				cust_type = #{custType,jdbcType=INTEGER},
+			</if>
+			<if test="idType != null">
+				id_type = #{idType,jdbcType=INTEGER},
+			</if>
+			<if test="idNo != null">
+				id_no = #{idNo,jdbcType=VARCHAR},
+			</if>
+			<if test="pacId != null">
+				pac_id = #{pacId,jdbcType=BIGINT},
+			</if>
+			<if test="custName != null">
+				cust_name = #{custName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="mblNo != null">
+				mbl_no = #{mblNo,jdbcType=VARCHAR},
+			</if>
+			<if test="telNo != null">
+				tel_no = #{telNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="zipcode != null">
+				zipcode = #{zipcode,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="filler1 != null">
+				filler1 = #{filler1,jdbcType=VARCHAR},
+			</if>
+			<if test="filler2 != null">
+				filler2 = #{filler2,jdbcType=VARCHAR},
+			</if>
+			<if test="filler3 != null">
+				filler3 = #{filler3,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER} + 1,
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=BIGINT},
+			</if>
+			<if test="thirdMemberNo != null">
+				third_member_no = #{thirdMemberNo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ink.user.core.po.AccCust">
+		update acc_cust
+		set
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+		mch_id = #{mchId,jdbcType=VARCHAR},
+		cust_id = #{custId,jdbcType=VARCHAR},
+		cust_type = #{custType,jdbcType=INTEGER},
+		id_type = #{idType,jdbcType=INTEGER},
+		id_no = #{idNo,jdbcType=VARCHAR},
+		pac_id = #{pacId,jdbcType=BIGINT},
+		cust_name = #{custName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=DATE},
+		mbl_no = #{mblNo,jdbcType=VARCHAR},
+		tel_no = #{telNo,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		zipcode = #{zipcode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		del_flag = #{delFlag,jdbcType=INTEGER},
+		filler1 = #{filler1,jdbcType=VARCHAR},
+		filler2 = #{filler2,jdbcType=VARCHAR},
+		filler3 = #{filler3,jdbcType=VARCHAR},
+		version = #{version,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=BIGINT},
+		third_member_no = #{thirdMemberNo,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 根据商户号、客户号查询客户信息 ,查询出状态为启用且未删除的客户信息-->
+	<select id="selectAccCustByCustIdAndMchId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_cust where mch_id=#{mchId,jdbcType=VARCHAR} and
+		cust_id=#{custId,jdbcType=VARCHAR} and del_flag = 0 and status = 1
+	</select>
+	
+	<!-- 综合账户信息查询，根据客户类型、证件类型、证件号码 -->
+	<select id="selectAccCustInfo" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List_Self" />
+		FROM
+		acc_master_cust
+		JOIN acc_master_cust_relation ON
+		acc_master_cust_relation.acc_master_cust_id = acc_master_cust.id
+		JOIN
+		acc_cust ON acc_master_cust_relation.acc_cust_id = acc_master_cust.id
+		where
+		acc_master_cust.id_type=#{idType,jdbcType=VARCHAR} and
+		acc_master_cust.id_no=#{idNo,jdbcType=VARCHAR}
+	</select>
+	<!-- 查询客户信息表，暂时用户主键查询 -->
+	<select id="selectAccCustAllInfo" parameterType="com.ink.user.core.po.AccCust"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from acc_cust where 1=1
+		<if test="id != null">
+			and id=#{id,jdbcType=VARCHAR}
+		</if>
+	</select>
+    
+    <!-- 依据查询实体分页查询 -->
+    <select id="findList" resultMap="BaseResultMap">
+        <choose>
+            <when test="pageVO.totalPage&lt;0">
+                <include refid="baseDynamicQuery" />
+            </when>
+            <otherwise>
+                <include refid="pageDynamicQuery" />
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 全量查询 -->
+    <sql id="baseDynamicQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM acc_cust
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+        <if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+            ORDER BY ${pageVO.orderBy}
+        </if>
+    </sql>
+
+    <!-- 分页查询 -->
+    <sql id="pageDynamicQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM acc_cust
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+        <if test="pageVO.orderBy!=null and pageVO.orderBy!=''">
+            ORDER BY ${pageVO.orderBy}
+        </if>
+        LIMIT #{pageVO.start, jdbcType=INTEGER}, #{pageVO.pageSize, jdbcType=INTEGER}
+    </sql>
+
+    <!-- 实体查询条件 -->
+    <sql id="dynamicPageWhere">
+        <where>
+            1=1
+      <if test="queryEntity.createTime != null and queryEntity.createTime != ''" >
+        AND create_time = #{queryEntity.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.lastUpdateTime != null and queryEntity.lastUpdateTime != ''" >
+        AND last_update_time = #{queryEntity.lastUpdateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="queryEntity.mchId != null and queryEntity.mchId != ''" >
+        AND mch_id = #{queryEntity.mchId,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.custId != null and queryEntity.custId != ''" >
+        AND cust_id = #{queryEntity.custId,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.custType != null" >
+        AND cust_type = #{queryEntity.custType,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.idType != null" >
+        AND id_type = #{queryEntity.idType,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.idNo != null and queryEntity.idNo != ''" >
+        AND id_no = #{queryEntity.idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.pacId != null and queryEntity.pacId != ''" >
+        AND pac_id = #{queryEntity.pacId,jdbcType=BIGINT}
+      </if>
+      <if test="queryEntity.custName != null and queryEntity.custName != ''" >
+        AND cust_name = #{queryEntity.custName,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.sex != null and queryEntity.sex != ''" >
+        AND sex = #{queryEntity.sex,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.birthday != null and queryEntity.birthday != ''" >
+        AND birthday = #{queryEntity.birthday,jdbcType=DATE}
+      </if>
+      <if test="queryEntity.mblNo != null and queryEntity.mblNo != ''" >
+        AND mbl_no = #{queryEntity.mblNo,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.telNo != null and queryEntity.telNo != ''" >
+        AND tel_no = #{queryEntity.telNo,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.email != null and queryEntity.email != ''" >
+        AND email = #{queryEntity.email,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.zipcode != null and queryEntity.zipcode != ''" >
+        AND zipcode = #{queryEntity.zipcode,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.address != null and queryEntity.address != ''" >
+        AND address = #{queryEntity.address,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.status != null and queryEntity.status != ''" >
+        AND status = #{queryEntity.status,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.delFlag != null and queryEntity.delFlag != ''" >
+        AND del_flag = #{queryEntity.delFlag,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.filler1 != null and queryEntity.filler1 != ''" >
+        AND filler1 = #{queryEntity.filler1,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.filler2 != null and queryEntity.filler2 != ''" >
+        AND filler2 = #{queryEntity.filler2,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.filler3 != null and queryEntity.filler3 != ''" >
+        AND filler3 = #{queryEntity.filler3,jdbcType=VARCHAR}
+      </if>
+      <if test="queryEntity.version != null and queryEntity.version != ''" >
+        AND version = #{queryEntity.version,jdbcType=INTEGER}
+      </if>
+      <if test="queryEntity.uid != null and queryEntity.uid != ''" >
+        AND uid = #{queryEntity.uid,jdbcType=BIGINT}
+      </if>
+      <if test="queryEntity.thirdMemberNo != null and queryEntity.thirdMemberNo != ''" >
+        AND third_member_no = #{queryEntity.thirdMemberNo,jdbcType=VARCHAR}
+      </if>
+        </where>
+    </sql>
+
+    <!-- 时间查询条件 -->
+    <sql id="dynamicDateWhere">
+        <if test="queryEntity.createTimeStart !=null and queryEntity.createTimeStart !=''">
+            <![CDATA[ and create_time >= #{queryEntity.createTimeStart, jdbcType=TIMESTAMP}]]>
+        </if>
+        <if test="queryEntity.createTimeEnd !=null and queryEntity.createTimeEnd !=''">
+            <![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d')<= #{queryEntity.createTimeEnd, jdbcType=TIMESTAMP}]]>
+        </if>
+    </sql>
+
+    <!-- 分页查询记录总记录数 -->
+    <select id="findCount" resultType="int">
+        SELECT
+        count(1)
+        FROM acc_cust
+        <include refid="dynamicPageWhere" />
+        <include refid="dynamicDateWhere" />
+    </select>
+    
+  <select id="selectAccCustByCustTypeAndCustIdAndMchId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from acc_cust
+    where
+    1=1 
+      <if test="custType != null" >
+        AND cust_type = #{custType,jdbcType=INTEGER}
+      </if>
+      <if test="mchId != null">
+		AND mch_id = #{mchId,jdbcType=VARCHAR}
+      </if>
+      <if test="custId != null">
+		AND cust_id = #{custId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+</mapper>

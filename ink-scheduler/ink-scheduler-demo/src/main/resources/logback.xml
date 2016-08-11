@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 所有日志进入all.log和控制台日志，错误日志进入error.log, 业务日志进入biz.log。 author: Robert Lee -->
+
+<configuration scan="true" >
+
+    <contextName>yinker-scheduler-service</contextName>
+
+    <!--日志路径 -->
+    <property name="logback.logs.path" value="./logs/" />
+    <!--项目名 -->
+    <property name="logback.project.name" value="yinker-scheduler-service" />
+    <!--日志文件名的日期格式 -->
+    <timestamp key="byDay" datePattern="yyyyMMdd" />
+    <!-- 控制台日志 -->
+    <appender name="stdout.default" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%level]\t%date{yyyy-MM-dd HH:mm:ss}\t%thread[%X{his_trace_id}]\t%logger\t%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 业务日志 -->
+    <appender name="biz.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+        <File> ${logback.logs.path}${logback.project.name}/biz.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]\t%date{yyyy-MM-dd HH:mm:ss}\t%thread[%X{his_trace_id}]\t%logger\t%msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.logs.path}${logback.project.name}/biz.log.%d{yyyyMMdd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+
+    <!-- 所有日志-->
+    <appender name="all.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+        <File> ${logback.logs.path}${logback.project.name}/all.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]\t%date{yyyy-MM-dd HH:mm:ss}\t%thread[%X{his_trace_id}]\t%logger\t%msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logback.logs.path}${logback.project.name}/all.log.%d{yyyyMMdd}</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <!-- 所有错误日志-->
+    <appender name="error.log" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+        <File> ${logback.logs.path}${logback.project.name}/error.log</File>
+        <encoder charset="UTF-8">
+            <pattern>[%level]\t%date{yyyy-MM-dd HH:mm:ss}\t%thread[%X{his_trace_id}]\t%logger\t%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logback.logs.path}${logback.project.name}/error.log.%d{yyyyMMdd}</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <!-- mongo日志同步 -->
+    <appender name="MONGO" class="com.yinker.base.log.mongo.MongoDBAppender">
+        <dbName>${mongo.dbName}</dbName>
+        <collectionName>${mongo.collectionName}</collectionName>
+        <source>${system.source}</source>
+        <host>${mongo.host}</host>
+        <port>${mongo.port}</port>
+        <level>${mongo.level}</level>
+    </appender>
+
+
+    <logger name="com.star" level="INFO">
+        <appender-ref ref="biz.log" />
+    </logger>
+
+
+    <logger name="com.ibatis" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+    <root level="INFO">
+        <appender-ref ref="stdout.default" />
+        <appender-ref ref="all.log" />
+        <appender-ref ref="error.log" />
+    </root>
+</configuration>

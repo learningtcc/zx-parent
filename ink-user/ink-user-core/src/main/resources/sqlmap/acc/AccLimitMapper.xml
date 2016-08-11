@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AccLimit">
+
+    <resultMap id="AccLimit" type="com.ink.user.core.po.AccLimit">
+        <result property="id" column="id"/>
+        <result property="pacId" column="pac_id"/>
+        <result property="sacId" column="sac_id"/>
+        <result property="sacType" column="sac_type"/>
+        <result property="tradeDate" column="trade_date"/>
+        <result property="dayCashAmt" column="day_cash_amt"/>
+        <result property="dayCashCnt" column="day_cash_cnt"/>
+        <result property="dayCashlmtAmt" column="day_cashlmt_amt"/>
+        <result property="dayCashlmtCnt" column="day_cashlmt_cnt"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+        id ,pac_id ,sac_id ,sac_type ,trade_date ,day_cash_amt ,day_cash_cnt ,day_cashlmt_amt ,day_cashlmt_cnt ,version 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO acc_limit (
+	        id  ,
+	        pac_id  ,
+	        sac_id  ,
+	        sac_type  ,
+	        trade_date  ,
+	        day_cash_amt  ,
+	        day_cash_cnt  ,
+	        day_cashlmt_amt  ,
+	        day_cashlmt_cnt  ,
+	        version  
+        ) VALUES (
+        	#{id, jdbcType=BIGINT} ,
+        	#{pacId, jdbcType=BIGINT} ,
+        	#{sacId, jdbcType=BIGINT} ,
+        	#{sacType, jdbcType=VARCHAR} ,
+        	#{tradeDate, jdbcType=VARCHAR} ,
+        	#{dayCashAmt, jdbcType=DECIMAL} ,
+        	#{dayCashCnt, jdbcType=INTEGER} ,
+        	#{dayCashlmtAmt, jdbcType=DECIMAL} ,
+        	#{dayCashlmtCnt, jdbcType=INTEGER} ,
+        	#{version, jdbcType=INTEGER} 
+        )
+    ]]>
+    </insert>
+   <insert id="insertBatch"   parameterType="java.util.List">
+      INSERT INTO acc_limit ( <include refid="columns"/>) values
+        <foreach collection="list" item="item" separator="," >
+    (
+        	#{item.id, jdbcType=BIGINT} ,
+        	#{item.pacId, jdbcType=BIGINT} ,
+        	#{item.sacId, jdbcType=BIGINT} ,
+        	#{item.sacType, jdbcType=VARCHAR} ,
+        	#{item.tradeDate, jdbcType=VARCHAR} ,
+        	#{item.dayCashAmt, jdbcType=DECIMAL} ,
+        	#{item.dayCashCnt, jdbcType=INTEGER} ,
+        	#{item.dayCashlmtAmt, jdbcType=DECIMAL} ,
+        	#{item.dayCashlmtCnt, jdbcType=INTEGER} ,
+        	#{item.version, jdbcType=INTEGER} 
+    )
+        </foreach>
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE acc_limit SET
+	        pac_id = #{pacId, jdbcType=BIGINT} ,
+	        sac_id = #{sacId, jdbcType=BIGINT} ,
+	        sac_type = #{sacType, jdbcType=VARCHAR} ,
+	        trade_date = #{tradeDate, jdbcType=VARCHAR} ,
+	        day_cash_amt = #{dayCashAmt, jdbcType=DECIMAL} ,
+	        day_cash_cnt = #{dayCashCnt, jdbcType=INTEGER} ,
+	        day_cashlmt_amt = #{dayCashlmtAmt, jdbcType=DECIMAL} ,
+	        day_cashlmt_cnt = #{dayCashlmtCnt, jdbcType=INTEGER} ,
+	        version = #{version, jdbcType=INTEGER} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM acc_limit WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="AccLimit">
+	    SELECT <include refid="columns"/>
+	    <![CDATA[
+	        FROM acc_limit 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+    </select>
+
+	<sql id="findWhere">
+	    <where>
+	    	<choose>
+	    		<when test="queryType==0">
+			       	<if test="null!=sacType and ''!=sacType ">
+	   			 		AND sac_type = #{sacType}
+	   			   	</if>
+			       	<if test="null!=tradeDate and ''!=tradeDate ">
+	   			 		AND trade_date = #{tradeDate}
+	   			   	</if>
+	       		</when>
+	       		<otherwise>
+				    <if test="null!=sacType and ''!=sacType">
+				    <!-- 	AND sac_type LIKE '%'||#{sacType}||'%' oracle -->
+			   			AND sac_type LIKE concat('%',#{sacType},'%')
+			   			
+			   		</if>
+				    <if test="null!=tradeDate and ''!=tradeDate">
+				    <!-- 	AND trade_date LIKE '%'||#{tradeDate}||'%' oracle -->
+			   			AND trade_date LIKE concat('%',#{tradeDate},'%')
+			   			
+			   		</if>
+		        </otherwise>
+	      	</choose>
+		   	<if test="null!=id and ''!=id">
+			    AND id = #{id}
+			</if>
+		   	<if test="null!=pacId and ''!=pacId">
+			    AND pac_id = #{pacId}
+			</if>
+		   	<if test="null!=sacId and ''!=sacId">
+			    AND sac_id = #{sacId}
+			</if>
+		   	<if test="null!=dayCashAmt and ''!=dayCashAmt">
+			    AND day_cash_amt = #{dayCashAmt}
+			</if>
+		   	<if test="null!=dayCashCnt and ''!=dayCashCnt">
+			    AND day_cash_cnt = #{dayCashCnt}
+			</if>
+		   	<if test="null!=dayCashlmtAmt and ''!=dayCashlmtAmt">
+			    AND day_cashlmt_amt = #{dayCashlmtAmt}
+			</if>
+		   	<if test="null!=dayCashlmtCnt and ''!=dayCashlmtCnt">
+			    AND day_cashlmt_cnt = #{dayCashlmtCnt}
+			</if>
+		   	<if test="null!=version and ''!=version">
+			    AND version = #{version}
+			</if>
+	    </where>
+	</sql>
+	 
+    <select id="findPageCount" resultType="long">
+        SELECT count(*) FROM acc_limit <include refid="findWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="findPage" resultMap="AccLimit">
+    	SELECT <include refid="columns"/> FROM acc_limit 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns and ''!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+	<select id="find" resultMap="AccLimit">
+	    SELECT <include refid="columns"/> FROM acc_limit 
+		<include refid="findWhere"/>
+		<if test="null!=sortColumns">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	<select id="selectByIdForUpdate" resultMap="AccLimit">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM acc_limit
+	        WHERE 
+		        id = #{id} 
+		    for update
+	    ]]>
+	</select>
+
+	<select id="selectBySacIdAndTradeDateForUpdate" resultMap="AccLimit">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM acc_limit
+	       WHERE 
+	        sac_id = #{sacId, jdbcType=BIGINT} AND
+	        trade_date = #{tradeDate, jdbcType=VARCHAR} 
+		    for update
+	    ]]>
+	</select>
+
+	<select id="selectByPacIdAndTradeDateForUpdate" resultMap="AccLimit">
+		SELECT
+		<include refid="columns" />
+	    <![CDATA[
+	        FROM acc_limit
+	            pac_id = #{pacId, jdbcType=BIGINT} AND
+	        	trade_date = #{tradeDate, jdbcType=VARCHAR} 
+		    for update
+	    ]]>
+	</select>
+    
+</mapper>
