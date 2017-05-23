@@ -7,13 +7,13 @@
     <!-- 数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClass" value="${YINKER_PLATFORM_JDBC_DRIVER}" />
-        <property name="jdbcUrl" value="jdbc:mysql://${YINKER_PLATFORM_JDBC_HOST}:${YINKER_PLATFORM_JDBC_PORT}/${YINKER_PLATFORM_JDBC_DBNAME}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
-        <property name="user" value="${YINKER_PLATFORM_JDBC_USERNAME}" />
-        <property name="password" value="${YINKER_PLATFORM_JDBC_PASSWORD}" />
-        <property name="initialPoolSize" value="${YINKER_PLATFORM_DS_INITIALPOOLSIZE}" />
-        <property name="minPoolSize" value="${YINKER_PLATFORM_DS_MINPOOLSIZE}" />
-        <property name="maxPoolSize" value="${YINKER_PLATFORM_DS_MAXPOOLSIZE}" />
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://10.1.5.216:3306/ink_route?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
+        <property name="user" value="pats_atp_master" />
+        <property name="password" value="zhangege" />
+        <property name="initialPoolSize" value="5" />
+        <property name="minPoolSize" value="5" />
+        <property name="maxPoolSize" value="20" />
         <!-- 最大空闲时间,单位:秒 -->
         <property name="maxIdleTime" value="60" />
         <property name="acquireIncrement" value="3" />
@@ -34,13 +34,13 @@
     <!--从库数据源 -->
       <bean id="slaveDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClass" value="${YINKER_PLATFORM_JDBC_DRIVER}" />
-        <property name="jdbcUrl" value="jdbc:mysql://${SLAVE_YINKER_PLATFORM_JDBC_HOST}:${YINKER_PLATFORM_JDBC_PORT}/${YINKER_PLATFORM_JDBC_DBNAME}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
-        <property name="user" value="${SLAVE_YINKER_PLATFORM_JDBC_USERNAME}" />
-        <property name="password" value="${SLAVE_YINKER_PLATFORM_JDBC_PASSWORD}" />
-        <property name="initialPoolSize" value="${YINKER_PLATFORM_DS_INITIALPOOLSIZE}" />
-        <property name="minPoolSize" value="${YINKER_PLATFORM_DS_MINPOOLSIZE}" />
-        <property name="maxPoolSize" value="${YINKER_PLATFORM_DS_MAXPOOLSIZE}" />
+          <property name="driverClass" value="com.mysql.jdbc.Driver" />
+          <property name="jdbcUrl" value="jdbc:mysql://10.1.5.216:3306/ink_route?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true" />
+          <property name="user" value="pats_atp_master" />
+          <property name="password" value="zhangege" />
+          <property name="initialPoolSize" value="5" />
+          <property name="minPoolSize" value="5" />
+          <property name="maxPoolSize" value="20" />
         <!-- 最大空闲时间,单位:秒 -->
         <property name="maxIdleTime" value="60" />
         <property name="acquireIncrement" value="3" />

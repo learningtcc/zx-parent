@@ -33,7 +33,7 @@ import com.ink.route.manager.IAsileBusinessManager;
 @Transactional
 public class AsileBusinessManagerImpl extends BaseManager<AsileBusiness, java.lang.Long> implements IAsileBusinessManager {
 	private static final String cacheKey = "trade.asile.business";
-	@Autowired
+//	@Autowired
 	private Yedis redisClient;
 	@Autowired
 	private IAsileBusinessDao asileBusinessDao;

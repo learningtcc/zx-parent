@@ -42,7 +42,7 @@ public class AsileBusinessSupportManagerImpl extends BaseManager<AsileBusinessSu
 
 	@Autowired
 	private IAsileBusinessSupportDao asileBusinessSupportDao;
-	@Autowired
+//	@Autowired
 	private Yedis redisClient;
 
 	public EntityDao<AsileBusinessSupport, java.lang.Long> getEntityDao() {

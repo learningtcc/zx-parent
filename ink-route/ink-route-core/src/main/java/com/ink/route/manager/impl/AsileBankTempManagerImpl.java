@@ -28,7 +28,7 @@ public class AsileBankTempManagerImpl extends BaseManager<AsileBankTemp, Long>
         implements IAsileBankTempManager {
 
     private static final YinkerLogger logger = YinkerLogger.getLogger(AsileBankTempManagerImpl.class);
-    @Autowired
+//    @Autowired
     private Yedis redisClient;
     @Autowired
     private IAsileBankTempDao asileBankTempDao;

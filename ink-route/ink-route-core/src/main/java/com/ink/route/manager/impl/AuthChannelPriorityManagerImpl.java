@@ -36,7 +36,7 @@ public class AuthChannelPriorityManagerImpl extends BaseManager<AuthChannelPrior
 	private final YinkerLogger logger = YinkerLogger.getLogger(AuthChannelPriorityManagerImpl.class);
 
 	private static final String cacheKey = "auth.channel.priority.all";
-	@Autowired
+//	@Autowired
 	private Yedis redisClient;
 	@Autowired
 	private IAuthChannelPriorityDao authChannelPriorityDao;

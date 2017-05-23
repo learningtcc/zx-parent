@@ -42,7 +42,7 @@ public class BankcardBinManagerImpl extends BaseManager<BankcardBin,Long> implem
 	@Autowired
 	private IBankcardBinDao bankcardBinDao;
 	
-	@Autowired
+//	@Autowired
     private Yedis redisClient;
 	
 	private final int [] cardBinLenArr = {1,2,3,4,5,6,7,8,9,10};//cardbin长度集合

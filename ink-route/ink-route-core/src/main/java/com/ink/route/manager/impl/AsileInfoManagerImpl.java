@@ -28,7 +28,7 @@ public class AsileInfoManagerImpl extends BaseManager<AsileInfo, Long>
 
     @Autowired
     private IAsileInfoDao asileInfoDao;
-    @Autowired
+//    @Autowired
     private Yedis redisClient;
 
     @Override

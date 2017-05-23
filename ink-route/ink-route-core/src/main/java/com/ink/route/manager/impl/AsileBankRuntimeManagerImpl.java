@@ -27,7 +27,7 @@ public class AsileBankRuntimeManagerImpl extends BaseManager<AsileBankRuntime, L
     private static final YinkerLogger logger = YinkerLogger.getLogger(AsileBankRuntimeManagerImpl.class);
     @Autowired
     private IAsileBankRuntimeDao asileBankRuntimeDao;
-    @Autowired
+//    @Autowired
     private Yedis redisClient;
 
     private static final String cacheKey = "route.runtime.all";

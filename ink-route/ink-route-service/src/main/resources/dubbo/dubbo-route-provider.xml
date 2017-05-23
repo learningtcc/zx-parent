@@ -7,40 +7,40 @@
    		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 
-  <dubbo:service interface="com.ink.route.api.service.rule.IAsileRoute"
-		ref="asileRoute" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	
-	<!-- web平台提供dubbo开始 -->
-	<!-- 通道配置 -->
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileInfoService"
-		ref="asileInfoService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankRuntimeService"
-		ref="asileBankRuntimeService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankService"
-		ref="asileBankService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankTempService"
-		ref="asileBankTempService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileBusinessService"
-		ref="asileBusinessService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAsileBusinessSupportService"
-		ref="asileBusinessSupportService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IAuthChannelPriorityService"
-		ref="authChannelPriorityService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<!-- 基础配置 -->
-	<dubbo:service interface="com.ink.route.api.service.platform.IBankcardBinService"
-		ref="bankcardBinService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
-	<dubbo:service interface="com.ink.route.api.service.platform.IBasicBankService"
-		ref="basicBankService" version="1.0.0" retries="0" loadbalance="random">
-	</dubbo:service>
+  <!--<dubbo:service interface="com.ink.route.api.service.rule.IAsileRoute"-->
+		<!--ref="asileRoute" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!---->
+	<!--&lt;!&ndash; web平台提供dubbo开始 &ndash;&gt;-->
+	<!--&lt;!&ndash; 通道配置 &ndash;&gt;-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileInfoService"-->
+		<!--ref="asileInfoService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankRuntimeService"-->
+		<!--ref="asileBankRuntimeService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankService"-->
+		<!--ref="asileBankService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileBankTempService"-->
+		<!--ref="asileBankTempService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileBusinessService"-->
+		<!--ref="asileBusinessService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAsileBusinessSupportService"-->
+		<!--ref="asileBusinessSupportService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IAuthChannelPriorityService"-->
+		<!--ref="authChannelPriorityService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--&lt;!&ndash; 基础配置 &ndash;&gt;-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IBankcardBinService"-->
+		<!--ref="bankcardBinService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
+	<!--<dubbo:service interface="com.ink.route.api.service.platform.IBasicBankService"-->
+		<!--ref="basicBankService" version="1.0.0" retries="0" loadbalance="random">-->
+	<!--</dubbo:service>-->
 	
 	<!-- web平台提供dubbo结束 -->
 	

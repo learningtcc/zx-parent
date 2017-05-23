@@ -33,7 +33,7 @@ public class AsileBankManagerImpl extends BaseManager<AsileBank, Long>
     private static final YinkerLogger logger = YinkerLogger.getLogger(AsileBankManagerImpl.class);
     @Autowired
     private IAsileBankDao asileBankDao;
-    @Autowired
+//    @Autowired
     private Yedis redisClient;
 
     private static final String cacheKey = "route.bankSupport.all";
